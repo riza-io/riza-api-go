@@ -1,4 +1,4 @@
-module github.com/stainless-sdks/TEMP_riza-api-go
+module github.com/stainless-sdks/riza-api-go
 
 go 1.19
 

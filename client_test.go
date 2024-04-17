@@ -1,6 +1,6 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package temprizaapi_test
+package riza_test
 
 import (
 	"context"
@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/TEMP_riza-api-go"
-	"github.com/stainless-sdks/TEMP_riza-api-go/internal"
-	"github.com/stainless-sdks/TEMP_riza-api-go/option"
+	"github.com/stainless-sdks/riza-api-go"
+	"github.com/stainless-sdks/riza-api-go/internal"
+	"github.com/stainless-sdks/riza-api-go/option"
 )
 
 type closureTransport struct {
@@ -24,7 +24,7 @@ func (t *closureTransport) RoundTrip(req *http.Request) (*http.Response, error) 
 
 func TestUserAgentHeader(t *testing.T) {
 	var userAgent string
-	client := temprizaapi.NewClient(
+	client := riza.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -36,7 +36,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.V1.Execute(context.Background(), temprizaapi.V1ExecuteParams{})
+	client.V1.Execute(context.Background(), riza.V1ExecuteParams{})
 	if userAgent != fmt.Sprintf("Riza/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
@@ -44,7 +44,7 @@ func TestUserAgentHeader(t *testing.T) {
 
 func TestRetryAfter(t *testing.T) {
 	attempts := 0
-	client := temprizaapi.NewClient(
+	client := riza.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -59,7 +59,7 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.V1.Execute(context.Background(), temprizaapi.V1ExecuteParams{})
+	res, err := client.V1.Execute(context.Background(), riza.V1ExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -70,7 +70,7 @@ func TestRetryAfter(t *testing.T) {
 
 func TestRetryAfterMs(t *testing.T) {
 	attempts := 0
-	client := temprizaapi.NewClient(
+	client := riza.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -85,7 +85,7 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.V1.Execute(context.Background(), temprizaapi.V1ExecuteParams{})
+	res, err := client.V1.Execute(context.Background(), riza.V1ExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -95,7 +95,7 @@ func TestRetryAfterMs(t *testing.T) {
 }
 
 func TestContextCancel(t *testing.T) {
-	client := temprizaapi.NewClient(
+	client := riza.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -107,14 +107,14 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	res, err := client.V1.Execute(cancelCtx, temprizaapi.V1ExecuteParams{})
+	res, err := client.V1.Execute(cancelCtx, riza.V1ExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
 }
 
 func TestContextCancelDelay(t *testing.T) {
-	client := temprizaapi.NewClient(
+	client := riza.NewClient(
 		option.WithHTTPClient(&http.Client{
 			Transport: &closureTransport{
 				fn: func(req *http.Request) (*http.Response, error) {
@@ -126,7 +126,7 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	res, err := client.V1.Execute(cancelCtx, temprizaapi.V1ExecuteParams{})
+	res, err := client.V1.Execute(cancelCtx, riza.V1ExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("expected there to be a cancel error and for the response to be nil")
 	}
@@ -141,7 +141,7 @@ func TestContextDeadline(t *testing.T) {
 	defer cancel()
 
 	go func() {
-		client := temprizaapi.NewClient(
+		client := riza.NewClient(
 			option.WithHTTPClient(&http.Client{
 				Transport: &closureTransport{
 					fn: func(req *http.Request) (*http.Response, error) {
@@ -151,7 +151,7 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		res, err := client.V1.Execute(deadlineCtx, temprizaapi.V1ExecuteParams{})
+		res, err := client.V1.Execute(deadlineCtx, riza.V1ExecuteParams{})
 		if err == nil || res != nil {
 			t.Error("expected there to be a deadline error and for the response to be nil")
 		}

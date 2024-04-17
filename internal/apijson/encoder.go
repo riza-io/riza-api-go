@@ -12,7 +12,7 @@ import (
 
 	"github.com/tidwall/sjson"
 
-	"github.com/stainless-sdks/TEMP_riza-api-go/internal/param"
+	"github.com/stainless-sdks/riza-api-go/internal/param"
 )
 
 var encoders sync.Map // map[encoderEntry]encoderFunc

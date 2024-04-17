@@ -1,15 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package temprizaapi_test
+package riza_test
 
 import (
 	"context"
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/TEMP_riza-api-go"
-	"github.com/stainless-sdks/TEMP_riza-api-go/internal/testutil"
-	"github.com/stainless-sdks/TEMP_riza-api-go/option"
+	"github.com/stainless-sdks/riza-api-go"
+	"github.com/stainless-sdks/riza-api-go/internal/testutil"
+	"github.com/stainless-sdks/riza-api-go/option"
 )
 
 func TestUsage(t *testing.T) {
@@ -20,11 +20,11 @@ func TestUsage(t *testing.T) {
 	if !testutil.CheckTestServer(t, baseURL) {
 		return
 	}
-	client := temprizaapi.NewClient(
+	client := riza.NewClient(
 		option.WithBaseURL(baseURL),
 		option.WithAuthToken("My Auth Token"),
 	)
-	v1ExecuteResponse, err := client.V1.Execute(context.TODO(), temprizaapi.V1ExecuteParams{})
+	v1ExecuteResponse, err := client.V1.Execute(context.TODO(), riza.V1ExecuteParams{})
 	if err != nil {
 		t.Error(err)
 	}
