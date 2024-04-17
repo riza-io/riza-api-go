@@ -1,15 +1,15 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package temprizaapi
+package riza
 
 import (
 	"context"
 	"net/http"
 
-	"github.com/stainless-sdks/TEMP_riza-api-go/internal/apijson"
-	"github.com/stainless-sdks/TEMP_riza-api-go/internal/param"
-	"github.com/stainless-sdks/TEMP_riza-api-go/internal/requestconfig"
-	"github.com/stainless-sdks/TEMP_riza-api-go/option"
+	"github.com/stainless-sdks/riza-api-go/internal/apijson"
+	"github.com/stainless-sdks/riza-api-go/internal/param"
+	"github.com/stainless-sdks/riza-api-go/internal/requestconfig"
+	"github.com/stainless-sdks/riza-api-go/option"
 )
 
 // V1Service contains methods and other services that help with interacting with

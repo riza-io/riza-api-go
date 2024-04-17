@@ -1,14 +1,14 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-package temprizaapi
+package riza
 
 import (
 	"context"
 	"net/http"
 	"os"
 
-	"github.com/stainless-sdks/TEMP_riza-api-go/internal/requestconfig"
-	"github.com/stainless-sdks/TEMP_riza-api-go/option"
+	"github.com/stainless-sdks/riza-api-go/internal/requestconfig"
+	"github.com/stainless-sdks/riza-api-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
