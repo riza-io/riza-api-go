@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/riza-api-go/internal/param"
+	"github.com/riza-io/riza-api-go/internal/param"
 )
 
 type Struct struct {

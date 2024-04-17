@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/stainless-sdks/riza-api-go/internal/requestconfig"
-	"github.com/stainless-sdks/riza-api-go/option"
+	"github.com/riza-io/riza-api-go/internal/requestconfig"
+	"github.com/riza-io/riza-api-go/option"
 )
 
 // Client creates a struct with services and top level methods that help with
