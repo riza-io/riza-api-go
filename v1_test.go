@@ -8,9 +8,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/stainless-sdks/riza-api-go"
-	"github.com/stainless-sdks/riza-api-go/internal/testutil"
-	"github.com/stainless-sdks/riza-api-go/option"
+	"github.com/riza-io/riza-api-go"
+	"github.com/riza-io/riza-api-go/internal/testutil"
+	"github.com/riza-io/riza-api-go/option"
 )
 
 func TestV1ExecuteWithOptionalParams(t *testing.T) {

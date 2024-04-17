@@ -6,10 +6,10 @@ import (
 	"context"
 	"net/http"
 
-	"github.com/stainless-sdks/riza-api-go/internal/apijson"
-	"github.com/stainless-sdks/riza-api-go/internal/param"
-	"github.com/stainless-sdks/riza-api-go/internal/requestconfig"
-	"github.com/stainless-sdks/riza-api-go/option"
+	"github.com/riza-io/riza-api-go/internal/apijson"
+	"github.com/riza-io/riza-api-go/internal/param"
+	"github.com/riza-io/riza-api-go/internal/requestconfig"
+	"github.com/riza-io/riza-api-go/option"
 )
 
 // V1Service contains methods and other services that help with interacting with
