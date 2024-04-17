@@ -17,10 +17,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/stainless-sdks/riza-api-go/internal"
-	"github.com/stainless-sdks/riza-api-go/internal/apierror"
-	"github.com/stainless-sdks/riza-api-go/internal/apiform"
-	"github.com/stainless-sdks/riza-api-go/internal/apiquery"
+	"github.com/riza-io/riza-api-go/internal"
+	"github.com/riza-io/riza-api-go/internal/apierror"
+	"github.com/riza-io/riza-api-go/internal/apiform"
+	"github.com/riza-io/riza-api-go/internal/apiquery"
 )
 
 func getDefaultHeaders() map[string]string {

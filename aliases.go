@@ -3,7 +3,7 @@
 package riza
 
 import (
-	"github.com/stainless-sdks/riza-api-go/internal/apierror"
+	"github.com/riza-io/riza-api-go/internal/apierror"
 )
 
 type Error = apierror.Error
