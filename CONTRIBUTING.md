@@ -34,7 +34,7 @@ To use a local version of this library from source in another project, edit the 
 directive. This can be done through the CLI with the following:
 
 ```bash
-go mod edit -replace github.com/stainless-sdks/riza-api-go=/path/to/riza-api-go
+go mod edit -replace github.com/riza-io/riza-api-go=/path/to/riza-api-go
 ```
 
 ## Running tests

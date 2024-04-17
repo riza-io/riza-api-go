@@ -9,9 +9,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stainless-sdks/riza-api-go"
-	"github.com/stainless-sdks/riza-api-go/internal"
-	"github.com/stainless-sdks/riza-api-go/option"
+	"github.com/riza-io/riza-api-go"
+	"github.com/riza-io/riza-api-go/internal"
+	"github.com/riza-io/riza-api-go/option"
 )
 
 type closureTransport struct {

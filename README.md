@@ -1,6 +1,6 @@
 # Riza Go API Library
 
-<a href="https://pkg.go.dev/github.com/stainless-sdks/riza-api-go"><img src="https://pkg.go.dev/badge/github.com/stainless-sdks/riza-api-go.svg" alt="Go Reference"></a>
+<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go"><img src="https://pkg.go.dev/badge/github.com/riza-io/riza-api-go.svg" alt="Go Reference"></a>
 
 The Riza Go library provides convenient access to [the Riza REST
 API](https://docs.riza.io) from applications written in Go. The full API of this library can be found in [api.md](api.md).
@@ -9,17 +9,25 @@ It is generated with [Stainless](https://www.stainlessapi.com/).
 
 ## Installation
 
+<!-- x-release-please-start-version -->
+
 ```go
 import (
-	"github.com/stainless-sdks/riza-api-go" // imported as riza
+	"github.com/riza-io/riza-api-go" // imported as riza
 )
 ```
 
+<!-- x-release-please-end -->
+
 Or to pin the version:
 
+<!-- x-release-please-start-version -->
+
 ```sh
-go get -u 'github.com/stainless-sdks/riza-api-go@v0.0.1-alpha.0'
+go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.1'
 ```
+
+<!-- x-release-please-end -->
 
 ## Requirements
 
@@ -36,8 +44,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/stainless-sdks/riza-api-go"
-	"github.com/stainless-sdks/riza-api-go/option"
+	"github.com/riza-io/riza-api-go"
+	"github.com/riza-io/riza-api-go/option"
 )
 
 func main() {
@@ -145,7 +153,7 @@ client.V1.Execute(context.TODO(), ...,
 )
 ```
 
-See the [full list of request options](https://pkg.go.dev/github.com/stainless-sdks/riza-api-go/option).
+See the [full list of request options](https://pkg.go.dev/github.com/riza-io/riza-api-go/option).
 
 ### Pagination
 
@@ -329,4 +337,4 @@ This package generally follows [SemVer](https://semver.org/spec/v2.0.0.html) con
 
 We take backwards-compatibility seriously and work hard to ensure you can rely on a smooth upgrade experience.
 
-We are keen for your feedback; please open an [issue](https://www.github.com/stainless-sdks/riza-api-go/issues) with questions, bugs, or suggestions.
+We are keen for your feedback; please open an [issue](https://www.github.com/riza-io/riza-api-go/issues) with questions, bugs, or suggestions.
