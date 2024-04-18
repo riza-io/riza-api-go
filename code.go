@@ -37,7 +37,7 @@ func (r *CodeService) Execute(ctx context.Context, body CodeExecuteParams, opts 
 }
 
 type CodeExecuteResponse struct {
-	ExitCode string                  `json:"exitCode"`
+	ExitCode int64                   `json:"exit_code"`
 	Stderr   string                  `json:"stderr"`
 	Stdout   string                  `json:"stdout"`
 	JSON     codeExecuteResponseJSON `json:"-"`

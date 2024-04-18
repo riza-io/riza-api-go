@@ -22,7 +22,7 @@ func TestUsage(t *testing.T) {
 	}
 	client := riza.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAuthToken("My Auth Token"),
+		option.WithAPIKey("My API Key"),
 	)
 	codeExecuteResponse, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{})
 	if err != nil {
