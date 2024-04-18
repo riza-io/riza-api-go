@@ -52,11 +52,11 @@ func main() {
 	client := riza.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RIZA_API_KEY")
 	)
-	codeExecuteResponse, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{})
+	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", codeExecuteResponse.ExitCode)
+	fmt.Printf("%+v\n", sandboxExecuteResponse.ExitCode)
 }
 
 ```
@@ -145,7 +145,7 @@ client := riza.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Code.Execute(context.TODO(), ...,
+client.Sandbox.Execute(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -174,7 +174,7 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{})
+_, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{})
 if err != nil {
 	var apierr *riza.Error
 	if errors.As(err, &apierr) {
@@ -199,9 +199,9 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Code.Execute(
+client.Sandbox.Execute(
 	ctx,
-	riza.CodeExecuteParams{},
+	riza.SandboxExecuteParams{},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -235,9 +235,9 @@ client := riza.NewClient(
 )
 
 // Override per-request:
-client.Code.Execute(
+client.Sandbox.Execute(
 	context.TODO(),
-	riza.CodeExecuteParams{},
+	riza.SandboxExecuteParams{},
 	option.WithMaxRetries(5),
 )
 ```
