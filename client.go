@@ -15,8 +15,8 @@ import (
 // interacting with the riza API. You should not instantiate this client directly,
 // and instead use the [NewClient] method instead.
 type Client struct {
-	Options []option.RequestOption
-	V1      *V1Service
+	Options  []option.RequestOption
+	TopLevel *TopLevelService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -32,7 +32,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r = &Client{Options: opts}
 
-	r.V1 = NewV1Service(opts...)
+	r.TopLevel = NewTopLevelService(opts...)
 
 	return
 }
