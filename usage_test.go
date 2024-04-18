@@ -24,9 +24,9 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAuthToken("My Auth Token"),
 	)
-	topLevelExecuteResponse, err := client.TopLevel.Execute(context.TODO(), riza.TopLevelExecuteParams{})
+	codeExecuteResponse, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", topLevelExecuteResponse.ExitCode)
+	t.Logf("%+v\n", codeExecuteResponse.ExitCode)
 }
