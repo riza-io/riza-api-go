@@ -36,7 +36,7 @@ func TestUserAgentHeader(t *testing.T) {
 			},
 		}),
 	)
-	client.TopLevel.Execute(context.Background(), riza.TopLevelExecuteParams{})
+	client.Code.Execute(context.Background(), riza.CodeExecuteParams{})
 	if userAgent != fmt.Sprintf("Riza/Go %s", internal.PackageVersion) {
 		t.Errorf("Expected User-Agent to be correct, but got: %#v", userAgent)
 	}
@@ -59,7 +59,7 @@ func TestRetryAfter(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.TopLevel.Execute(context.Background(), riza.TopLevelExecuteParams{})
+	res, err := client.Code.Execute(context.Background(), riza.CodeExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -85,7 +85,7 @@ func TestRetryAfterMs(t *testing.T) {
 			},
 		}),
 	)
-	res, err := client.TopLevel.Execute(context.Background(), riza.TopLevelExecuteParams{})
+	res, err := client.Code.Execute(context.Background(), riza.CodeExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -107,7 +107,7 @@ func TestContextCancel(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithCancel(context.Background())
 	cancel()
-	res, err := client.TopLevel.Execute(cancelCtx, riza.TopLevelExecuteParams{})
+	res, err := client.Code.Execute(cancelCtx, riza.CodeExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("Expected there to be a cancel error and for the response to be nil")
 	}
@@ -126,7 +126,7 @@ func TestContextCancelDelay(t *testing.T) {
 	)
 	cancelCtx, cancel := context.WithTimeout(context.Background(), 2*time.Millisecond)
 	defer cancel()
-	res, err := client.TopLevel.Execute(cancelCtx, riza.TopLevelExecuteParams{})
+	res, err := client.Code.Execute(cancelCtx, riza.CodeExecuteParams{})
 	if err == nil || res != nil {
 		t.Error("expected there to be a cancel error and for the response to be nil")
 	}
@@ -151,7 +151,7 @@ func TestContextDeadline(t *testing.T) {
 				},
 			}),
 		)
-		res, err := client.TopLevel.Execute(deadlineCtx, riza.TopLevelExecuteParams{})
+		res, err := client.Code.Execute(deadlineCtx, riza.CodeExecuteParams{})
 		if err == nil || res != nil {
 			t.Error("expected there to be a deadline error and for the response to be nil")
 		}
