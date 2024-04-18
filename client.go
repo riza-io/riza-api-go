@@ -20,13 +20,13 @@ type Client struct {
 }
 
 // NewClient generates a new client with the default option read from the
-// environment (RIZA_AUTH_TOKEN). The option passed in as arguments are applied
-// after these default arguments, and all option will be passed down to the
-// services and requests that this client makes.
+// environment (RIZA_API_KEY). The option passed in as arguments are applied after
+// these default arguments, and all option will be passed down to the services and
+// requests that this client makes.
 func NewClient(opts ...option.RequestOption) (r *Client) {
 	defaults := []option.RequestOption{option.WithEnvironmentProduction()}
-	if o, ok := os.LookupEnv("RIZA_AUTH_TOKEN"); ok {
-		defaults = append(defaults, option.WithAuthToken(o))
+	if o, ok := os.LookupEnv("RIZA_API_KEY"); ok {
+		defaults = append(defaults, option.WithAPIKey(o))
 	}
 	opts = append(defaults, opts...)
 

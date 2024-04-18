@@ -50,7 +50,7 @@ import (
 
 func main() {
 	client := riza.NewClient(
-		option.WithAuthToken("My Auth Token"), // defaults to os.LookupEnv("RIZA_AUTH_TOKEN")
+		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RIZA_API_KEY")
 	)
 	codeExecuteResponse, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{})
 	if err != nil {
