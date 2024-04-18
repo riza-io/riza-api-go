@@ -22,11 +22,11 @@ func TestUsage(t *testing.T) {
 	}
 	client := riza.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAuthToken("My Auth Token"),
+		option.WithAPIKey("My API Key"),
 	)
-	v1ExecuteResponse, err := client.V1.Execute(context.TODO(), riza.V1ExecuteParams{})
+	codeExecuteResponse, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", v1ExecuteResponse.ExitCode)
+	t.Logf("%+v\n", codeExecuteResponse.ExitCode)
 }

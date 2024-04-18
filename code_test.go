@@ -13,7 +13,7 @@ import (
 	"github.com/riza-io/riza-api-go/option"
 )
 
-func TestV1ExecuteWithOptionalParams(t *testing.T) {
+func TestCodeExecuteWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -23,15 +23,15 @@ func TestV1ExecuteWithOptionalParams(t *testing.T) {
 	}
 	client := riza.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAuthToken("My Auth Token"),
+		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.V1.Execute(context.TODO(), riza.V1ExecuteParams{
+	_, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{
 		Args: riza.F([]string{"string", "string", "string"}),
 		Code: riza.F("string"),
 		Env: riza.F(map[string]string{
 			"foo": "string",
 		}),
-		Language: riza.F(riza.V1ExecuteParamsLanguageUnspecified),
+		Language: riza.F(riza.CodeExecuteParamsLanguageUnspecified),
 		Stdin:    riza.F("string"),
 	})
 	if err != nil {
