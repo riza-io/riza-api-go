@@ -23,7 +23,7 @@ func TestCodeExecuteWithOptionalParams(t *testing.T) {
 	}
 	client := riza.NewClient(
 		option.WithBaseURL(baseURL),
-		option.WithAuthToken("My Auth Token"),
+		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{
 		Args: riza.F([]string{"string", "string", "string"}),
