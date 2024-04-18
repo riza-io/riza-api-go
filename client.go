@@ -16,7 +16,7 @@ import (
 // and instead use the [NewClient] method instead.
 type Client struct {
 	Options []option.RequestOption
-	Code    *CodeService
+	Sandbox *SandboxService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -32,7 +32,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 
 	r = &Client{Options: opts}
 
-	r.Code = NewCodeService(opts...)
+	r.Sandbox = NewSandboxService(opts...)
 
 	return
 }
