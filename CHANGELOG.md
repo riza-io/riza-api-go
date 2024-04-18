@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.0-alpha.3 (2024-04-18)
+
+Full Changelog: [v0.1.0-alpha.2...v0.1.0-alpha.3](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.2...v0.1.0-alpha.3)
+
+### Features
+
+* **api:** update via SDK Studio ([#7](https://github.com/riza-io/riza-api-go/issues/7)) ([abb3637](https://github.com/riza-io/riza-api-go/commit/abb3637374d13cab4eb29fe21d748ef9f8b4a641))
+
 ## 0.1.0-alpha.2 (2024-04-18)
 
 Full Changelog: [v0.1.0-alpha.1...v0.1.0-alpha.2](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.1...v0.1.0-alpha.2)
