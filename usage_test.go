@@ -24,9 +24,9 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	codeExecuteResponse, err := client.Code.Execute(context.TODO(), riza.CodeExecuteParams{})
+	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", codeExecuteResponse.ExitCode)
+	t.Logf("%+v\n", sandboxExecuteResponse.ExitCode)
 }
