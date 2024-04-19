@@ -29,6 +29,9 @@ func NewSandboxService(opts ...option.RequestOption) (r *SandboxService) {
 	return
 }
 
+// Run a script in a secure, isolated sandbox. Scripts can read from stdin and
+// write to stdout or stderr. They can access environment variables and command
+// line arguments.
 func (r *SandboxService) Execute(ctx context.Context, body SandboxExecuteParams, opts ...option.RequestOption) (res *SandboxExecuteResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/execute"
@@ -37,10 +40,14 @@ func (r *SandboxService) Execute(ctx context.Context, body SandboxExecuteParams,
 }
 
 type SandboxExecuteResponse struct {
-	ExitCode int64                      `json:"exit_code"`
-	Stderr   string                     `json:"stderr"`
-	Stdout   string                     `json:"stdout"`
-	JSON     sandboxExecuteResponseJSON `json:"-"`
+	// The exit code returned by the script. Will be `0` on success and non-zero on
+	// failure.
+	ExitCode int64 `json:"exit_code"`
+	// The contents of `stderr` after executing the script.
+	Stderr string `json:"stderr"`
+	// The contents of `stdout` after executing the script.
+	Stdout string                     `json:"stdout"`
+	JSON   sandboxExecuteResponseJSON `json:"-"`
 }
 
 // sandboxExecuteResponseJSON contains the JSON metadata for the struct
@@ -62,31 +69,36 @@ func (r sandboxExecuteResponseJSON) RawJSON() string {
 }
 
 type SandboxExecuteParams struct {
-	Args     param.Field[[]string]                     `json:"args"`
-	Code     param.Field[string]                       `json:"code"`
-	Env      param.Field[map[string]string]            `json:"env"`
-	Language param.Field[SandboxExecuteParamsLanguage] `json:"language"`
-	Stdin    param.Field[string]                       `json:"stdin"`
+	// The code to execute in the sandbox.
+	Code param.Field[string] `json:"code,required"`
+	// The interpreter to use when executing code.
+	Language param.Field[SandboxExecuteParamsLanguage] `json:"language,required"`
+	// List of command line arguments to pass to the script.
+	Args param.Field[[]string] `json:"args"`
+	// Set of key-value pairs to add to the script's execution environment.
+	Env param.Field[map[string]string] `json:"env"`
+	// Input to pass to the script via `stdin`.
+	Stdin param.Field[string] `json:"stdin"`
 }
 
 func (r SandboxExecuteParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The interpreter to use when executing code.
 type SandboxExecuteParamsLanguage string
 
 const (
-	SandboxExecuteParamsLanguageUnspecified SandboxExecuteParamsLanguage = "UNSPECIFIED"
-	SandboxExecuteParamsLanguagePython      SandboxExecuteParamsLanguage = "PYTHON"
-	SandboxExecuteParamsLanguageJavascript  SandboxExecuteParamsLanguage = "JAVASCRIPT"
-	SandboxExecuteParamsLanguageTypescript  SandboxExecuteParamsLanguage = "TYPESCRIPT"
-	SandboxExecuteParamsLanguageRuby        SandboxExecuteParamsLanguage = "RUBY"
-	SandboxExecuteParamsLanguagePhp         SandboxExecuteParamsLanguage = "PHP"
+	SandboxExecuteParamsLanguagePython     SandboxExecuteParamsLanguage = "PYTHON"
+	SandboxExecuteParamsLanguageJavascript SandboxExecuteParamsLanguage = "JAVASCRIPT"
+	SandboxExecuteParamsLanguageTypescript SandboxExecuteParamsLanguage = "TYPESCRIPT"
+	SandboxExecuteParamsLanguageRuby       SandboxExecuteParamsLanguage = "RUBY"
+	SandboxExecuteParamsLanguagePhp        SandboxExecuteParamsLanguage = "PHP"
 )
 
 func (r SandboxExecuteParamsLanguage) IsKnown() bool {
 	switch r {
-	case SandboxExecuteParamsLanguageUnspecified, SandboxExecuteParamsLanguagePython, SandboxExecuteParamsLanguageJavascript, SandboxExecuteParamsLanguageTypescript, SandboxExecuteParamsLanguageRuby, SandboxExecuteParamsLanguagePhp:
+	case SandboxExecuteParamsLanguagePython, SandboxExecuteParamsLanguageJavascript, SandboxExecuteParamsLanguageTypescript, SandboxExecuteParamsLanguageRuby, SandboxExecuteParamsLanguagePhp:
 		return true
 	}
 	return false
