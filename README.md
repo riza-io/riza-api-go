@@ -52,7 +52,10 @@ func main() {
 	client := riza.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RIZA_API_KEY")
 	)
-	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{})
+	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
+		Code:     riza.F("print(\"Hello world!\")"),
+		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+	})
 	if err != nil {
 		panic(err.Error())
 	}
@@ -174,7 +177,10 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{})
+_, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
+	Code:     riza.F("print(\"Hello world!\")"),
+	Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+})
 if err != nil {
 	var apierr *riza.Error
 	if errors.As(err, &apierr) {
@@ -201,7 +207,10 @@ ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
 client.Sandbox.Execute(
 	ctx,
-	riza.SandboxExecuteParams{},
+	riza.SandboxExecuteParams{
+		Code:     riza.F("print(\"Hello world!\")"),
+		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
 )
@@ -237,7 +246,10 @@ client := riza.NewClient(
 // Override per-request:
 client.Sandbox.Execute(
 	context.TODO(),
-	riza.SandboxExecuteParams{},
+	riza.SandboxExecuteParams{
+		Code:     riza.F("print(\"Hello world!\")"),
+		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+	},
 	option.WithMaxRetries(5),
 )
 ```

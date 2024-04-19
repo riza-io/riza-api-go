@@ -24,7 +24,10 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{})
+	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
+		Code:     riza.F("print(\"Hello world!\")"),
+		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+	})
 	if err != nil {
 		t.Error(err)
 	}

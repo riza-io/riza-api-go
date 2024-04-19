@@ -26,13 +26,13 @@ func TestSandboxExecuteWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
-		Args: riza.F([]string{"string", "string", "string"}),
-		Code: riza.F("string"),
+		Code:     riza.F("print(\"Hello world!\")"),
+		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+		Args:     riza.F([]string{"string", "string", "string"}),
 		Env: riza.F(map[string]string{
 			"foo": "string",
 		}),
-		Language: riza.F(riza.SandboxExecuteParamsLanguageUnspecified),
-		Stdin:    riza.F("string"),
+		Stdin: riza.F("string"),
 	})
 	if err != nil {
 		var apierr *riza.Error
