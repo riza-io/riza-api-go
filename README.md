@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.4'
+go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.5'
 ```
 
 <!-- x-release-please-end -->
@@ -52,14 +52,14 @@ func main() {
 	client := riza.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RIZA_API_KEY")
 	)
-	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
+	commandExecResponse, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", sandboxExecuteResponse.ExitCode)
+	fmt.Printf("%+v\n", commandExecResponse.ExitCode)
 }
 
 ```
@@ -148,7 +148,7 @@ client := riza.NewClient(
 	option.WithHeader("X-Some-Header", "custom_header_info"),
 )
 
-client.Sandbox.Execute(context.TODO(), ...,
+client.Command.Exec(context.TODO(), ...,
 	// Override the header
 	option.WithHeader("X-Some-Header", "some_other_custom_header_info"),
 	// Add an undocumented field to the request body, using sjson syntax
@@ -177,9 +177,9 @@ When the API returns a non-success status code, we return an error with type
 To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
-_, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
+_, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 	Code:     riza.F("print(\"Hello world!\")"),
-	Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+	Language: riza.F(riza.CommandExecParamsLanguagePython),
 })
 if err != nil {
 	var apierr *riza.Error
@@ -205,11 +205,11 @@ To set a per-retry timeout, use `option.WithRequestTimeout()`.
 // This sets the timeout for the request, including all the retries.
 ctx, cancel := context.WithTimeout(context.Background(), 5*time.Minute)
 defer cancel()
-client.Sandbox.Execute(
+client.Command.Exec(
 	ctx,
-	riza.SandboxExecuteParams{
+	riza.CommandExecParams{
 		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -244,11 +244,11 @@ client := riza.NewClient(
 )
 
 // Override per-request:
-client.Sandbox.Execute(
+client.Command.Exec(
 	context.TODO(),
-	riza.SandboxExecuteParams{
+	riza.CommandExecParams{
 		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	},
 	option.WithMaxRetries(5),
 )
