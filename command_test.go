@@ -13,7 +13,7 @@ import (
 	"github.com/riza-io/riza-api-go/option"
 )
 
-func TestSandboxExecuteWithOptionalParams(t *testing.T) {
+func TestCommandExecWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -25,9 +25,9 @@ func TestSandboxExecuteWithOptionalParams(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
+	_, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 		Args:     riza.F([]string{"string", "string", "string"}),
 		Env: riza.F(map[string]string{
 			"foo": "string",

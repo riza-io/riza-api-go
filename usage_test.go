@@ -24,12 +24,12 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	sandboxExecuteResponse, err := client.Sandbox.Execute(context.TODO(), riza.SandboxExecuteParams{
+	commandExecResponse, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.SandboxExecuteParamsLanguagePython),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", sandboxExecuteResponse.ExitCode)
+	t.Logf("%+v\n", commandExecResponse.ExitCode)
 }
