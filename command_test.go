@@ -32,6 +32,7 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 		Env: riza.F(map[string]string{
 			"foo": "string",
 		}),
+		Net:   riza.F([]string{"string", "string", "string"}),
 		Stdin: riza.F("string"),
 	})
 	if err != nil {

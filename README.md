@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/riza-io/riza-api-go@v0.0.1-alpha.0'
+go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.5'
 ```
 
 <!-- x-release-please-end -->
