@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.0-alpha.6 (2024-05-22)
+
+Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#13](https://github.com/riza-io/riza-api-go/issues/13)) ([ee07454](https://github.com/riza-io/riza-api-go/commit/ee07454b71782f7a5a05528ed2d453721edc2d71))
+* **api:** OpenAPI spec update via Stainless API ([#15](https://github.com/riza-io/riza-api-go/issues/15)) ([b018f31](https://github.com/riza-io/riza-api-go/commit/b018f31bf878771e88bab46893854c994a6d969e))
+
 ## 0.1.0-alpha.5 (2024-04-23)
 
 Full Changelog: [v0.1.0-alpha.4...v0.1.0-alpha.5](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.4...v0.1.0-alpha.5)

@@ -26,9 +26,10 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
-		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.CommandExecParamsLanguagePython),
-		Args:     riza.F([]string{"string", "string", "string"}),
+		Code:           riza.F("print(\"Hello world!\")"),
+		Language:       riza.F(riza.CommandExecParamsLanguagePython),
+		AllowHTTPHosts: riza.F([]string{"string", "string", "string"}),
+		Args:           riza.F([]string{"string", "string", "string"}),
 		Env: riza.F(map[string]string{
 			"foo": "string",
 		}),

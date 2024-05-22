@@ -13,9 +13,11 @@ import (
 )
 
 // CommandService contains methods and other services that help with interacting
-// with the riza API. Note, unlike clients, this service does not read variables
-// from the environment automatically. You should not instantiate this service
-// directly, and instead use the [NewCommandService] method instead.
+// with the riza API.
+//
+// Note, unlike clients, this service does not read variables from the environment
+// automatically. You should not instantiate this service directly, and instead use
+// the [NewCommandService] method instead.
 type CommandService struct {
 	Options []option.RequestOption
 }
@@ -73,6 +75,8 @@ type CommandExecParams struct {
 	Code param.Field[string] `json:"code,required"`
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecParamsLanguage] `json:"language,required"`
+	// List of allowed hosts for HTTP requests
+	AllowHTTPHosts param.Field[[]string] `json:"allow_http_hosts"`
 	// List of command line arguments to pass to the script.
 	Args param.Field[[]string] `json:"args"`
 	// Set of key-value pairs to add to the script's execution environment.
