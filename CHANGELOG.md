@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.1.0-alpha.7 (2024-07-23)
+
+Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#17](https://github.com/riza-io/riza-api-go/issues/17)) ([eb86e3d](https://github.com/riza-io/riza-api-go/commit/eb86e3db6249bf72e1fe313c8fcc02d85b264f1a))
+
+
+### Chores
+
+* **ci:** limit release doctor target branches ([#20](https://github.com/riza-io/riza-api-go/issues/20)) ([674c19b](https://github.com/riza-io/riza-api-go/commit/674c19b631604a469fa9829badfed40313dbc9e7))
+* **ci:** remove unused release doctor ([#21](https://github.com/riza-io/riza-api-go/issues/21)) ([6eadd74](https://github.com/riza-io/riza-api-go/commit/6eadd7428bfeb64239bb57cdea3d0a9fb240b5a2))
+* **internal:** codegen related update ([#18](https://github.com/riza-io/riza-api-go/issues/18)) ([b7e3a7d](https://github.com/riza-io/riza-api-go/commit/b7e3a7d073e3ce95c68ca5cf2c2556ba7fd9ae55))
+* **tests:** update prism version ([#22](https://github.com/riza-io/riza-api-go/issues/22)) ([ab187b8](https://github.com/riza-io/riza-api-go/commit/ab187b8b4cf37d0fdc24e6e58366785c9f40659e))
+
 ## 0.1.0-alpha.6 (2024-05-22)
 
 Full Changelog: [v0.1.0-alpha.5...v0.1.0-alpha.6](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.5...v0.1.0-alpha.6)
