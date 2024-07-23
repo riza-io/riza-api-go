@@ -27,13 +27,14 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code:           riza.F("print(\"Hello world!\")"),
-		Language:       riza.F(riza.CommandExecParamsLanguagePython),
 		AllowHTTPHosts: riza.F([]string{"string", "string", "string"}),
 		Args:           riza.F([]string{"string", "string", "string"}),
 		Env: riza.F(map[string]string{
 			"foo": "string",
 		}),
-		Stdin: riza.F("string"),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
+		Runtime:  riza.F("runtime"),
+		Stdin:    riza.F("stdin"),
 	})
 	if err != nil {
 		var apierr *riza.Error

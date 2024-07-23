@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.6'
+go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.7'
 ```
 
 <!-- x-release-please-end -->
@@ -53,8 +53,7 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RIZA_API_KEY")
 	)
 	commandExecResponse, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
-		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.CommandExecParamsLanguagePython),
+		Code: riza.F("print(\"Hello world!\")"),
 	})
 	if err != nil {
 		panic(err.Error())
@@ -178,8 +177,7 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
-	Code:     riza.F("print(\"Hello world!\")"),
-	Language: riza.F(riza.CommandExecParamsLanguagePython),
+	Code: riza.F("print(\"Hello world!\")"),
 })
 if err != nil {
 	var apierr *riza.Error
@@ -208,8 +206,7 @@ defer cancel()
 client.Command.Exec(
 	ctx,
 	riza.CommandExecParams{
-		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.CommandExecParamsLanguagePython),
+		Code: riza.F("print(\"Hello world!\")"),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -247,8 +244,7 @@ client := riza.NewClient(
 client.Command.Exec(
 	context.TODO(),
 	riza.CommandExecParams{
-		Code:     riza.F("print(\"Hello world!\")"),
-		Language: riza.F(riza.CommandExecParamsLanguagePython),
+		Code: riza.F("print(\"Hello world!\")"),
 	},
 	option.WithMaxRetries(5),
 )
