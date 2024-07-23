@@ -33,8 +33,8 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 			"foo": "string",
 		}),
 		Language: riza.F(riza.CommandExecParamsLanguagePython),
-		Runtime:  riza.F("string"),
-		Stdin:    riza.F("string"),
+		Runtime:  riza.F("runtime"),
+		Stdin:    riza.F("stdin"),
 	})
 	if err != nil {
 		var apierr *riza.Error
