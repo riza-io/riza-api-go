@@ -31,9 +31,9 @@ func NewCommandService(opts ...option.RequestOption) (r *CommandService) {
 	return
 }
 
-// Run a script in a secure, isolated sandbox. Scripts can read from stdin and
-// write to stdout or stderr. They can access environment variables and command
-// line arguments.
+// Run a script in a secure, isolated environment. Scripts can read from `stdin`
+// and write to `stdout` or `stderr`. They can access input files, environment
+// variables and command line arguments.
 func (r *CommandService) Exec(ctx context.Context, body CommandExecParams, opts ...option.RequestOption) (res *CommandExecResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/execute"
@@ -42,8 +42,8 @@ func (r *CommandService) Exec(ctx context.Context, body CommandExecParams, opts 
 }
 
 type CommandExecResponse struct {
-	// The exit code returned by the script. Will be `0` on success and non-zero on
-	// failure.
+	// The exit code returned by the script. Will often be `0` on success and non-zero
+	// on failure.
 	ExitCode int64 `json:"exit_code"`
 	// The contents of `stderr` after executing the script.
 	Stderr string `json:"stderr"`
@@ -71,23 +71,81 @@ func (r commandExecResponseJSON) RawJSON() string {
 }
 
 type CommandExecParams struct {
-	// The code to execute in the sandbox.
+	// The code to execute.
 	Code param.Field[string] `json:"code,required"`
-	// List of allowed hosts for HTTP requests
+	// List of allowed hosts for HTTP requests.
 	AllowHTTPHosts param.Field[[]string] `json:"allow_http_hosts"`
 	// List of command line arguments to pass to the script.
 	Args param.Field[[]string] `json:"args"`
 	// Set of key-value pairs to add to the script's execution environment.
 	Env param.Field[map[string]string] `json:"env"`
+	// List of input files.
+	Files param.Field[[]CommandExecParamsFile] `json:"files"`
+	// Configuration for HTTP requests and authentication.
+	HTTP param.Field[CommandExecParamsHTTP] `json:"http"`
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecParamsLanguage] `json:"language"`
+	// Configuration for execution environment limits.
+	Limits param.Field[CommandExecParamsLimits] `json:"limits"`
 	// The runtime to use when executing code.
 	Runtime param.Field[string] `json:"runtime"`
-	// Input to pass to the script via `stdin`.
+	// Input made available to the script via `stdin`.
 	Stdin param.Field[string] `json:"stdin"`
 }
 
 func (r CommandExecParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecParamsFile struct {
+	// The contents of the file.
+	Content param.Field[string] `json:"content"`
+	// The relative path of the file.
+	Path param.Field[string] `json:"path"`
+}
+
+func (r CommandExecParamsFile) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Configuration for HTTP requests and authentication.
+type CommandExecParamsHTTP struct {
+	// List of allowed HTTP hosts and associated authentication.
+	Allow param.Field[[]CommandExecParamsHTTPAllow] `json:"allow"`
+}
+
+func (r CommandExecParamsHTTP) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecParamsHTTPAllow struct {
+	// Authentication configuration for outbound requests to this host.
+	Auth param.Field[CommandExecParamsHTTPAllowAuth] `json:"auth"`
+	// The hostname to allow.
+	Host param.Field[string] `json:"host"`
+}
+
+func (r CommandExecParamsHTTPAllow) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Authentication configuration for outbound requests to this host.
+type CommandExecParamsHTTPAllowAuth struct {
+	// Configuration to add an `Authorization` header using the `Bearer` scheme.
+	Bearer param.Field[CommandExecParamsHTTPAllowAuthBearer] `json:"bearer"`
+}
+
+func (r CommandExecParamsHTTPAllowAuth) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Configuration to add an `Authorization` header using the `Bearer` scheme.
+type CommandExecParamsHTTPAllowAuthBearer struct {
+	// The token to set, e.g. `Authorization: Bearer <token>`.
+	Token param.Field[string] `json:"token"`
+}
+
+func (r CommandExecParamsHTTPAllowAuthBearer) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
@@ -108,4 +166,16 @@ func (r CommandExecParamsLanguage) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+// Configuration for execution environment limits.
+type CommandExecParamsLimits struct {
+	// The maximum time allowed for execution (in seconds). Default is 30.
+	ExecutionTimeout param.Field[int64] `json:"execution_timeout"`
+	// The maximum memory allowed for execution (in MiB). Default is 128.
+	MemorySize param.Field[int64] `json:"memory_size"`
+}
+
+func (r CommandExecParamsLimits) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
