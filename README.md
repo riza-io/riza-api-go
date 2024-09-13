@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.7'
+go get -u 'github.com/riza-io/riza-api-go@v0.1.0-alpha.8'
 ```
 
 <!-- x-release-please-end -->
@@ -52,13 +52,13 @@ func main() {
 	client := riza.NewClient(
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RIZA_API_KEY")
 	)
-	commandExecResponse, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
+	response, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code: riza.F("print(\"Hello world!\")"),
 	})
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", commandExecResponse.ExitCode)
+	fmt.Printf("%+v\n", response.ExitCode)
 }
 
 ```

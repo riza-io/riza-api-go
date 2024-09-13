@@ -438,7 +438,7 @@ func (cfg *RequestConfig) Execute() (err error) {
 
 	err = json.NewDecoder(bytes.NewReader(contents)).Decode(cfg.ResponseBodyInto)
 	if err != nil {
-		err = fmt.Errorf("error parsing response json: %w", err)
+		return fmt.Errorf("error parsing response json: %w", err)
 	}
 
 	return nil
@@ -465,10 +465,14 @@ func (cfg *RequestConfig) Clone(ctx context.Context) *RequestConfig {
 		return nil
 	}
 	new := &RequestConfig{
-		MaxRetries: cfg.MaxRetries,
-		Context:    ctx,
-		Request:    req,
-		HTTPClient: cfg.HTTPClient,
+		MaxRetries:     cfg.MaxRetries,
+		RequestTimeout: cfg.RequestTimeout,
+		Context:        ctx,
+		Request:        req,
+		BaseURL:        cfg.BaseURL,
+		HTTPClient:     cfg.HTTPClient,
+		Middlewares:    cfg.Middlewares,
+		APIKey:         cfg.APIKey,
 	}
 
 	return new
