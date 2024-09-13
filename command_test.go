@@ -33,37 +33,37 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 			"foo": "string",
 		}),
 		Files: riza.F([]riza.CommandExecParamsFile{{
-			Path:    riza.F("path"),
 			Content: riza.F("content"),
+			Path:    riza.F("path"),
 		}, {
-			Path:    riza.F("path"),
 			Content: riza.F("content"),
+			Path:    riza.F("path"),
 		}, {
-			Path:    riza.F("path"),
 			Content: riza.F("content"),
+			Path:    riza.F("path"),
 		}}),
 		HTTP: riza.F(riza.CommandExecParamsHTTP{
 			Allow: riza.F([]riza.CommandExecParamsHTTPAllow{{
-				Host: riza.F("host"),
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
 				}),
+				Host: riza.F("host"),
 			}, {
-				Host: riza.F("host"),
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
 				}),
+				Host: riza.F("host"),
 			}, {
-				Host: riza.F("host"),
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
 				}),
+				Host: riza.F("host"),
 			}}),
 		}),
 		Language: riza.F(riza.CommandExecParamsLanguagePython),
