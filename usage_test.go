@@ -24,11 +24,11 @@ func TestUsage(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	commandExecResponse, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
+	response, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code: riza.F("print(\"Hello world!\")"),
 	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", commandExecResponse.ExitCode)
+	t.Logf("%+v\n", response.ExitCode)
 }
