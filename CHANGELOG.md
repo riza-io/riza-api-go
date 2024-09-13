@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.1.0-alpha.8 (2024-09-13)
+
+Full Changelog: [v0.1.0-alpha.7...v0.1.0-alpha.8](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.7...v0.1.0-alpha.8)
+
+### Features
+
+* **api:** OpenAPI spec update via Stainless API ([#23](https://github.com/riza-io/riza-api-go/issues/23)) ([3eeaab1](https://github.com/riza-io/riza-api-go/commit/3eeaab1625a9724ab26d132477b1941677db8017))
+
+
+### Bug Fixes
+
+* **requestconfig:** copy over more fields when cloning ([#26](https://github.com/riza-io/riza-api-go/issues/26)) ([b4f4a13](https://github.com/riza-io/riza-api-go/commit/b4f4a13898477e4f8bb9d78ba212b114917d4df8))
+
+
+### Chores
+
+* **internal:** codegen related update ([#24](https://github.com/riza-io/riza-api-go/issues/24)) ([c8f6136](https://github.com/riza-io/riza-api-go/commit/c8f6136fabff019582c1e83bcae4c6e4140d4642))
+* **internal:** codegen related update ([#27](https://github.com/riza-io/riza-api-go/issues/27)) ([c8ba87a](https://github.com/riza-io/riza-api-go/commit/c8ba87a68699b7dc49835b4f628d41247db0ee95))
+
+
+### Documentation
+
+* update CONTRIBUTING.md ([#28](https://github.com/riza-io/riza-api-go/issues/28)) ([27e70ff](https://github.com/riza-io/riza-api-go/commit/27e70ffe7f1553404478edf5be322a7588d2c7b2))
+
 ## 0.1.0-alpha.7 (2024-07-23)
 
 Full Changelog: [v0.1.0-alpha.6...v0.1.0-alpha.7](https://github.com/riza-io/riza-api-go/compare/v0.1.0-alpha.6...v0.1.0-alpha.7)
