@@ -42,12 +42,12 @@ func (r *CommandService) Exec(ctx context.Context, body CommandExecParams, opts 
 }
 
 type CommandExecResponse struct {
-	// The exit code returned by the script. Will often be `0` on success and non-zero
+	// The exit code returned by the script. Will often be '0' on success and non-zero
 	// on failure.
 	ExitCode int64 `json:"exit_code"`
-	// The contents of `stderr` after executing the script.
+	// The contents of 'stderr' after executing the script.
 	Stderr string `json:"stderr"`
-	// The contents of `stdout` after executing the script.
+	// The contents of 'stdout' after executing the script.
 	Stdout string                  `json:"stdout"`
 	JSON   commandExecResponseJSON `json:"-"`
 }
@@ -86,10 +86,11 @@ type CommandExecParams struct {
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecParamsLanguage] `json:"language"`
 	// Configuration for execution environment limits.
-	Limits param.Field[CommandExecParamsLimits] `json:"limits"`
+	Limits   param.Field[CommandExecParamsLimits] `json:"limits"`
+	Revision param.Field[string]                  `json:"revision"`
 	// The runtime to use when executing code.
 	Runtime param.Field[string] `json:"runtime"`
-	// Input made available to the script via `stdin`.
+	// Input made available to the script via 'stdin'.
 	Stdin param.Field[string] `json:"stdin"`
 }
 
@@ -99,7 +100,7 @@ func (r CommandExecParams) MarshalJSON() (data []byte, err error) {
 
 type CommandExecParamsFile struct {
 	// The contents of the file.
-	Content param.Field[string] `json:"content"`
+	Contents param.Field[string] `json:"contents"`
 	// The relative path of the file.
 	Path param.Field[string] `json:"path"`
 }
@@ -118,11 +119,11 @@ func (r CommandExecParamsHTTP) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// List of allowed HTTP hosts and associated authentication.
 type CommandExecParamsHTTPAllow struct {
 	// Authentication configuration for outbound requests to this host.
-	Auth param.Field[CommandExecParamsHTTPAllowAuth] `json:"auth"`
-	// The hostname to allow.
-	Host param.Field[string] `json:"host"`
+	Auth     param.Field[CommandExecParamsHTTPAllowAuth] `json:"auth"`
+	HostDesc param.Field[string]                         `json:"host desc:"`
 }
 
 func (r CommandExecParamsHTTPAllow) MarshalJSON() (data []byte, err error) {
@@ -131,7 +132,8 @@ func (r CommandExecParamsHTTPAllow) MarshalJSON() (data []byte, err error) {
 
 // Authentication configuration for outbound requests to this host.
 type CommandExecParamsHTTPAllowAuth struct {
-	// Configuration to add an `Authorization` header using the `Bearer` scheme.
+	Basic param.Field[CommandExecParamsHTTPAllowAuthBasic] `json:"basic"`
+	// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
 	Bearer param.Field[CommandExecParamsHTTPAllowAuthBearer] `json:"bearer"`
 }
 
@@ -139,9 +141,18 @@ func (r CommandExecParamsHTTPAllowAuth) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
-// Configuration to add an `Authorization` header using the `Bearer` scheme.
+type CommandExecParamsHTTPAllowAuthBasic struct {
+	Password param.Field[string] `json:"password"`
+	UserID   param.Field[string] `json:"user_id"`
+}
+
+func (r CommandExecParamsHTTPAllowAuthBasic) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
 type CommandExecParamsHTTPAllowAuthBearer struct {
-	// The token to set, e.g. `Authorization: Bearer <token>`.
+	// The token to set, e.g. 'Authorization: Bearer <token>'.
 	Token param.Field[string] `json:"token"`
 }
 
