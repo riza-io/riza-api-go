@@ -33,37 +33,49 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 			"foo": "string",
 		}),
 		Files: riza.F([]riza.CommandExecParamsFile{{
-			Content: riza.F("content"),
-			Path:    riza.F("path"),
+			Contents: riza.F("contents"),
+			Path:     riza.F("path"),
 		}, {
-			Content: riza.F("content"),
-			Path:    riza.F("path"),
+			Contents: riza.F("contents"),
+			Path:     riza.F("path"),
 		}, {
-			Content: riza.F("content"),
-			Path:    riza.F("path"),
+			Contents: riza.F("contents"),
+			Path:     riza.F("path"),
 		}}),
 		HTTP: riza.F(riza.CommandExecParamsHTTP{
 			Allow: riza.F([]riza.CommandExecParamsHTTPAllow{{
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
+					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
+						Password: riza.F("password"),
+						UserID:   riza.F("user_id"),
+					}),
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
 				}),
-				Host: riza.F("host"),
+				HostDesc: riza.F("host desc:"),
 			}, {
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
+					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
+						Password: riza.F("password"),
+						UserID:   riza.F("user_id"),
+					}),
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
 				}),
-				Host: riza.F("host"),
+				HostDesc: riza.F("host desc:"),
 			}, {
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
+					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
+						Password: riza.F("password"),
+						UserID:   riza.F("user_id"),
+					}),
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
 				}),
-				Host: riza.F("host"),
+				HostDesc: riza.F("host desc:"),
 			}}),
 		}),
 		Language: riza.F(riza.CommandExecParamsLanguagePython),
@@ -71,8 +83,9 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 			ExecutionTimeout: riza.F(int64(0)),
 			MemorySize:       riza.F(int64(0)),
 		}),
-		Runtime: riza.F("runtime"),
-		Stdin:   riza.F("stdin"),
+		Revision: riza.F("revision"),
+		Runtime:  riza.F("runtime"),
+		Stdin:    riza.F("stdin"),
 	})
 	if err != nil {
 		var apierr *riza.Error
