@@ -122,8 +122,9 @@ func (r CommandExecParamsHTTP) MarshalJSON() (data []byte, err error) {
 // List of allowed HTTP hosts and associated authentication.
 type CommandExecParamsHTTPAllow struct {
 	// Authentication configuration for outbound requests to this host.
-	Auth     param.Field[CommandExecParamsHTTPAllowAuth] `json:"auth"`
-	HostDesc param.Field[string]                         `json:"host desc:"`
+	Auth param.Field[CommandExecParamsHTTPAllowAuth] `json:"auth"`
+	// The hostname to allow.
+	Host param.Field[string] `json:"host"`
 }
 
 func (r CommandExecParamsHTTPAllow) MarshalJSON() (data []byte, err error) {

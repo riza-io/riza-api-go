@@ -137,7 +137,7 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 							SecretID: riza.F("secret_id"),
 						}),
 					}),
-					HostDesc: riza.F("host desc:"),
+					Host: riza.F("host"),
 				}, {
 					Auth: riza.F(riza.ToolExecParamsHTTPAllowAuth{
 						Basic: riza.F(riza.ToolExecParamsHTTPAllowAuthBasic{
@@ -150,7 +150,7 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 							SecretID: riza.F("secret_id"),
 						}),
 					}),
-					HostDesc: riza.F("host desc:"),
+					Host: riza.F("host"),
 				}, {
 					Auth: riza.F(riza.ToolExecParamsHTTPAllowAuth{
 						Basic: riza.F(riza.ToolExecParamsHTTPAllowAuthBasic{
@@ -163,7 +163,7 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 							SecretID: riza.F("secret_id"),
 						}),
 					}),
-					HostDesc: riza.F("host desc:"),
+					Host: riza.F("host"),
 				}}),
 			}),
 			Input:      riza.F[any](map[string]interface{}{}),

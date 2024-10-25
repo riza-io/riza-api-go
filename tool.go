@@ -272,8 +272,9 @@ func (r ToolExecParamsHTTP) MarshalJSON() (data []byte, err error) {
 // List of allowed HTTP hosts and associated authentication.
 type ToolExecParamsHTTPAllow struct {
 	// Authentication configuration for outbound requests to this host.
-	Auth     param.Field[ToolExecParamsHTTPAllowAuth] `json:"auth"`
-	HostDesc param.Field[string]                      `json:"host desc:"`
+	Auth param.Field[ToolExecParamsHTTPAllowAuth] `json:"auth"`
+	// The hostname to allow.
+	Host param.Field[string] `json:"host"`
 }
 
 func (r ToolExecParamsHTTPAllow) MarshalJSON() (data []byte, err error) {
