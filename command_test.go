@@ -53,7 +53,7 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 						Token: riza.F("token"),
 					}),
 				}),
-				HostDesc: riza.F("host desc:"),
+				Host: riza.F("host"),
 			}, {
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
 					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
@@ -64,7 +64,7 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 						Token: riza.F("token"),
 					}),
 				}),
-				HostDesc: riza.F("host desc:"),
+				Host: riza.F("host"),
 			}, {
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
 					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
@@ -75,7 +75,7 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 						Token: riza.F("token"),
 					}),
 				}),
-				HostDesc: riza.F("host desc:"),
+				Host: riza.F("host"),
 			}}),
 		}),
 		Language: riza.F(riza.CommandExecParamsLanguagePython),
