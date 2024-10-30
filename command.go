@@ -136,6 +136,7 @@ type CommandExecParamsHTTPAllowAuth struct {
 	Basic param.Field[CommandExecParamsHTTPAllowAuthBasic] `json:"basic"`
 	// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
 	Bearer param.Field[CommandExecParamsHTTPAllowAuthBearer] `json:"bearer"`
+	Query  param.Field[CommandExecParamsHTTPAllowAuthQuery]  `json:"query"`
 }
 
 func (r CommandExecParamsHTTPAllowAuth) MarshalJSON() (data []byte, err error) {
@@ -158,6 +159,15 @@ type CommandExecParamsHTTPAllowAuthBearer struct {
 }
 
 func (r CommandExecParamsHTTPAllowAuthBearer) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecParamsHTTPAllowAuthQuery struct {
+	Key   param.Field[string] `json:"key"`
+	Value param.Field[string] `json:"value"`
+}
+
+func (r CommandExecParamsHTTPAllowAuthQuery) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
