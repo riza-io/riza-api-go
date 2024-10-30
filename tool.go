@@ -286,6 +286,7 @@ type ToolExecParamsHTTPAllowAuth struct {
 	Basic param.Field[ToolExecParamsHTTPAllowAuthBasic] `json:"basic"`
 	// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
 	Bearer param.Field[ToolExecParamsHTTPAllowAuthBearer] `json:"bearer"`
+	Query  param.Field[ToolExecParamsHTTPAllowAuthQuery]  `json:"query"`
 }
 
 func (r ToolExecParamsHTTPAllowAuth) MarshalJSON() (data []byte, err error) {
@@ -310,5 +311,15 @@ type ToolExecParamsHTTPAllowAuthBearer struct {
 }
 
 func (r ToolExecParamsHTTPAllowAuthBearer) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type ToolExecParamsHTTPAllowAuthQuery struct {
+	Key      param.Field[string] `json:"key"`
+	SecretID param.Field[string] `json:"secret_id"`
+	Value    param.Field[string] `json:"value"`
+}
+
+func (r ToolExecParamsHTTPAllowAuthQuery) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

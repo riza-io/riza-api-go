@@ -136,18 +136,10 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 							Token:    riza.F("token"),
 							SecretID: riza.F("secret_id"),
 						}),
-					}),
-					Host: riza.F("host"),
-				}, {
-					Auth: riza.F(riza.ToolExecParamsHTTPAllowAuth{
-						Basic: riza.F(riza.ToolExecParamsHTTPAllowAuthBasic{
-							Password: riza.F("password"),
+						Query: riza.F(riza.ToolExecParamsHTTPAllowAuthQuery{
+							Key:      riza.F("key"),
 							SecretID: riza.F("secret_id"),
-							UserID:   riza.F("user_id"),
-						}),
-						Bearer: riza.F(riza.ToolExecParamsHTTPAllowAuthBearer{
-							Token:    riza.F("token"),
-							SecretID: riza.F("secret_id"),
+							Value:    riza.F("value"),
 						}),
 					}),
 					Host: riza.F("host"),
@@ -161,6 +153,29 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 						Bearer: riza.F(riza.ToolExecParamsHTTPAllowAuthBearer{
 							Token:    riza.F("token"),
 							SecretID: riza.F("secret_id"),
+						}),
+						Query: riza.F(riza.ToolExecParamsHTTPAllowAuthQuery{
+							Key:      riza.F("key"),
+							SecretID: riza.F("secret_id"),
+							Value:    riza.F("value"),
+						}),
+					}),
+					Host: riza.F("host"),
+				}, {
+					Auth: riza.F(riza.ToolExecParamsHTTPAllowAuth{
+						Basic: riza.F(riza.ToolExecParamsHTTPAllowAuthBasic{
+							Password: riza.F("password"),
+							SecretID: riza.F("secret_id"),
+							UserID:   riza.F("user_id"),
+						}),
+						Bearer: riza.F(riza.ToolExecParamsHTTPAllowAuthBearer{
+							Token:    riza.F("token"),
+							SecretID: riza.F("secret_id"),
+						}),
+						Query: riza.F(riza.ToolExecParamsHTTPAllowAuthQuery{
+							Key:      riza.F("key"),
+							SecretID: riza.F("secret_id"),
+							Value:    riza.F("value"),
 						}),
 					}),
 					Host: riza.F("host"),
