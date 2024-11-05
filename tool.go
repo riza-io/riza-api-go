@@ -111,7 +111,7 @@ func (r toolJSON) RawJSON() string {
 }
 
 type ToolListResponse struct {
-	Tools []Tool               `json:"tools"`
+	Tools []Tool               `json:"tools,required"`
 	JSON  toolListResponseJSON `json:"-"`
 }
 
