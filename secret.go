@@ -30,6 +30,7 @@ func NewSecretService(opts ...option.RequestOption) (r *SecretService) {
 	return
 }
 
+// Returns a list of secrets in your project.
 func (r *SecretService) List(ctx context.Context, opts ...option.RequestOption) (res *SecretListResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/secrets"
