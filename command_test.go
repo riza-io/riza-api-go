@@ -52,6 +52,10 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
+					Header: riza.F(riza.CommandExecParamsHTTPAllowAuthHeader{
+						Name:  riza.F("name"),
+						Value: riza.F("value"),
+					}),
 					Query: riza.F(riza.CommandExecParamsHTTPAllowAuthQuery{
 						Key:   riza.F("key"),
 						Value: riza.F("value"),
@@ -67,6 +71,10 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
 					}),
+					Header: riza.F(riza.CommandExecParamsHTTPAllowAuthHeader{
+						Name:  riza.F("name"),
+						Value: riza.F("value"),
+					}),
 					Query: riza.F(riza.CommandExecParamsHTTPAllowAuthQuery{
 						Key:   riza.F("key"),
 						Value: riza.F("value"),
@@ -81,6 +89,10 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 					}),
 					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
 						Token: riza.F("token"),
+					}),
+					Header: riza.F(riza.CommandExecParamsHTTPAllowAuthHeader{
+						Name:  riza.F("name"),
+						Value: riza.F("value"),
 					}),
 					Query: riza.F(riza.CommandExecParamsHTTPAllowAuthQuery{
 						Key:   riza.F("key"),
