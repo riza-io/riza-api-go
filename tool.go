@@ -81,13 +81,14 @@ func (r *ToolService) Get(ctx context.Context, id string, opts ...option.Request
 }
 
 type Tool struct {
-	ID          string      `json:"id,required"`
-	Code        string      `json:"code,required"`
-	Description string      `json:"description,required"`
-	InputSchema interface{} `json:"input_schema,required"`
-	Name        string      `json:"name,required"`
-	RevisionID  string      `json:"revision_id,required"`
-	JSON        toolJSON    `json:"-"`
+	ID          string       `json:"id,required"`
+	Code        string       `json:"code,required"`
+	Description string       `json:"description,required"`
+	InputSchema interface{}  `json:"input_schema,required"`
+	Language    ToolLanguage `json:"language,required"`
+	Name        string       `json:"name,required"`
+	RevisionID  string       `json:"revision_id,required"`
+	JSON        toolJSON     `json:"-"`
 }
 
 // toolJSON contains the JSON metadata for the struct [Tool]
@@ -96,6 +97,7 @@ type toolJSON struct {
 	Code        apijson.Field
 	Description apijson.Field
 	InputSchema apijson.Field
+	Language    apijson.Field
 	Name        apijson.Field
 	RevisionID  apijson.Field
 	raw         string
@@ -108,6 +110,24 @@ func (r *Tool) UnmarshalJSON(data []byte) (err error) {
 
 func (r toolJSON) RawJSON() string {
 	return r.raw
+}
+
+type ToolLanguage string
+
+const (
+	ToolLanguagePython     ToolLanguage = "PYTHON"
+	ToolLanguageJavascript ToolLanguage = "JAVASCRIPT"
+	ToolLanguageTypescript ToolLanguage = "TYPESCRIPT"
+	ToolLanguageRuby       ToolLanguage = "RUBY"
+	ToolLanguagePhp        ToolLanguage = "PHP"
+)
+
+func (r ToolLanguage) IsKnown() bool {
+	switch r {
+	case ToolLanguagePython, ToolLanguageJavascript, ToolLanguageTypescript, ToolLanguageRuby, ToolLanguagePhp:
+		return true
+	}
+	return false
 }
 
 type ToolListResponse struct {
