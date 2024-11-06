@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/riza-io/riza-api-go/internal/apijson"
+	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
 )
@@ -27,6 +28,14 @@ type SecretService struct {
 func NewSecretService(opts ...option.RequestOption) (r *SecretService) {
 	r = &SecretService{}
 	r.Options = opts
+	return
+}
+
+// Create a secret in your project.
+func (r *SecretService) New(ctx context.Context, body SecretNewParams, opts ...option.RequestOption) (res *Secret, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "v1/secrets"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
 	return
 }
 
@@ -79,4 +88,13 @@ func (r *SecretListResponse) UnmarshalJSON(data []byte) (err error) {
 
 func (r secretListResponseJSON) RawJSON() string {
 	return r.raw
+}
+
+type SecretNewParams struct {
+	Name  param.Field[string] `json:"name,required"`
+	Value param.Field[string] `json:"value,required"`
+}
+
+func (r SecretNewParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
 }
