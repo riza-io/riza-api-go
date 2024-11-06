@@ -33,6 +33,7 @@ func NewToolService(opts ...option.RequestOption) (r *ToolService) {
 	return
 }
 
+// Create a tool in your project.
 func (r *ToolService) New(ctx context.Context, body ToolNewParams, opts ...option.RequestOption) (res *Tool, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/tools"
@@ -40,6 +41,7 @@ func (r *ToolService) New(ctx context.Context, body ToolNewParams, opts ...optio
 	return
 }
 
+// Update the source code and input schema of a tool.
 func (r *ToolService) Update(ctx context.Context, id string, body ToolUpdateParams, opts ...option.RequestOption) (res *Tool, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
@@ -51,6 +53,7 @@ func (r *ToolService) Update(ctx context.Context, id string, body ToolUpdatePara
 	return
 }
 
+// Returns a list of tools in your project.
 func (r *ToolService) List(ctx context.Context, opts ...option.RequestOption) (res *ToolListResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/tools"
@@ -58,6 +61,8 @@ func (r *ToolService) List(ctx context.Context, opts ...option.RequestOption) (r
 	return
 }
 
+// Execute a tool with a given input. The input is validated against the tool's
+// input schema.
 func (r *ToolService) Exec(ctx context.Context, id string, body ToolExecParams, opts ...option.RequestOption) (res *ToolExecResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
@@ -69,6 +74,7 @@ func (r *ToolService) Exec(ctx context.Context, id string, body ToolExecParams, 
 	return
 }
 
+// Retrieves a tool.
 func (r *ToolService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *Tool, err error) {
 	opts = append(r.Options[:], opts...)
 	if id == "" {
