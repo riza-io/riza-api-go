@@ -81,13 +81,14 @@ func (r *ToolService) Get(ctx context.Context, id string, opts ...option.Request
 }
 
 type Tool struct {
-	ID          string      `json:"id,required"`
-	Code        string      `json:"code,required"`
-	Description string      `json:"description,required"`
-	InputSchema interface{} `json:"input_schema,required"`
-	Name        string      `json:"name,required"`
-	RevisionID  string      `json:"revision_id,required"`
-	JSON        toolJSON    `json:"-"`
+	ID          string       `json:"id,required"`
+	Code        string       `json:"code,required"`
+	Description string       `json:"description,required"`
+	InputSchema interface{}  `json:"input_schema,required"`
+	Language    ToolLanguage `json:"language,required"`
+	Name        string       `json:"name,required"`
+	RevisionID  string       `json:"revision_id,required"`
+	JSON        toolJSON     `json:"-"`
 }
 
 // toolJSON contains the JSON metadata for the struct [Tool]
@@ -96,6 +97,7 @@ type toolJSON struct {
 	Code        apijson.Field
 	Description apijson.Field
 	InputSchema apijson.Field
+	Language    apijson.Field
 	Name        apijson.Field
 	RevisionID  apijson.Field
 	raw         string
@@ -110,8 +112,26 @@ func (r toolJSON) RawJSON() string {
 	return r.raw
 }
 
+type ToolLanguage string
+
+const (
+	ToolLanguagePython     ToolLanguage = "PYTHON"
+	ToolLanguageJavascript ToolLanguage = "JAVASCRIPT"
+	ToolLanguageTypescript ToolLanguage = "TYPESCRIPT"
+	ToolLanguageRuby       ToolLanguage = "RUBY"
+	ToolLanguagePhp        ToolLanguage = "PHP"
+)
+
+func (r ToolLanguage) IsKnown() bool {
+	switch r {
+	case ToolLanguagePython, ToolLanguageJavascript, ToolLanguageTypescript, ToolLanguageRuby, ToolLanguagePhp:
+		return true
+	}
+	return false
+}
+
 type ToolListResponse struct {
-	Tools []Tool               `json:"tools"`
+	Tools []Tool               `json:"tools,required"`
 	JSON  toolListResponseJSON `json:"-"`
 }
 
@@ -272,8 +292,9 @@ func (r ToolExecParamsHTTP) MarshalJSON() (data []byte, err error) {
 // List of allowed HTTP hosts and associated authentication.
 type ToolExecParamsHTTPAllow struct {
 	// Authentication configuration for outbound requests to this host.
-	Auth     param.Field[ToolExecParamsHTTPAllowAuth] `json:"auth"`
-	HostDesc param.Field[string]                      `json:"host desc:"`
+	Auth param.Field[ToolExecParamsHTTPAllowAuth] `json:"auth"`
+	// The hostname to allow.
+	Host param.Field[string] `json:"host"`
 }
 
 func (r ToolExecParamsHTTPAllow) MarshalJSON() (data []byte, err error) {
@@ -285,6 +306,7 @@ type ToolExecParamsHTTPAllowAuth struct {
 	Basic param.Field[ToolExecParamsHTTPAllowAuthBasic] `json:"basic"`
 	// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
 	Bearer param.Field[ToolExecParamsHTTPAllowAuthBearer] `json:"bearer"`
+	Query  param.Field[ToolExecParamsHTTPAllowAuthQuery]  `json:"query"`
 }
 
 func (r ToolExecParamsHTTPAllowAuth) MarshalJSON() (data []byte, err error) {
@@ -309,5 +331,15 @@ type ToolExecParamsHTTPAllowAuthBearer struct {
 }
 
 func (r ToolExecParamsHTTPAllowAuthBearer) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type ToolExecParamsHTTPAllowAuthQuery struct {
+	Key      param.Field[string] `json:"key"`
+	SecretID param.Field[string] `json:"secret_id"`
+	Value    param.Field[string] `json:"value"`
+}
+
+func (r ToolExecParamsHTTPAllowAuthQuery) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }

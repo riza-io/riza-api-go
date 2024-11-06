@@ -122,8 +122,9 @@ func (r CommandExecParamsHTTP) MarshalJSON() (data []byte, err error) {
 // List of allowed HTTP hosts and associated authentication.
 type CommandExecParamsHTTPAllow struct {
 	// Authentication configuration for outbound requests to this host.
-	Auth     param.Field[CommandExecParamsHTTPAllowAuth] `json:"auth"`
-	HostDesc param.Field[string]                         `json:"host desc:"`
+	Auth param.Field[CommandExecParamsHTTPAllowAuth] `json:"auth"`
+	// The hostname to allow.
+	Host param.Field[string] `json:"host"`
 }
 
 func (r CommandExecParamsHTTPAllow) MarshalJSON() (data []byte, err error) {
@@ -135,6 +136,8 @@ type CommandExecParamsHTTPAllowAuth struct {
 	Basic param.Field[CommandExecParamsHTTPAllowAuthBasic] `json:"basic"`
 	// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
 	Bearer param.Field[CommandExecParamsHTTPAllowAuthBearer] `json:"bearer"`
+	Header param.Field[CommandExecParamsHTTPAllowAuthHeader] `json:"header"`
+	Query  param.Field[CommandExecParamsHTTPAllowAuthQuery]  `json:"query"`
 }
 
 func (r CommandExecParamsHTTPAllowAuth) MarshalJSON() (data []byte, err error) {
@@ -157,6 +160,24 @@ type CommandExecParamsHTTPAllowAuthBearer struct {
 }
 
 func (r CommandExecParamsHTTPAllowAuthBearer) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecParamsHTTPAllowAuthHeader struct {
+	Name  param.Field[string] `json:"name"`
+	Value param.Field[string] `json:"value"`
+}
+
+func (r CommandExecParamsHTTPAllowAuthHeader) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecParamsHTTPAllowAuthQuery struct {
+	Key   param.Field[string] `json:"key"`
+	Value param.Field[string] `json:"value"`
+}
+
+func (r CommandExecParamsHTTPAllowAuthQuery) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 

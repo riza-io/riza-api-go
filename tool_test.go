@@ -136,8 +136,13 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 							Token:    riza.F("token"),
 							SecretID: riza.F("secret_id"),
 						}),
+						Query: riza.F(riza.ToolExecParamsHTTPAllowAuthQuery{
+							Key:      riza.F("key"),
+							SecretID: riza.F("secret_id"),
+							Value:    riza.F("value"),
+						}),
 					}),
-					HostDesc: riza.F("host desc:"),
+					Host: riza.F("host"),
 				}, {
 					Auth: riza.F(riza.ToolExecParamsHTTPAllowAuth{
 						Basic: riza.F(riza.ToolExecParamsHTTPAllowAuthBasic{
@@ -149,8 +154,13 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 							Token:    riza.F("token"),
 							SecretID: riza.F("secret_id"),
 						}),
+						Query: riza.F(riza.ToolExecParamsHTTPAllowAuthQuery{
+							Key:      riza.F("key"),
+							SecretID: riza.F("secret_id"),
+							Value:    riza.F("value"),
+						}),
 					}),
-					HostDesc: riza.F("host desc:"),
+					Host: riza.F("host"),
 				}, {
 					Auth: riza.F(riza.ToolExecParamsHTTPAllowAuth{
 						Basic: riza.F(riza.ToolExecParamsHTTPAllowAuthBasic{
@@ -162,8 +172,13 @@ func TestToolExecWithOptionalParams(t *testing.T) {
 							Token:    riza.F("token"),
 							SecretID: riza.F("secret_id"),
 						}),
+						Query: riza.F(riza.ToolExecParamsHTTPAllowAuthQuery{
+							Key:      riza.F("key"),
+							SecretID: riza.F("secret_id"),
+							Value:    riza.F("value"),
+						}),
 					}),
-					HostDesc: riza.F("host desc:"),
+					Host: riza.F("host"),
 				}}),
 			}),
 			Input:      riza.F[any](map[string]interface{}{}),
