@@ -7,6 +7,7 @@ Response Types:
 
 Methods:
 
+- <code title="post /v1/secrets">client.Secrets.<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go#SecretService.New">New</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>, body <a href="https://pkg.go.dev/github.com/riza-io/riza-api-go">riza</a>.<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go#SecretNewParams">SecretNewParams</a>) (<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go">riza</a>.<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go#Secret">Secret</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 - <code title="get /v1/secrets">client.Secrets.<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go#SecretService.List">List</a>(ctx <a href="https://pkg.go.dev/context">context</a>.<a href="https://pkg.go.dev/context#Context">Context</a>) (<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go">riza</a>.<a href="https://pkg.go.dev/github.com/riza-io/riza-api-go#SecretListResponse">SecretListResponse</a>, <a href="https://pkg.go.dev/builtin#error">error</a>)</code>
 
 # Tools
