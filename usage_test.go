@@ -25,7 +25,8 @@ func TestUsage(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	response, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
-		Code: riza.F("print(\"Hello world!\")"),
+		Code:     riza.F("print('Hello, World!')"),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	})
 	if err != nil {
 		t.Error(err)
