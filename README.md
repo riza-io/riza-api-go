@@ -53,7 +53,8 @@ func main() {
 		option.WithAPIKey("My API Key"), // defaults to os.LookupEnv("RIZA_API_KEY")
 	)
 	response, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
-		Code: riza.F("print(\"Hello world!\")"),
+		Code:     riza.F("print('Hello, World!')"),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	})
 	if err != nil {
 		panic(err.Error())
@@ -177,7 +178,8 @@ To handle errors, we recommend that you use the `errors.As` pattern:
 
 ```go
 _, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
-	Code: riza.F("print(\"Hello world!\")"),
+	Code:     riza.F("print('Hello, World!')"),
+	Language: riza.F(riza.CommandExecParamsLanguagePython),
 })
 if err != nil {
 	var apierr *riza.Error
@@ -206,7 +208,8 @@ defer cancel()
 client.Command.Exec(
 	ctx,
 	riza.CommandExecParams{
-		Code: riza.F("print(\"Hello world!\")"),
+		Code:     riza.F("print('Hello, World!')"),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	},
 	// This sets the per-retry timeout
 	option.WithRequestTimeout(20*time.Second),
@@ -244,7 +247,8 @@ client := riza.NewClient(
 client.Command.Exec(
 	context.TODO(),
 	riza.CommandExecParams{
-		Code: riza.F("print(\"Hello world!\")"),
+		Code:     riza.F("print('Hello, World!')"),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
 	},
 	option.WithMaxRetries(5),
 )
