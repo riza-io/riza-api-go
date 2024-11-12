@@ -159,7 +159,7 @@ func (r toolListResponseJSON) RawJSON() string {
 
 type ToolExecResponse struct {
 	Execution ToolExecResponseExecution `json:"execution,required"`
-	Output    string                    `json:"output"`
+	Output    interface{}               `json:"output"`
 	JSON      toolExecResponseJSON      `json:"-"`
 }
 
