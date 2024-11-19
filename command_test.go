@@ -27,61 +27,17 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code:           riza.F("print(\"Hello world!\")"),
-		AllowHTTPHosts: riza.F([]string{"string", "string", "string"}),
-		Args:           riza.F([]string{"string", "string", "string"}),
+		AllowHTTPHosts: riza.F([]string{"string"}),
+		Args:           riza.F([]string{"string"}),
 		Env: riza.F(map[string]string{
 			"foo": "string",
 		}),
 		Files: riza.F([]riza.CommandExecParamsFile{{
 			Contents: riza.F("contents"),
 			Path:     riza.F("path"),
-		}, {
-			Contents: riza.F("contents"),
-			Path:     riza.F("path"),
-		}, {
-			Contents: riza.F("contents"),
-			Path:     riza.F("path"),
 		}}),
 		HTTP: riza.F(riza.CommandExecParamsHTTP{
 			Allow: riza.F([]riza.CommandExecParamsHTTPAllow{{
-				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
-					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
-						Password: riza.F("password"),
-						UserID:   riza.F("user_id"),
-					}),
-					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
-						Token: riza.F("token"),
-					}),
-					Header: riza.F(riza.CommandExecParamsHTTPAllowAuthHeader{
-						Name:  riza.F("name"),
-						Value: riza.F("value"),
-					}),
-					Query: riza.F(riza.CommandExecParamsHTTPAllowAuthQuery{
-						Key:   riza.F("key"),
-						Value: riza.F("value"),
-					}),
-				}),
-				Host: riza.F("host"),
-			}, {
-				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
-					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
-						Password: riza.F("password"),
-						UserID:   riza.F("user_id"),
-					}),
-					Bearer: riza.F(riza.CommandExecParamsHTTPAllowAuthBearer{
-						Token: riza.F("token"),
-					}),
-					Header: riza.F(riza.CommandExecParamsHTTPAllowAuthHeader{
-						Name:  riza.F("name"),
-						Value: riza.F("value"),
-					}),
-					Query: riza.F(riza.CommandExecParamsHTTPAllowAuthQuery{
-						Key:   riza.F("key"),
-						Value: riza.F("value"),
-					}),
-				}),
-				Host: riza.F("host"),
-			}, {
 				Auth: riza.F(riza.CommandExecParamsHTTPAllowAuth{
 					Basic: riza.F(riza.CommandExecParamsHTTPAllowAuthBasic{
 						Password: riza.F("password"),
