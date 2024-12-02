@@ -124,13 +124,11 @@ const (
 	ToolLanguagePython     ToolLanguage = "PYTHON"
 	ToolLanguageJavascript ToolLanguage = "JAVASCRIPT"
 	ToolLanguageTypescript ToolLanguage = "TYPESCRIPT"
-	ToolLanguageRuby       ToolLanguage = "RUBY"
-	ToolLanguagePhp        ToolLanguage = "PHP"
 )
 
 func (r ToolLanguage) IsKnown() bool {
 	switch r {
-	case ToolLanguagePython, ToolLanguageJavascript, ToolLanguageTypescript, ToolLanguageRuby, ToolLanguagePhp:
+	case ToolLanguagePython, ToolLanguageJavascript, ToolLanguageTypescript:
 		return true
 	}
 	return false
@@ -223,13 +221,11 @@ const (
 	ToolNewParamsLanguagePython     ToolNewParamsLanguage = "PYTHON"
 	ToolNewParamsLanguageJavascript ToolNewParamsLanguage = "JAVASCRIPT"
 	ToolNewParamsLanguageTypescript ToolNewParamsLanguage = "TYPESCRIPT"
-	ToolNewParamsLanguageRuby       ToolNewParamsLanguage = "RUBY"
-	ToolNewParamsLanguagePhp        ToolNewParamsLanguage = "PHP"
 )
 
 func (r ToolNewParamsLanguage) IsKnown() bool {
 	switch r {
-	case ToolNewParamsLanguagePython, ToolNewParamsLanguageJavascript, ToolNewParamsLanguageTypescript, ToolNewParamsLanguageRuby, ToolNewParamsLanguagePhp:
+	case ToolNewParamsLanguagePython, ToolNewParamsLanguageJavascript, ToolNewParamsLanguageTypescript:
 		return true
 	}
 	return false
@@ -253,13 +249,11 @@ const (
 	ToolUpdateParamsLanguagePython     ToolUpdateParamsLanguage = "PYTHON"
 	ToolUpdateParamsLanguageJavascript ToolUpdateParamsLanguage = "JAVASCRIPT"
 	ToolUpdateParamsLanguageTypescript ToolUpdateParamsLanguage = "TYPESCRIPT"
-	ToolUpdateParamsLanguageRuby       ToolUpdateParamsLanguage = "RUBY"
-	ToolUpdateParamsLanguagePhp        ToolUpdateParamsLanguage = "PHP"
 )
 
 func (r ToolUpdateParamsLanguage) IsKnown() bool {
 	switch r {
-	case ToolUpdateParamsLanguagePython, ToolUpdateParamsLanguageJavascript, ToolUpdateParamsLanguageTypescript, ToolUpdateParamsLanguageRuby, ToolUpdateParamsLanguagePhp:
+	case ToolUpdateParamsLanguagePython, ToolUpdateParamsLanguageJavascript, ToolUpdateParamsLanguageTypescript:
 		return true
 	}
 	return false
