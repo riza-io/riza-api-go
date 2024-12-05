@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.0 (2024-12-02)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/riza-io/riza-api-go/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** api update ([#49](https://github.com/riza-io/riza-api-go/issues/49)) ([f210c04](https://github.com/riza-io/riza-api-go/commit/f210c047c22fce6a9c7baff3c6e818e50a685544))
+* **api:** api update ([#51](https://github.com/riza-io/riza-api-go/issues/51)) ([74c2f77](https://github.com/riza-io/riza-api-go/commit/74c2f77f0fc3aa80de1da6001a3638736a09d5fc))
+
+
+### Chores
+
+* rebuild project due to codegen change ([#46](https://github.com/riza-io/riza-api-go/issues/46)) ([8bd8d40](https://github.com/riza-io/riza-api-go/commit/8bd8d40bf2491e1c5a01abb56c85e7cfb7525d1c))
+* rebuild project due to codegen change ([#48](https://github.com/riza-io/riza-api-go/issues/48)) ([661b38a](https://github.com/riza-io/riza-api-go/commit/661b38a6511e84da23d0d471da0ee008b17127d1))
+* rebuild project due to codegen change ([#50](https://github.com/riza-io/riza-api-go/issues/50)) ([80e0064](https://github.com/riza-io/riza-api-go/commit/80e00642d28150bafd7cc5cfa46a65251a6e7ab5))
+
 ## 0.2.0 (2024-11-07)
 
 Full Changelog: [v0.1.1...v0.2.0](https://github.com/riza-io/riza-api-go/compare/v0.1.1...v0.2.0)
