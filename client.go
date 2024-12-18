@@ -15,10 +15,11 @@ import (
 // interacting with the riza API. You should not instantiate this client directly,
 // and instead use the [NewClient] method instead.
 type Client struct {
-	Options []option.RequestOption
-	Secrets *SecretService
-	Tools   *ToolService
-	Command *CommandService
+	Options  []option.RequestOption
+	Secrets  *SecretService
+	Tools    *ToolService
+	Command  *CommandService
+	Runtimes *RuntimeService
 }
 
 // NewClient generates a new client with the default option read from the
@@ -37,6 +38,7 @@ func NewClient(opts ...option.RequestOption) (r *Client) {
 	r.Secrets = NewSecretService(opts...)
 	r.Tools = NewToolService(opts...)
 	r.Command = NewCommandService(opts...)
+	r.Runtimes = NewRuntimeService(opts...)
 
 	return
 }
