@@ -88,8 +88,11 @@ type CommandExecParams struct {
 	// Configuration for execution environment limits.
 	Limits   param.Field[CommandExecParamsLimits] `json:"limits"`
 	Revision param.Field[string]                  `json:"revision"`
-	// The runtime to use when executing code.
+	// The runtime to use when executing code. Deprecated in favor of
+	// `runtime_revision_id`.
 	Runtime param.Field[string] `json:"runtime"`
+	// The ID of the runtime revision to use when executing code.
+	RuntimeRevisionID param.Field[string] `json:"runtime_revision_id"`
 	// Input made available to the script via 'stdin'.
 	Stdin param.Field[string] `json:"stdin"`
 }
