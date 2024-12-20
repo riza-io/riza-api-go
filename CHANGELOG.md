@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.1 (2024-12-20)
+
+Full Changelog: [v0.4.0...v0.4.1](https://github.com/riza-io/riza-api-go/compare/v0.4.0...v0.4.1)
+
+### Chores
+
+* **internal:** codegen related update ([#58](https://github.com/riza-io/riza-api-go/issues/58)) ([67c178d](https://github.com/riza-io/riza-api-go/commit/67c178db0dfe3d38d936a2c6ded06b2febfa7419))
+
 ## 0.4.0 (2024-12-18)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/riza-io/riza-api-go/compare/v0.3.0...v0.4.0)
