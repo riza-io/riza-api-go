@@ -137,11 +137,12 @@ type RuntimeManifestFileName string
 
 const (
 	RuntimeManifestFileNameRequirementsTxt RuntimeManifestFileName = "requirements.txt"
+	RuntimeManifestFileNamePackageJson     RuntimeManifestFileName = "package.json"
 )
 
 func (r RuntimeManifestFileName) IsKnown() bool {
 	switch r {
-	case RuntimeManifestFileNameRequirementsTxt:
+	case RuntimeManifestFileNameRequirementsTxt, RuntimeManifestFileNamePackageJson:
 		return true
 	}
 	return false
@@ -207,11 +208,12 @@ type RuntimeNewParamsManifestFileName string
 
 const (
 	RuntimeNewParamsManifestFileNameRequirementsTxt RuntimeNewParamsManifestFileName = "requirements.txt"
+	RuntimeNewParamsManifestFileNamePackageJson     RuntimeNewParamsManifestFileName = "package.json"
 )
 
 func (r RuntimeNewParamsManifestFileName) IsKnown() bool {
 	switch r {
-	case RuntimeNewParamsManifestFileNameRequirementsTxt:
+	case RuntimeNewParamsManifestFileNameRequirementsTxt, RuntimeNewParamsManifestFileNamePackageJson:
 		return true
 	}
 	return false
