@@ -205,10 +205,10 @@ func (r toolExecResponseExecutionJSON) RawJSON() string {
 
 type ToolNewParams struct {
 	Code        param.Field[string]                `json:"code,required"`
+	Language    param.Field[ToolNewParamsLanguage] `json:"language,required"`
 	Name        param.Field[string]                `json:"name,required"`
 	Description param.Field[string]                `json:"description"`
 	InputSchema param.Field[interface{}]           `json:"input_schema"`
-	Language    param.Field[ToolNewParamsLanguage] `json:"language"`
 }
 
 func (r ToolNewParams) MarshalJSON() (data []byte, err error) {
