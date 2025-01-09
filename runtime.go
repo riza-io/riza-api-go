@@ -98,8 +98,8 @@ func (r runtimeJSON) RawJSON() string {
 type RuntimeLanguage string
 
 const (
-	RuntimeLanguagePython     RuntimeLanguage = "PYTHON"
-	RuntimeLanguageJavascript RuntimeLanguage = "JAVASCRIPT"
+	RuntimeLanguagePython     RuntimeLanguage = "python"
+	RuntimeLanguageJavascript RuntimeLanguage = "javascript"
 )
 
 func (r RuntimeLanguage) IsKnown() bool {
@@ -183,8 +183,8 @@ func (r RuntimeNewParams) MarshalJSON() (data []byte, err error) {
 type RuntimeNewParamsLanguage string
 
 const (
-	RuntimeNewParamsLanguagePython     RuntimeNewParamsLanguage = "PYTHON"
-	RuntimeNewParamsLanguageJavascript RuntimeNewParamsLanguage = "JAVASCRIPT"
+	RuntimeNewParamsLanguagePython     RuntimeNewParamsLanguage = "python"
+	RuntimeNewParamsLanguageJavascript RuntimeNewParamsLanguage = "javascript"
 )
 
 func (r RuntimeNewParamsLanguage) IsKnown() bool {
