@@ -86,11 +86,7 @@ type CommandExecParams struct {
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecParamsLanguage] `json:"language"`
 	// Configuration for execution environment limits.
-	Limits   param.Field[CommandExecParamsLimits] `json:"limits"`
-	Revision param.Field[string]                  `json:"revision"`
-	// The runtime to use when executing code. Deprecated in favor of
-	// `runtime_revision_id`.
-	Runtime param.Field[string] `json:"runtime"`
+	Limits param.Field[CommandExecParamsLimits] `json:"limits"`
 	// The ID of the runtime revision to use when executing code.
 	RuntimeRevisionID param.Field[string] `json:"runtime_revision_id"`
 	// Input made available to the script via 'stdin'.
@@ -188,11 +184,11 @@ func (r CommandExecParamsHTTPAllowAuthQuery) MarshalJSON() (data []byte, err err
 type CommandExecParamsLanguage string
 
 const (
-	CommandExecParamsLanguagePython     CommandExecParamsLanguage = "PYTHON"
-	CommandExecParamsLanguageJavascript CommandExecParamsLanguage = "JAVASCRIPT"
-	CommandExecParamsLanguageTypescript CommandExecParamsLanguage = "TYPESCRIPT"
-	CommandExecParamsLanguageRuby       CommandExecParamsLanguage = "RUBY"
-	CommandExecParamsLanguagePhp        CommandExecParamsLanguage = "PHP"
+	CommandExecParamsLanguagePython     CommandExecParamsLanguage = "python"
+	CommandExecParamsLanguageJavascript CommandExecParamsLanguage = "javascript"
+	CommandExecParamsLanguageTypescript CommandExecParamsLanguage = "typescript"
+	CommandExecParamsLanguageRuby       CommandExecParamsLanguage = "ruby"
+	CommandExecParamsLanguagePhp        CommandExecParamsLanguage = "php"
 )
 
 func (r CommandExecParamsLanguage) IsKnown() bool {
