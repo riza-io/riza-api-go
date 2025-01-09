@@ -27,10 +27,10 @@ func TestToolNewWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Tools.New(context.TODO(), riza.ToolNewParams{
 		Code:        riza.F("code"),
+		Language:    riza.F(riza.ToolNewParamsLanguagePython),
 		Name:        riza.F("name"),
 		Description: riza.F("description"),
 		InputSchema: riza.F[any](map[string]interface{}{}),
-		Language:    riza.F(riza.ToolNewParamsLanguagePython),
 	})
 	if err != nil {
 		var apierr *riza.Error
