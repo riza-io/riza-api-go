@@ -27,6 +27,7 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 	)
 	_, err := client.Command.Exec(context.TODO(), riza.CommandExecParams{
 		Code:           riza.F("print(\"Hello world!\")"),
+		Language:       riza.F(riza.CommandExecParamsLanguagePython),
 		AllowHTTPHosts: riza.F([]string{"string"}),
 		Args:           riza.F([]string{"string"}),
 		Env: riza.F(map[string]string{
@@ -58,7 +59,6 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 				Host: riza.F("host"),
 			}}),
 		}),
-		Language: riza.F(riza.CommandExecParamsLanguagePython),
 		Limits: riza.F(riza.CommandExecParamsLimits{
 			ExecutionTimeout: riza.F(int64(0)),
 			MemorySize:       riza.F(int64(0)),
