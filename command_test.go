@@ -63,8 +63,6 @@ func TestCommandExecWithOptionalParams(t *testing.T) {
 			ExecutionTimeout: riza.F(int64(0)),
 			MemorySize:       riza.F(int64(0)),
 		}),
-		Revision:          riza.F("revision"),
-		Runtime:           riza.F("runtime"),
 		RuntimeRevisionID: riza.F("runtime_revision_id"),
 		Stdin:             riza.F("stdin"),
 	})

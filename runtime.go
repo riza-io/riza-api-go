@@ -98,8 +98,8 @@ func (r runtimeJSON) RawJSON() string {
 type RuntimeLanguage string
 
 const (
-	RuntimeLanguagePython     RuntimeLanguage = "PYTHON"
-	RuntimeLanguageJavascript RuntimeLanguage = "JAVASCRIPT"
+	RuntimeLanguagePython     RuntimeLanguage = "python"
+	RuntimeLanguageJavascript RuntimeLanguage = "javascript"
 )
 
 func (r RuntimeLanguage) IsKnown() bool {
@@ -137,11 +137,12 @@ type RuntimeManifestFileName string
 
 const (
 	RuntimeManifestFileNameRequirementsTxt RuntimeManifestFileName = "requirements.txt"
+	RuntimeManifestFileNamePackageJson     RuntimeManifestFileName = "package.json"
 )
 
 func (r RuntimeManifestFileName) IsKnown() bool {
 	switch r {
-	case RuntimeManifestFileNameRequirementsTxt:
+	case RuntimeManifestFileNameRequirementsTxt, RuntimeManifestFileNamePackageJson:
 		return true
 	}
 	return false
@@ -182,8 +183,8 @@ func (r RuntimeNewParams) MarshalJSON() (data []byte, err error) {
 type RuntimeNewParamsLanguage string
 
 const (
-	RuntimeNewParamsLanguagePython     RuntimeNewParamsLanguage = "PYTHON"
-	RuntimeNewParamsLanguageJavascript RuntimeNewParamsLanguage = "JAVASCRIPT"
+	RuntimeNewParamsLanguagePython     RuntimeNewParamsLanguage = "python"
+	RuntimeNewParamsLanguageJavascript RuntimeNewParamsLanguage = "javascript"
 )
 
 func (r RuntimeNewParamsLanguage) IsKnown() bool {
@@ -207,11 +208,12 @@ type RuntimeNewParamsManifestFileName string
 
 const (
 	RuntimeNewParamsManifestFileNameRequirementsTxt RuntimeNewParamsManifestFileName = "requirements.txt"
+	RuntimeNewParamsManifestFileNamePackageJson     RuntimeNewParamsManifestFileName = "package.json"
 )
 
 func (r RuntimeNewParamsManifestFileName) IsKnown() bool {
 	switch r {
-	case RuntimeNewParamsManifestFileNameRequirementsTxt:
+	case RuntimeNewParamsManifestFileNameRequirementsTxt, RuntimeNewParamsManifestFileNamePackageJson:
 		return true
 	}
 	return false

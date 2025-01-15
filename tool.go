@@ -121,9 +121,9 @@ func (r toolJSON) RawJSON() string {
 type ToolLanguage string
 
 const (
-	ToolLanguagePython     ToolLanguage = "PYTHON"
-	ToolLanguageJavascript ToolLanguage = "JAVASCRIPT"
-	ToolLanguageTypescript ToolLanguage = "TYPESCRIPT"
+	ToolLanguagePython     ToolLanguage = "python"
+	ToolLanguageJavascript ToolLanguage = "javascript"
+	ToolLanguageTypescript ToolLanguage = "typescript"
 )
 
 func (r ToolLanguage) IsKnown() bool {
@@ -205,10 +205,10 @@ func (r toolExecResponseExecutionJSON) RawJSON() string {
 
 type ToolNewParams struct {
 	Code        param.Field[string]                `json:"code,required"`
+	Language    param.Field[ToolNewParamsLanguage] `json:"language,required"`
 	Name        param.Field[string]                `json:"name,required"`
 	Description param.Field[string]                `json:"description"`
 	InputSchema param.Field[interface{}]           `json:"input_schema"`
-	Language    param.Field[ToolNewParamsLanguage] `json:"language"`
 }
 
 func (r ToolNewParams) MarshalJSON() (data []byte, err error) {
@@ -218,9 +218,9 @@ func (r ToolNewParams) MarshalJSON() (data []byte, err error) {
 type ToolNewParamsLanguage string
 
 const (
-	ToolNewParamsLanguagePython     ToolNewParamsLanguage = "PYTHON"
-	ToolNewParamsLanguageJavascript ToolNewParamsLanguage = "JAVASCRIPT"
-	ToolNewParamsLanguageTypescript ToolNewParamsLanguage = "TYPESCRIPT"
+	ToolNewParamsLanguagePython     ToolNewParamsLanguage = "python"
+	ToolNewParamsLanguageJavascript ToolNewParamsLanguage = "javascript"
+	ToolNewParamsLanguageTypescript ToolNewParamsLanguage = "typescript"
 )
 
 func (r ToolNewParamsLanguage) IsKnown() bool {
@@ -246,9 +246,9 @@ func (r ToolUpdateParams) MarshalJSON() (data []byte, err error) {
 type ToolUpdateParamsLanguage string
 
 const (
-	ToolUpdateParamsLanguagePython     ToolUpdateParamsLanguage = "PYTHON"
-	ToolUpdateParamsLanguageJavascript ToolUpdateParamsLanguage = "JAVASCRIPT"
-	ToolUpdateParamsLanguageTypescript ToolUpdateParamsLanguage = "TYPESCRIPT"
+	ToolUpdateParamsLanguagePython     ToolUpdateParamsLanguage = "python"
+	ToolUpdateParamsLanguageJavascript ToolUpdateParamsLanguage = "javascript"
+	ToolUpdateParamsLanguageTypescript ToolUpdateParamsLanguage = "typescript"
 )
 
 func (r ToolUpdateParamsLanguage) IsKnown() bool {
