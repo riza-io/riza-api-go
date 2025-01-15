@@ -73,6 +73,8 @@ func (r commandExecResponseJSON) RawJSON() string {
 type CommandExecParams struct {
 	// The code to execute.
 	Code param.Field[string] `json:"code,required"`
+	// The interpreter to use when executing code.
+	Language param.Field[CommandExecParamsLanguage] `json:"language,required"`
 	// List of allowed hosts for HTTP requests.
 	AllowHTTPHosts param.Field[[]string] `json:"allow_http_hosts"`
 	// List of command line arguments to pass to the script.
@@ -83,8 +85,6 @@ type CommandExecParams struct {
 	Files param.Field[[]CommandExecParamsFile] `json:"files"`
 	// Configuration for HTTP requests and authentication.
 	HTTP param.Field[CommandExecParamsHTTP] `json:"http"`
-	// The interpreter to use when executing code.
-	Language param.Field[CommandExecParamsLanguage] `json:"language"`
 	// Configuration for execution environment limits.
 	Limits param.Field[CommandExecParamsLimits] `json:"limits"`
 	// The ID of the runtime revision to use when executing code.
@@ -95,6 +95,25 @@ type CommandExecParams struct {
 
 func (r CommandExecParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+// The interpreter to use when executing code.
+type CommandExecParamsLanguage string
+
+const (
+	CommandExecParamsLanguagePython     CommandExecParamsLanguage = "python"
+	CommandExecParamsLanguageJavascript CommandExecParamsLanguage = "javascript"
+	CommandExecParamsLanguageTypescript CommandExecParamsLanguage = "typescript"
+	CommandExecParamsLanguageRuby       CommandExecParamsLanguage = "ruby"
+	CommandExecParamsLanguagePhp        CommandExecParamsLanguage = "php"
+)
+
+func (r CommandExecParamsLanguage) IsKnown() bool {
+	switch r {
+	case CommandExecParamsLanguagePython, CommandExecParamsLanguageJavascript, CommandExecParamsLanguageTypescript, CommandExecParamsLanguageRuby, CommandExecParamsLanguagePhp:
+		return true
+	}
+	return false
 }
 
 type CommandExecParamsFile struct {
@@ -178,25 +197,6 @@ type CommandExecParamsHTTPAllowAuthQuery struct {
 
 func (r CommandExecParamsHTTPAllowAuthQuery) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
-}
-
-// The interpreter to use when executing code.
-type CommandExecParamsLanguage string
-
-const (
-	CommandExecParamsLanguagePython     CommandExecParamsLanguage = "python"
-	CommandExecParamsLanguageJavascript CommandExecParamsLanguage = "javascript"
-	CommandExecParamsLanguageTypescript CommandExecParamsLanguage = "typescript"
-	CommandExecParamsLanguageRuby       CommandExecParamsLanguage = "ruby"
-	CommandExecParamsLanguagePhp        CommandExecParamsLanguage = "php"
-)
-
-func (r CommandExecParamsLanguage) IsKnown() bool {
-	switch r {
-	case CommandExecParamsLanguagePython, CommandExecParamsLanguageJavascript, CommandExecParamsLanguageTypescript, CommandExecParamsLanguageRuby, CommandExecParamsLanguagePhp:
-		return true
-	}
-	return false
 }
 
 // Configuration for execution environment limits.
