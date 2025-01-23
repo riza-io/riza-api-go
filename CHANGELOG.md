@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.7.0 (2025-01-23)
+
+Full Changelog: [v0.6.0...v0.7.0](https://github.com/riza-io/riza-api-go/compare/v0.6.0...v0.7.0)
+
+### Features
+
+* **api:** api update ([#71](https://github.com/riza-io/riza-api-go/issues/71)) ([6ee7e40](https://github.com/riza-io/riza-api-go/commit/6ee7e409be7d31d82b196ebd19ad034343e55c8f))
+
+
+### Chores
+
+* **internal:** codegen related update ([#69](https://github.com/riza-io/riza-api-go/issues/69)) ([45d5b2c](https://github.com/riza-io/riza-api-go/commit/45d5b2c6adf566245bb3336cae9f6551ff3be5f0))
+
 ## 0.6.0 (2025-01-16)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/riza-io/riza-api-go/compare/v0.5.0...v0.6.0)

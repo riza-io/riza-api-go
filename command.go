@@ -41,6 +41,15 @@ func (r *CommandService) Exec(ctx context.Context, body CommandExecParams, opts 
 	return
 }
 
+// Run a function in a secure, isolated environment. Define a function named
+// `execute`. The function will be passed `input` as an object.
+func (r *CommandService) ExecFunc(ctx context.Context, body CommandExecFuncParams, opts ...option.RequestOption) (res *CommandExecFuncResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	path := "v1/execute-function"
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodPost, path, body, &res, opts...)
+	return
+}
+
 type CommandExecResponse struct {
 	// The exit code returned by the script. Will often be '0' on success and non-zero
 	// on failure.
@@ -68,6 +77,84 @@ func (r *CommandExecResponse) UnmarshalJSON(data []byte) (err error) {
 
 func (r commandExecResponseJSON) RawJSON() string {
 	return r.raw
+}
+
+type CommandExecFuncResponse struct {
+	Execution CommandExecFuncResponseExecution `json:"execution"`
+	Output    interface{}                      `json:"output"`
+	// The status of the output. "valid" means your function executed successfully and
+	// returned a valid JSON-serializable object, or void. "json_serialization_error"
+	// means your function executed successfully, but returned a nonserializable
+	// object. "error" means your function failed to execute.
+	OutputStatus CommandExecFuncResponseOutputStatus `json:"output_status"`
+	JSON         commandExecFuncResponseJSON         `json:"-"`
+}
+
+// commandExecFuncResponseJSON contains the JSON metadata for the struct
+// [CommandExecFuncResponse]
+type commandExecFuncResponseJSON struct {
+	Execution    apijson.Field
+	Output       apijson.Field
+	OutputStatus apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
+}
+
+func (r *CommandExecFuncResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r commandExecFuncResponseJSON) RawJSON() string {
+	return r.raw
+}
+
+type CommandExecFuncResponseExecution struct {
+	// The exit code returned by the script. Will often be '0' on success and non-zero
+	// on failure.
+	ExitCode int64 `json:"exit_code"`
+	// The contents of 'stderr' after executing the script.
+	Stderr string `json:"stderr"`
+	// The contents of 'stdout' after executing the script.
+	Stdout string                               `json:"stdout"`
+	JSON   commandExecFuncResponseExecutionJSON `json:"-"`
+}
+
+// commandExecFuncResponseExecutionJSON contains the JSON metadata for the struct
+// [CommandExecFuncResponseExecution]
+type commandExecFuncResponseExecutionJSON struct {
+	ExitCode    apijson.Field
+	Stderr      apijson.Field
+	Stdout      apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *CommandExecFuncResponseExecution) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r commandExecFuncResponseExecutionJSON) RawJSON() string {
+	return r.raw
+}
+
+// The status of the output. "valid" means your function executed successfully and
+// returned a valid JSON-serializable object, or void. "json_serialization_error"
+// means your function executed successfully, but returned a nonserializable
+// object. "error" means your function failed to execute.
+type CommandExecFuncResponseOutputStatus string
+
+const (
+	CommandExecFuncResponseOutputStatusError                  CommandExecFuncResponseOutputStatus = "error"
+	CommandExecFuncResponseOutputStatusJsonSerializationError CommandExecFuncResponseOutputStatus = "json_serialization_error"
+	CommandExecFuncResponseOutputStatusValid                  CommandExecFuncResponseOutputStatus = "valid"
+)
+
+func (r CommandExecFuncResponseOutputStatus) IsKnown() bool {
+	switch r {
+	case CommandExecFuncResponseOutputStatusError, CommandExecFuncResponseOutputStatusJsonSerializationError, CommandExecFuncResponseOutputStatusValid:
+		return true
+	}
+	return false
 }
 
 type CommandExecParams struct {
@@ -208,5 +295,142 @@ type CommandExecParamsLimits struct {
 }
 
 func (r CommandExecParamsLimits) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecFuncParams struct {
+	// The function to execute. Your code must define a function named 'execute' and
+	// return a JSON-serializable value.
+	Code param.Field[string] `json:"code,required"`
+	// The interpreter to use when executing code.
+	Language param.Field[CommandExecFuncParamsLanguage] `json:"language,required"`
+	// Set of key-value pairs to add to the script's execution environment.
+	Env param.Field[map[string]string] `json:"env"`
+	// List of input files.
+	Files param.Field[[]CommandExecFuncParamsFile] `json:"files"`
+	// Configuration for HTTP requests and authentication.
+	HTTP  param.Field[CommandExecFuncParamsHTTP] `json:"http"`
+	Input param.Field[interface{}]               `json:"input"`
+	// Configuration for execution environment limits.
+	Limits param.Field[CommandExecFuncParamsLimits] `json:"limits"`
+	// The ID of the runtime revision to use when executing code.
+	RuntimeRevisionID param.Field[string] `json:"runtime_revision_id"`
+}
+
+func (r CommandExecFuncParams) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// The interpreter to use when executing code.
+type CommandExecFuncParamsLanguage string
+
+const (
+	CommandExecFuncParamsLanguagePython     CommandExecFuncParamsLanguage = "python"
+	CommandExecFuncParamsLanguageJavascript CommandExecFuncParamsLanguage = "javascript"
+	CommandExecFuncParamsLanguageTypescript CommandExecFuncParamsLanguage = "typescript"
+	CommandExecFuncParamsLanguageRuby       CommandExecFuncParamsLanguage = "ruby"
+	CommandExecFuncParamsLanguagePhp        CommandExecFuncParamsLanguage = "php"
+)
+
+func (r CommandExecFuncParamsLanguage) IsKnown() bool {
+	switch r {
+	case CommandExecFuncParamsLanguagePython, CommandExecFuncParamsLanguageJavascript, CommandExecFuncParamsLanguageTypescript, CommandExecFuncParamsLanguageRuby, CommandExecFuncParamsLanguagePhp:
+		return true
+	}
+	return false
+}
+
+type CommandExecFuncParamsFile struct {
+	// The contents of the file.
+	Contents param.Field[string] `json:"contents"`
+	// The relative path of the file.
+	Path param.Field[string] `json:"path"`
+}
+
+func (r CommandExecFuncParamsFile) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Configuration for HTTP requests and authentication.
+type CommandExecFuncParamsHTTP struct {
+	// List of allowed HTTP hosts and associated authentication.
+	Allow param.Field[[]CommandExecFuncParamsHTTPAllow] `json:"allow"`
+}
+
+func (r CommandExecFuncParamsHTTP) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// List of allowed HTTP hosts and associated authentication.
+type CommandExecFuncParamsHTTPAllow struct {
+	// Authentication configuration for outbound requests to this host.
+	Auth param.Field[CommandExecFuncParamsHTTPAllowAuth] `json:"auth"`
+	// The hostname to allow.
+	Host param.Field[string] `json:"host"`
+}
+
+func (r CommandExecFuncParamsHTTPAllow) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Authentication configuration for outbound requests to this host.
+type CommandExecFuncParamsHTTPAllowAuth struct {
+	Basic param.Field[CommandExecFuncParamsHTTPAllowAuthBasic] `json:"basic"`
+	// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
+	Bearer param.Field[CommandExecFuncParamsHTTPAllowAuthBearer] `json:"bearer"`
+	Header param.Field[CommandExecFuncParamsHTTPAllowAuthHeader] `json:"header"`
+	Query  param.Field[CommandExecFuncParamsHTTPAllowAuthQuery]  `json:"query"`
+}
+
+func (r CommandExecFuncParamsHTTPAllowAuth) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecFuncParamsHTTPAllowAuthBasic struct {
+	Password param.Field[string] `json:"password"`
+	UserID   param.Field[string] `json:"user_id"`
+}
+
+func (r CommandExecFuncParamsHTTPAllowAuthBasic) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Configuration to add an 'Authorization' header using the 'Bearer' scheme.
+type CommandExecFuncParamsHTTPAllowAuthBearer struct {
+	// The token to set, e.g. 'Authorization: Bearer <token>'.
+	Token param.Field[string] `json:"token"`
+}
+
+func (r CommandExecFuncParamsHTTPAllowAuthBearer) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecFuncParamsHTTPAllowAuthHeader struct {
+	Name  param.Field[string] `json:"name"`
+	Value param.Field[string] `json:"value"`
+}
+
+func (r CommandExecFuncParamsHTTPAllowAuthHeader) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+type CommandExecFuncParamsHTTPAllowAuthQuery struct {
+	Key   param.Field[string] `json:"key"`
+	Value param.Field[string] `json:"value"`
+}
+
+func (r CommandExecFuncParamsHTTPAllowAuthQuery) MarshalJSON() (data []byte, err error) {
+	return apijson.MarshalRoot(r)
+}
+
+// Configuration for execution environment limits.
+type CommandExecFuncParamsLimits struct {
+	// The maximum time allowed for execution (in seconds). Default is 30.
+	ExecutionTimeout param.Field[int64] `json:"execution_timeout"`
+	// The maximum memory allowed for execution (in MiB). Default is 128.
+	MemorySize param.Field[int64] `json:"memory_size"`
+}
+
+func (r CommandExecFuncParamsLimits) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
