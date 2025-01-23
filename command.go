@@ -53,11 +53,11 @@ func (r *CommandService) ExecFunc(ctx context.Context, body CommandExecFuncParam
 type CommandExecResponse struct {
 	// The exit code returned by the script. Will often be '0' on success and non-zero
 	// on failure.
-	ExitCode int64 `json:"exit_code"`
+	ExitCode int64 `json:"exit_code,required"`
 	// The contents of 'stderr' after executing the script.
-	Stderr string `json:"stderr"`
+	Stderr string `json:"stderr,required"`
 	// The contents of 'stdout' after executing the script.
-	Stdout string                  `json:"stdout"`
+	Stdout string                  `json:"stdout,required"`
 	JSON   commandExecResponseJSON `json:"-"`
 }
 
@@ -80,13 +80,13 @@ func (r commandExecResponseJSON) RawJSON() string {
 }
 
 type CommandExecFuncResponse struct {
-	Execution CommandExecFuncResponseExecution `json:"execution"`
-	Output    interface{}                      `json:"output"`
+	Execution CommandExecFuncResponseExecution `json:"execution,required"`
+	Output    interface{}                      `json:"output,required"`
 	// The status of the output. "valid" means your function executed successfully and
 	// returned a valid JSON-serializable object, or void. "json_serialization_error"
 	// means your function executed successfully, but returned a nonserializable
 	// object. "error" means your function failed to execute.
-	OutputStatus CommandExecFuncResponseOutputStatus `json:"output_status"`
+	OutputStatus CommandExecFuncResponseOutputStatus `json:"output_status,required"`
 	JSON         commandExecFuncResponseJSON         `json:"-"`
 }
 
@@ -111,11 +111,11 @@ func (r commandExecFuncResponseJSON) RawJSON() string {
 type CommandExecFuncResponseExecution struct {
 	// The exit code returned by the script. Will often be '0' on success and non-zero
 	// on failure.
-	ExitCode int64 `json:"exit_code"`
+	ExitCode int64 `json:"exit_code,required"`
 	// The contents of 'stderr' after executing the script.
-	Stderr string `json:"stderr"`
+	Stderr string `json:"stderr,required"`
 	// The contents of 'stdout' after executing the script.
-	Stdout string                               `json:"stdout"`
+	Stdout string                               `json:"stdout,required"`
 	JSON   commandExecFuncResponseExecutionJSON `json:"-"`
 }
 
