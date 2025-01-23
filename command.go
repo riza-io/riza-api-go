@@ -299,8 +299,8 @@ func (r CommandExecParamsLimits) MarshalJSON() (data []byte, err error) {
 }
 
 type CommandExecFuncParams struct {
-	// The function to execute. Your code must define a function named 'execute' and
-	// return a JSON-serializable value.
+	// The function to execute. Your code must define a function named "execute" that
+	// takes in a single argument and returns a JSON-serializable value.
 	Code param.Field[string] `json:"code,required"`
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecFuncParamsLanguage] `json:"language,required"`
