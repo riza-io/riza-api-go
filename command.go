@@ -328,13 +328,11 @@ const (
 	CommandExecFuncParamsLanguagePython     CommandExecFuncParamsLanguage = "python"
 	CommandExecFuncParamsLanguageJavascript CommandExecFuncParamsLanguage = "javascript"
 	CommandExecFuncParamsLanguageTypescript CommandExecFuncParamsLanguage = "typescript"
-	CommandExecFuncParamsLanguageRuby       CommandExecFuncParamsLanguage = "ruby"
-	CommandExecFuncParamsLanguagePhp        CommandExecFuncParamsLanguage = "php"
 )
 
 func (r CommandExecFuncParamsLanguage) IsKnown() bool {
 	switch r {
-	case CommandExecFuncParamsLanguagePython, CommandExecFuncParamsLanguageJavascript, CommandExecFuncParamsLanguageTypescript, CommandExecFuncParamsLanguageRuby, CommandExecFuncParamsLanguagePhp:
+	case CommandExecFuncParamsLanguagePython, CommandExecFuncParamsLanguageJavascript, CommandExecFuncParamsLanguageTypescript:
 		return true
 	}
 	return false
