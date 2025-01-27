@@ -304,7 +304,7 @@ type CommandExecFuncParams struct {
 	Code param.Field[string] `json:"code,required"`
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecFuncParamsLanguage] `json:"language,required"`
-	// Set of key-value pairs to add to the script's execution environment.
+	// Set of key-value pairs to add to the function's execution environment.
 	Env param.Field[map[string]string] `json:"env"`
 	// List of input files.
 	Files param.Field[[]CommandExecFuncParamsFile] `json:"files"`
