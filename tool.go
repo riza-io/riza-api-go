@@ -87,14 +87,23 @@ func (r *ToolService) Get(ctx context.Context, id string, opts ...option.Request
 }
 
 type Tool struct {
-	ID          string       `json:"id,required"`
-	Code        string       `json:"code,required"`
-	Description string       `json:"description,required"`
-	InputSchema interface{}  `json:"input_schema,required"`
-	Language    ToolLanguage `json:"language,required"`
-	Name        string       `json:"name,required"`
-	RevisionID  string       `json:"revision_id,required"`
-	JSON        toolJSON     `json:"-"`
+	// The ID of the tool.
+	ID string `json:"id,required"`
+	// The code of the tool. You must define a function named "execute" that takes in a
+	// single argument and returns a JSON-serializable value. The argument will be the
+	// "input" passed when executing the tool, and will match the input schema.
+	Code string `json:"code,required"`
+	// A description of the tool.
+	Description string      `json:"description,required"`
+	InputSchema interface{} `json:"input_schema,required"`
+	// The language of the tool's code.
+	Language ToolLanguage `json:"language,required"`
+	// The name of the tool.
+	Name string `json:"name,required"`
+	// The ID of the tool's current revision. This is used to pin executions to
+	// specific versions of the Tool, even if the Tool is updated later.
+	RevisionID string   `json:"revision_id,required"`
+	JSON       toolJSON `json:"-"`
 }
 
 // toolJSON contains the JSON metadata for the struct [Tool]
@@ -118,6 +127,7 @@ func (r toolJSON) RawJSON() string {
 	return r.raw
 }
 
+// The language of the tool's code.
 type ToolLanguage string
 
 const (
@@ -156,18 +166,25 @@ func (r toolListResponseJSON) RawJSON() string {
 }
 
 type ToolExecResponse struct {
+	// The execution details of the Tool.
 	Execution ToolExecResponseExecution `json:"execution,required"`
-	Output    interface{}               `json:"output"`
-	JSON      toolExecResponseJSON      `json:"-"`
+	Output    interface{}               `json:"output,required"`
+	// The status of the output. "valid" means your Tool executed successfully and
+	// returned a valid JSON-serializable object, or void. "json_serialization_error"
+	// means your Tool executed successfully, but returned a nonserializable object.
+	// "error" means your Tool failed to execute.
+	OutputStatus ToolExecResponseOutputStatus `json:"output_status,required"`
+	JSON         toolExecResponseJSON         `json:"-"`
 }
 
 // toolExecResponseJSON contains the JSON metadata for the struct
 // [ToolExecResponse]
 type toolExecResponseJSON struct {
-	Execution   apijson.Field
-	Output      apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	Execution    apijson.Field
+	Output       apijson.Field
+	OutputStatus apijson.Field
+	raw          string
+	ExtraFields  map[string]apijson.Field
 }
 
 func (r *ToolExecResponse) UnmarshalJSON(data []byte) (err error) {
@@ -178,6 +195,7 @@ func (r toolExecResponseJSON) RawJSON() string {
 	return r.raw
 }
 
+// The execution details of the Tool.
 type ToolExecResponseExecution struct {
 	ExitCode int64                         `json:"exit_code,required"`
 	Stderr   string                        `json:"stderr,required"`
@@ -203,18 +221,45 @@ func (r toolExecResponseExecutionJSON) RawJSON() string {
 	return r.raw
 }
 
+// The status of the output. "valid" means your Tool executed successfully and
+// returned a valid JSON-serializable object, or void. "json_serialization_error"
+// means your Tool executed successfully, but returned a nonserializable object.
+// "error" means your Tool failed to execute.
+type ToolExecResponseOutputStatus string
+
+const (
+	ToolExecResponseOutputStatusError                  ToolExecResponseOutputStatus = "error"
+	ToolExecResponseOutputStatusJsonSerializationError ToolExecResponseOutputStatus = "json_serialization_error"
+	ToolExecResponseOutputStatusValid                  ToolExecResponseOutputStatus = "valid"
+)
+
+func (r ToolExecResponseOutputStatus) IsKnown() bool {
+	switch r {
+	case ToolExecResponseOutputStatusError, ToolExecResponseOutputStatusJsonSerializationError, ToolExecResponseOutputStatusValid:
+		return true
+	}
+	return false
+}
+
 type ToolNewParams struct {
-	Code        param.Field[string]                `json:"code,required"`
-	Language    param.Field[ToolNewParamsLanguage] `json:"language,required"`
-	Name        param.Field[string]                `json:"name,required"`
-	Description param.Field[string]                `json:"description"`
-	InputSchema param.Field[interface{}]           `json:"input_schema"`
+	// The code of the tool. You must define a function named "execute" that takes in a
+	// single argument and returns a JSON-serializable value. The argument will be the
+	// "input" passed when executing the tool, and will match the input schema.
+	Code param.Field[string] `json:"code,required"`
+	// The language of the tool's code.
+	Language param.Field[ToolNewParamsLanguage] `json:"language,required"`
+	// The name of the tool.
+	Name param.Field[string] `json:"name,required"`
+	// A description of the tool.
+	Description param.Field[string]      `json:"description"`
+	InputSchema param.Field[interface{}] `json:"input_schema"`
 }
 
 func (r ToolNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The language of the tool's code.
 type ToolNewParamsLanguage string
 
 const (
@@ -260,16 +305,22 @@ func (r ToolUpdateParamsLanguage) IsKnown() bool {
 }
 
 type ToolExecParams struct {
-	Env        param.Field[[]ToolExecParamsEnv] `json:"env"`
-	HTTP       param.Field[ToolExecParamsHTTP]  `json:"http"`
-	Input      param.Field[interface{}]         `json:"input"`
-	RevisionID param.Field[string]              `json:"revision_id"`
+	// Set of key-value pairs to add to the tool's execution environment.
+	Env param.Field[[]ToolExecParamsEnv] `json:"env"`
+	// Configuration for HTTP requests and authentication.
+	HTTP  param.Field[ToolExecParamsHTTP] `json:"http"`
+	Input param.Field[interface{}]        `json:"input"`
+	// The Tool revision ID to execute. This optional parmeter is used to pin
+	// executions to specific versions of the Tool. If not provided, the latest
+	// (current) version of the Tool will be executed.
+	RevisionID param.Field[string] `json:"revision_id"`
 }
 
 func (r ToolExecParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Set of key-value pairs to add to the tool's execution environment.
 type ToolExecParamsEnv struct {
 	Name     param.Field[string] `json:"name,required"`
 	SecretID param.Field[string] `json:"secret_id"`
@@ -280,6 +331,7 @@ func (r ToolExecParamsEnv) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// Configuration for HTTP requests and authentication.
 type ToolExecParamsHTTP struct {
 	// List of allowed HTTP hosts and associated authentication.
 	Allow param.Field[[]ToolExecParamsHTTPAllow] `json:"allow"`
