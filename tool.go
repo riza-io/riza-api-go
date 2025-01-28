@@ -100,23 +100,28 @@ type Tool struct {
 	Language ToolLanguage `json:"language,required"`
 	// The name of the tool.
 	Name string `json:"name,required"`
-	// The ID of the tool's current revision. This is used to pin executions to
-	// specific versions of the Tool, even if the Tool is updated later.
-	RevisionID string   `json:"revision_id,required"`
-	JSON       toolJSON `json:"-"`
+	// The ID of the tool's current revision. This is used to pin executions to a
+	// specific version of the tool, even if the tool is updated later.
+	RevisionID string `json:"revision_id,required"`
+	// The ID of the custom runtime revision that the tool uses for executions. This
+	// pins executions to specific version of a custom runtime runtime, even if the
+	// runtime is updated later.
+	RuntimeRevisionID string   `json:"runtime_revision_id"`
+	JSON              toolJSON `json:"-"`
 }
 
 // toolJSON contains the JSON metadata for the struct [Tool]
 type toolJSON struct {
-	ID          apijson.Field
-	Code        apijson.Field
-	Description apijson.Field
-	InputSchema apijson.Field
-	Language    apijson.Field
-	Name        apijson.Field
-	RevisionID  apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
+	ID                apijson.Field
+	Code              apijson.Field
+	Description       apijson.Field
+	InputSchema       apijson.Field
+	Language          apijson.Field
+	Name              apijson.Field
+	RevisionID        apijson.Field
+	RuntimeRevisionID apijson.Field
+	raw               string
+	ExtraFields       map[string]apijson.Field
 }
 
 func (r *Tool) UnmarshalJSON(data []byte) (err error) {
@@ -253,6 +258,8 @@ type ToolNewParams struct {
 	// A description of the tool.
 	Description param.Field[string]      `json:"description"`
 	InputSchema param.Field[interface{}] `json:"input_schema"`
+	// The ID of the runtime revision to use when executing the tool.
+	RuntimeRevisionID param.Field[string] `json:"runtime_revision_id"`
 }
 
 func (r ToolNewParams) MarshalJSON() (data []byte, err error) {
@@ -277,17 +284,28 @@ func (r ToolNewParamsLanguage) IsKnown() bool {
 }
 
 type ToolUpdateParams struct {
-	Code        param.Field[string]                   `json:"code"`
-	Description param.Field[string]                   `json:"description"`
-	InputSchema param.Field[interface{}]              `json:"input_schema"`
-	Language    param.Field[ToolUpdateParamsLanguage] `json:"language"`
-	Name        param.Field[string]                   `json:"name"`
+	// The code of the tool. You must define a function named "execute" that takes in a
+	// single argument and returns a JSON-serializable value. The argument will be the
+	// "input" passed when executing the tool, and will match the input schema.
+	Code param.Field[string] `json:"code"`
+	// A description of the tool.
+	Description param.Field[string]      `json:"description"`
+	InputSchema param.Field[interface{}] `json:"input_schema"`
+	// The language of the tool's code.
+	Language param.Field[ToolUpdateParamsLanguage] `json:"language"`
+	// The name of the tool.
+	Name param.Field[string] `json:"name"`
+	// The ID of the custom runtime revision that the tool uses for executions. This is
+	// used to pin executions to a specific version of a custom runtime, even if the
+	// runtime is updated later.
+	RuntimeRevisionID param.Field[string] `json:"runtime_revision_id"`
 }
 
 func (r ToolUpdateParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
 }
 
+// The language of the tool's code.
 type ToolUpdateParamsLanguage string
 
 const (
