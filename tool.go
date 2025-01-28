@@ -94,7 +94,8 @@ type Tool struct {
 	// "input" passed when executing the tool, and will match the input schema.
 	Code string `json:"code,required"`
 	// A description of the tool.
-	Description string      `json:"description,required"`
+	Description string `json:"description,required"`
+	// The input schema of the tool. This must be a valid JSON Schema object.
 	InputSchema interface{} `json:"input_schema,required"`
 	// The language of the tool's code.
 	Language ToolLanguage `json:"language,required"`
@@ -173,7 +174,8 @@ func (r toolListResponseJSON) RawJSON() string {
 type ToolExecResponse struct {
 	// The execution details of the Tool.
 	Execution ToolExecResponseExecution `json:"execution,required"`
-	Output    interface{}               `json:"output,required"`
+	// The returned value of the Tool's execute function.
+	Output interface{} `json:"output,required"`
 	// The status of the output. "valid" means your Tool executed successfully and
 	// returned a valid JSON-serializable object, or void. "json_serialization_error"
 	// means your Tool executed successfully, but returned a nonserializable object.
@@ -256,7 +258,8 @@ type ToolNewParams struct {
 	// The name of the tool.
 	Name param.Field[string] `json:"name,required"`
 	// A description of the tool.
-	Description param.Field[string]      `json:"description"`
+	Description param.Field[string] `json:"description"`
+	// The input schema of the tool. This must be a valid JSON Schema object.
 	InputSchema param.Field[interface{}] `json:"input_schema"`
 	// The ID of the runtime revision to use when executing the tool.
 	RuntimeRevisionID param.Field[string] `json:"runtime_revision_id"`
@@ -289,7 +292,8 @@ type ToolUpdateParams struct {
 	// "input" passed when executing the tool, and will match the input schema.
 	Code param.Field[string] `json:"code"`
 	// A description of the tool.
-	Description param.Field[string]      `json:"description"`
+	Description param.Field[string] `json:"description"`
+	// The input schema of the tool. This must be a valid JSON Schema object.
 	InputSchema param.Field[interface{}] `json:"input_schema"`
 	// The language of the tool's code.
 	Language param.Field[ToolUpdateParamsLanguage] `json:"language"`
@@ -326,8 +330,10 @@ type ToolExecParams struct {
 	// Set of key-value pairs to add to the tool's execution environment.
 	Env param.Field[[]ToolExecParamsEnv] `json:"env"`
 	// Configuration for HTTP requests and authentication.
-	HTTP  param.Field[ToolExecParamsHTTP] `json:"http"`
-	Input param.Field[interface{}]        `json:"input"`
+	HTTP param.Field[ToolExecParamsHTTP] `json:"http"`
+	// The input to the tool. This must be a valid JSON-serializable object. It will be
+	// validated against the tool's input schema.
+	Input param.Field[interface{}] `json:"input"`
 	// The Tool revision ID to execute. This optional parmeter is used to pin
 	// executions to specific versions of the Tool. If not provided, the latest
 	// (current) version of the Tool will be executed.

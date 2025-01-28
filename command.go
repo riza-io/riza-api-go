@@ -81,7 +81,8 @@ func (r commandExecResponseJSON) RawJSON() string {
 
 type CommandExecFuncResponse struct {
 	Execution CommandExecFuncResponseExecution `json:"execution,required"`
-	Output    interface{}                      `json:"output,required"`
+	// The output of the function.
+	Output interface{} `json:"output,required"`
 	// The status of the output. "valid" means your function executed successfully and
 	// returned a valid JSON-serializable object, or void. "json_serialization_error"
 	// means your function executed successfully, but returned a nonserializable
@@ -309,8 +310,11 @@ type CommandExecFuncParams struct {
 	// List of input files.
 	Files param.Field[[]CommandExecFuncParamsFile] `json:"files"`
 	// Configuration for HTTP requests and authentication.
-	HTTP  param.Field[CommandExecFuncParamsHTTP] `json:"http"`
-	Input param.Field[interface{}]               `json:"input"`
+	HTTP param.Field[CommandExecFuncParamsHTTP] `json:"http"`
+	// The input to the function. This must be a valid JSON-serializable object. If you
+	// do not pass an input, your function will be called with None (Python) or null
+	// (JavaScript/TypeScript) as the argument.
+	Input param.Field[interface{}] `json:"input"`
 	// Configuration for execution environment limits.
 	Limits param.Field[CommandExecFuncParamsLimits] `json:"limits"`
 	// The ID of the runtime revision to use when executing code.
