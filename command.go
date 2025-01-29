@@ -53,11 +53,11 @@ func (r *CommandService) ExecFunc(ctx context.Context, body CommandExecFuncParam
 type CommandExecResponse struct {
 	// The exit code returned by the script. Will often be '0' on success and non-zero
 	// on failure.
-	ExitCode int64 `json:"exit_code"`
+	ExitCode int64 `json:"exit_code,required"`
 	// The contents of 'stderr' after executing the script.
-	Stderr string `json:"stderr"`
+	Stderr string `json:"stderr,required"`
 	// The contents of 'stdout' after executing the script.
-	Stdout string                  `json:"stdout"`
+	Stdout string                  `json:"stdout,required"`
 	JSON   commandExecResponseJSON `json:"-"`
 }
 
@@ -80,13 +80,14 @@ func (r commandExecResponseJSON) RawJSON() string {
 }
 
 type CommandExecFuncResponse struct {
-	Execution CommandExecFuncResponseExecution `json:"execution"`
-	Output    interface{}                      `json:"output"`
+	Execution CommandExecFuncResponseExecution `json:"execution,required"`
+	// The output of the function.
+	Output interface{} `json:"output,required"`
 	// The status of the output. "valid" means your function executed successfully and
 	// returned a valid JSON-serializable object, or void. "json_serialization_error"
 	// means your function executed successfully, but returned a nonserializable
 	// object. "error" means your function failed to execute.
-	OutputStatus CommandExecFuncResponseOutputStatus `json:"output_status"`
+	OutputStatus CommandExecFuncResponseOutputStatus `json:"output_status,required"`
 	JSON         commandExecFuncResponseJSON         `json:"-"`
 }
 
@@ -111,11 +112,11 @@ func (r commandExecFuncResponseJSON) RawJSON() string {
 type CommandExecFuncResponseExecution struct {
 	// The exit code returned by the script. Will often be '0' on success and non-zero
 	// on failure.
-	ExitCode int64 `json:"exit_code"`
+	ExitCode int64 `json:"exit_code,required"`
 	// The contents of 'stderr' after executing the script.
-	Stderr string `json:"stderr"`
+	Stderr string `json:"stderr,required"`
 	// The contents of 'stdout' after executing the script.
-	Stdout string                               `json:"stdout"`
+	Stdout string                               `json:"stdout,required"`
 	JSON   commandExecFuncResponseExecutionJSON `json:"-"`
 }
 
@@ -299,18 +300,21 @@ func (r CommandExecParamsLimits) MarshalJSON() (data []byte, err error) {
 }
 
 type CommandExecFuncParams struct {
-	// The function to execute. Your code must define a function named 'execute' and
-	// return a JSON-serializable value.
+	// The function to execute. Your code must define a function named "execute" that
+	// takes in a single argument and returns a JSON-serializable value.
 	Code param.Field[string] `json:"code,required"`
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecFuncParamsLanguage] `json:"language,required"`
-	// Set of key-value pairs to add to the script's execution environment.
+	// Set of key-value pairs to add to the function's execution environment.
 	Env param.Field[map[string]string] `json:"env"`
 	// List of input files.
 	Files param.Field[[]CommandExecFuncParamsFile] `json:"files"`
 	// Configuration for HTTP requests and authentication.
-	HTTP  param.Field[CommandExecFuncParamsHTTP] `json:"http"`
-	Input param.Field[interface{}]               `json:"input"`
+	HTTP param.Field[CommandExecFuncParamsHTTP] `json:"http"`
+	// The input to the function. This must be a valid JSON-serializable object. If you
+	// do not pass an input, your function will be called with None (Python) or null
+	// (JavaScript/TypeScript) as the argument.
+	Input param.Field[interface{}] `json:"input"`
 	// Configuration for execution environment limits.
 	Limits param.Field[CommandExecFuncParamsLimits] `json:"limits"`
 	// The ID of the runtime revision to use when executing code.
@@ -328,13 +332,11 @@ const (
 	CommandExecFuncParamsLanguagePython     CommandExecFuncParamsLanguage = "python"
 	CommandExecFuncParamsLanguageJavascript CommandExecFuncParamsLanguage = "javascript"
 	CommandExecFuncParamsLanguageTypescript CommandExecFuncParamsLanguage = "typescript"
-	CommandExecFuncParamsLanguageRuby       CommandExecFuncParamsLanguage = "ruby"
-	CommandExecFuncParamsLanguagePhp        CommandExecFuncParamsLanguage = "php"
 )
 
 func (r CommandExecFuncParamsLanguage) IsKnown() bool {
 	switch r {
-	case CommandExecFuncParamsLanguagePython, CommandExecFuncParamsLanguageJavascript, CommandExecFuncParamsLanguageTypescript, CommandExecFuncParamsLanguageRuby, CommandExecFuncParamsLanguagePhp:
+	case CommandExecFuncParamsLanguagePython, CommandExecFuncParamsLanguageJavascript, CommandExecFuncParamsLanguageTypescript:
 		return true
 	}
 	return false
