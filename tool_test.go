@@ -26,11 +26,12 @@ func TestToolNewWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Tools.New(context.TODO(), riza.ToolNewParams{
-		Code:        riza.F("code"),
-		Language:    riza.F(riza.ToolNewParamsLanguagePython),
-		Name:        riza.F("name"),
-		Description: riza.F("description"),
-		InputSchema: riza.F[any](map[string]interface{}{}),
+		Code:              riza.F("code"),
+		Language:          riza.F(riza.ToolNewParamsLanguagePython),
+		Name:              riza.F("name"),
+		Description:       riza.F("description"),
+		InputSchema:       riza.F[any](map[string]interface{}{}),
+		RuntimeRevisionID: riza.F("runtime_revision_id"),
 	})
 	if err != nil {
 		var apierr *riza.Error
@@ -57,11 +58,12 @@ func TestToolUpdateWithOptionalParams(t *testing.T) {
 		context.TODO(),
 		"id",
 		riza.ToolUpdateParams{
-			Code:        riza.F("code"),
-			Description: riza.F("description"),
-			InputSchema: riza.F[any](map[string]interface{}{}),
-			Language:    riza.F(riza.ToolUpdateParamsLanguagePython),
-			Name:        riza.F("name"),
+			Code:              riza.F("code"),
+			Description:       riza.F("description"),
+			InputSchema:       riza.F[any](map[string]interface{}{}),
+			Language:          riza.F(riza.ToolUpdateParamsLanguagePython),
+			Name:              riza.F("name"),
+			RuntimeRevisionID: riza.F("runtime_revision_id"),
 		},
 	)
 	if err != nil {
