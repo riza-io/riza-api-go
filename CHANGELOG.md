@@ -1,5 +1,35 @@
 # Changelog
 
+## 0.8.0 (2025-02-04)
+
+Full Changelog: [v0.7.0...v0.8.0](https://github.com/riza-io/riza-api-go/compare/v0.7.0...v0.8.0)
+
+### Features
+
+* **api:** api update ([#73](https://github.com/riza-io/riza-api-go/issues/73)) ([45a357c](https://github.com/riza-io/riza-api-go/commit/45a357cac0c0337b8ff995306a8b313dcfb1b1d4))
+* **api:** api update ([#75](https://github.com/riza-io/riza-api-go/issues/75)) ([feffe59](https://github.com/riza-io/riza-api-go/commit/feffe593826d2de7dd00943a1d808b15ec9af777))
+* **api:** api update ([#76](https://github.com/riza-io/riza-api-go/issues/76)) ([bbfad5b](https://github.com/riza-io/riza-api-go/commit/bbfad5b9ea1ad9a3c145b1cfe899ada739a5e6f0))
+* **api:** api update ([#77](https://github.com/riza-io/riza-api-go/issues/77)) ([8ab051f](https://github.com/riza-io/riza-api-go/commit/8ab051fddbf908cf482c8945ab8ae2e15c459c12))
+* **api:** api update ([#78](https://github.com/riza-io/riza-api-go/issues/78)) ([0525154](https://github.com/riza-io/riza-api-go/commit/0525154baa791111d4fa6b1b84919e79c208e228))
+* **api:** api update ([#79](https://github.com/riza-io/riza-api-go/issues/79)) ([87ae631](https://github.com/riza-io/riza-api-go/commit/87ae631c476db0656984dd3a9fa495804143842a))
+* **api:** api update ([#80](https://github.com/riza-io/riza-api-go/issues/80)) ([0274b2c](https://github.com/riza-io/riza-api-go/commit/0274b2cce301f580cd9d3a626dfed92b98470785))
+* **client:** send `X-Stainless-Timeout` header ([#84](https://github.com/riza-io/riza-api-go/issues/84)) ([a587ed8](https://github.com/riza-io/riza-api-go/commit/a587ed85e2675f8b5c6a442131bf9e3dfb815eb0))
+
+
+### Bug Fixes
+
+* fix unicode encoding for json ([#82](https://github.com/riza-io/riza-api-go/issues/82)) ([1e7d130](https://github.com/riza-io/riza-api-go/commit/1e7d1302645c5863b77c1413add7123c5d0726db))
+
+
+### Chores
+
+* refactor client tests ([#81](https://github.com/riza-io/riza-api-go/issues/81)) ([111bb9b](https://github.com/riza-io/riza-api-go/commit/111bb9bb1072de946f756d904021b13ee72a17e0))
+
+
+### Documentation
+
+* document raw responses ([#83](https://github.com/riza-io/riza-api-go/issues/83)) ([32e915b](https://github.com/riza-io/riza-api-go/commit/32e915b0a00317cdd5850f74a6e7cf0b5e37b148))
+
 ## 0.7.0 (2025-01-23)
 
 Full Changelog: [v0.6.0...v0.7.0](https://github.com/riza-io/riza-api-go/compare/v0.6.0...v0.7.0)

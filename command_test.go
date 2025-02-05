@@ -88,7 +88,7 @@ func TestCommandExecFuncWithOptionalParams(t *testing.T) {
 		option.WithAPIKey("My API Key"),
 	)
 	_, err := client.Command.ExecFunc(context.TODO(), riza.CommandExecFuncParams{
-		Code:     riza.F("def execute(input): return { \"name\": \"John\", \"executed\": True }"),
+		Code:     riza.F("def execute(input): return { \"name\": input[\"name\"], \"executed\": True }"),
 		Language: riza.F(riza.CommandExecFuncParamsLanguagePython),
 		Env: riza.F(map[string]string{
 			"foo": "string",

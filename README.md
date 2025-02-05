@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/riza-io/riza-api-go@v0.7.0'
+go get -u 'github.com/riza-io/riza-api-go@v0.8.0'
 ```
 
 <!-- x-release-please-end -->
@@ -252,6 +252,31 @@ client.Command.Exec(
 	},
 	option.WithMaxRetries(5),
 )
+```
+
+### Accessing raw response data (e.g. response headers)
+
+You can access the raw HTTP response data by using the `option.WithResponseInto()` request option. This is useful when
+you need to examine response headers, status codes, or other details.
+
+```go
+// Create a variable to store the HTTP response
+var response *http.Response
+response, err := client.Command.Exec(
+	context.TODO(),
+	riza.CommandExecParams{
+		Code:     riza.F("print('Hello, World!')"),
+		Language: riza.F(riza.CommandExecParamsLanguagePython),
+	},
+	option.WithResponseInto(&response),
+)
+if err != nil {
+	// handle error
+}
+fmt.Printf("%+v\n", response)
+
+fmt.Printf("Status Code: %d\n", response.StatusCode)
+fmt.Printf("Headers: %+#v\n", response.Header)
 ```
 
 ### Making custom/undocumented requests
