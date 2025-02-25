@@ -80,6 +80,7 @@ func (r commandExecResponseJSON) RawJSON() string {
 }
 
 type CommandExecFuncResponse struct {
+	// The execution details of the function.
 	Execution CommandExecFuncResponseExecution `json:"execution,required"`
 	// The output of the function.
 	Output interface{} `json:"output,required"`
@@ -109,13 +110,14 @@ func (r commandExecFuncResponseJSON) RawJSON() string {
 	return r.raw
 }
 
+// The execution details of the function.
 type CommandExecFuncResponseExecution struct {
-	// The exit code returned by the script. Will often be '0' on success and non-zero
-	// on failure.
+	// The exit code returned by the function. Will often be '0' on success and
+	// non-zero on failure.
 	ExitCode int64 `json:"exit_code,required"`
-	// The contents of 'stderr' after executing the script.
+	// The contents of 'stderr' after executing the function.
 	Stderr string `json:"stderr,required"`
-	// The contents of 'stdout' after executing the script.
+	// The contents of 'stdout' after executing the function.
 	Stdout string                               `json:"stdout,required"`
 	JSON   commandExecFuncResponseExecutionJSON `json:"-"`
 }
