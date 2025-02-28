@@ -5,7 +5,7 @@
 The Riza Go library provides convenient access to [the Riza REST
 API](https://docs.riza.io) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
