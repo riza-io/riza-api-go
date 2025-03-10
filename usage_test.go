@@ -31,5 +31,5 @@ func TestUsage(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%+v\n", response.ExitCode)
+	t.Logf("%+v\n", response.Duration)
 }
