@@ -204,6 +204,8 @@ func (r toolExecResponseJSON) RawJSON() string {
 
 // The execution details of the function.
 type ToolExecResponseExecution struct {
+	// The execution time of the function in milliseconds.
+	Duration int64 `json:"duration,required"`
 	// The exit code returned by the function. Will often be '0' on success and
 	// non-zero on failure.
 	ExitCode int64 `json:"exit_code,required"`
@@ -217,6 +219,7 @@ type ToolExecResponseExecution struct {
 // toolExecResponseExecutionJSON contains the JSON metadata for the struct
 // [ToolExecResponseExecution]
 type toolExecResponseExecutionJSON struct {
+	Duration    apijson.Field
 	ExitCode    apijson.Field
 	Stderr      apijson.Field
 	Stdout      apijson.Field
