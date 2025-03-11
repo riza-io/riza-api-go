@@ -1,5 +1,37 @@
 # Changelog
 
+## 0.9.0 (2025-03-11)
+
+Full Changelog: [v0.8.0...v0.9.0](https://github.com/riza-io/riza-api-go/compare/v0.8.0...v0.9.0)
+
+### Features
+
+* add SKIP_BREW env var to ./scripts/bootstrap ([#98](https://github.com/riza-io/riza-api-go/issues/98)) ([2a2cc6d](https://github.com/riza-io/riza-api-go/commit/2a2cc6d44d515a7a56eef9fc34e2118d830f8146))
+* **api:** api update ([#90](https://github.com/riza-io/riza-api-go/issues/90)) ([1e429b4](https://github.com/riza-io/riza-api-go/commit/1e429b4472db4ca0f476807a4c2f2f145c4d26b1))
+* **api:** api update ([#93](https://github.com/riza-io/riza-api-go/issues/93)) ([c474776](https://github.com/riza-io/riza-api-go/commit/c474776cd50ce5412814203a12c94218aeb1a82f))
+* **api:** api update ([#97](https://github.com/riza-io/riza-api-go/issues/97)) ([d5c1364](https://github.com/riza-io/riza-api-go/commit/d5c136421ad9755cb2fe275de67c58ffcdc3fec0))
+* **client:** accept RFC6838 JSON content types ([#99](https://github.com/riza-io/riza-api-go/issues/99)) ([08662f6](https://github.com/riza-io/riza-api-go/commit/08662f6a7412aa1cd75689343216b52dfc7fafa5))
+* **client:** allow custom baseurls without trailing slash ([#96](https://github.com/riza-io/riza-api-go/issues/96)) ([a27c784](https://github.com/riza-io/riza-api-go/commit/a27c784408aa973a7919d8c4290ccec10c423240))
+
+
+### Bug Fixes
+
+* **client:** don't truncate manually specified filenames ([#91](https://github.com/riza-io/riza-api-go/issues/91)) ([335ebd9](https://github.com/riza-io/riza-api-go/commit/335ebd95cb7ac7c178dd3b90af58eee7d8a4a5c6))
+* do not call path.Base on ContentType ([#89](https://github.com/riza-io/riza-api-go/issues/89)) ([99fbac5](https://github.com/riza-io/riza-api-go/commit/99fbac59fe49ba37de1d8f1de24792edff298071))
+* fix early cancel when RequestTimeout is provided for streaming requests ([#88](https://github.com/riza-io/riza-api-go/issues/88)) ([6b9ff08](https://github.com/riza-io/riza-api-go/commit/6b9ff0863a0efd10f1a0b2c59d4d67afa8b2914e))
+
+
+### Chores
+
+* add UnionUnmarshaler for responses that are interfaces ([#86](https://github.com/riza-io/riza-api-go/issues/86)) ([44dab94](https://github.com/riza-io/riza-api-go/commit/44dab941130bb59919e2fdbc713fb694606360e3))
+* **internal:** fix devcontainers setup ([#92](https://github.com/riza-io/riza-api-go/issues/92)) ([a2fd525](https://github.com/riza-io/riza-api-go/commit/a2fd5252bb8665bcbaec7a9ea0bf14610de2b95f))
+* simplify string literals ([#95](https://github.com/riza-io/riza-api-go/issues/95)) ([24640e4](https://github.com/riza-io/riza-api-go/commit/24640e46a8ab927967be3218663f7fbf263bd69a))
+
+
+### Documentation
+
+* update URLs from stainlessapi.com to stainless.com ([#94](https://github.com/riza-io/riza-api-go/issues/94)) ([03af88e](https://github.com/riza-io/riza-api-go/commit/03af88e3fd0bb14b7f14203874382e5d2d7f1768))
+
 ## 0.8.0 (2025-02-04)
 
 Full Changelog: [v0.7.0...v0.8.0](https://github.com/riza-io/riza-api-go/compare/v0.7.0...v0.8.0)
