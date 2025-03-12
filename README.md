@@ -5,7 +5,7 @@
 The Riza Go library provides convenient access to [the Riza REST
 API](https://docs.riza.io) from applications written in Go. The full API of this library can be found in [api.md](api.md).
 
-It is generated with [Stainless](https://www.stainlessapi.com/).
+It is generated with [Stainless](https://www.stainless.com/).
 
 ## Installation
 
@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/riza-io/riza-api-go@v0.8.0'
+go get -u 'github.com/riza-io/riza-api-go@v0.9.0'
 ```
 
 <!-- x-release-please-end -->
@@ -59,7 +59,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", response.ExitCode)
+	fmt.Printf("%+v\n", response.Duration)
 }
 
 ```

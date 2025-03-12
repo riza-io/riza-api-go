@@ -51,6 +51,8 @@ func (r *CommandService) ExecFunc(ctx context.Context, body CommandExecFuncParam
 }
 
 type CommandExecResponse struct {
+	// The execution time of the script in milliseconds.
+	Duration int64 `json:"duration,required"`
 	// The exit code returned by the script. Will often be '0' on success and non-zero
 	// on failure.
 	ExitCode int64 `json:"exit_code,required"`
@@ -64,6 +66,7 @@ type CommandExecResponse struct {
 // commandExecResponseJSON contains the JSON metadata for the struct
 // [CommandExecResponse]
 type commandExecResponseJSON struct {
+	Duration    apijson.Field
 	ExitCode    apijson.Field
 	Stderr      apijson.Field
 	Stdout      apijson.Field
@@ -80,6 +83,7 @@ func (r commandExecResponseJSON) RawJSON() string {
 }
 
 type CommandExecFuncResponse struct {
+	// The execution details of the function.
 	Execution CommandExecFuncResponseExecution `json:"execution,required"`
 	// The output of the function.
 	Output interface{} `json:"output,required"`
@@ -109,13 +113,16 @@ func (r commandExecFuncResponseJSON) RawJSON() string {
 	return r.raw
 }
 
+// The execution details of the function.
 type CommandExecFuncResponseExecution struct {
-	// The exit code returned by the script. Will often be '0' on success and non-zero
-	// on failure.
+	// The execution time of the function in milliseconds.
+	Duration int64 `json:"duration,required"`
+	// The exit code returned by the function. Will often be '0' on success and
+	// non-zero on failure.
 	ExitCode int64 `json:"exit_code,required"`
-	// The contents of 'stderr' after executing the script.
+	// The contents of 'stderr' after executing the function.
 	Stderr string `json:"stderr,required"`
-	// The contents of 'stdout' after executing the script.
+	// The contents of 'stdout' after executing the function.
 	Stdout string                               `json:"stdout,required"`
 	JSON   commandExecFuncResponseExecutionJSON `json:"-"`
 }
@@ -123,6 +130,7 @@ type CommandExecFuncResponseExecution struct {
 // commandExecFuncResponseExecutionJSON contains the JSON metadata for the struct
 // [CommandExecFuncResponseExecution]
 type commandExecFuncResponseExecutionJSON struct {
+	Duration    apijson.Field
 	ExitCode    apijson.Field
 	Stderr      apijson.Field
 	Stdout      apijson.Field
@@ -163,8 +171,6 @@ type CommandExecParams struct {
 	Code param.Field[string] `json:"code,required"`
 	// The interpreter to use when executing code.
 	Language param.Field[CommandExecParamsLanguage] `json:"language,required"`
-	// List of allowed hosts for HTTP requests.
-	AllowHTTPHosts param.Field[[]string] `json:"allow_http_hosts"`
 	// List of command line arguments to pass to the script.
 	Args param.Field[[]string] `json:"args"`
 	// Set of key-value pairs to add to the script's execution environment.

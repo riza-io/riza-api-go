@@ -172,7 +172,7 @@ func (r toolListResponseJSON) RawJSON() string {
 }
 
 type ToolExecResponse struct {
-	// The execution details of the Tool.
+	// The execution details of the function.
 	Execution ToolExecResponseExecution `json:"execution,required"`
 	// The returned value of the Tool's execute function.
 	Output interface{} `json:"output,required"`
@@ -202,17 +202,24 @@ func (r toolExecResponseJSON) RawJSON() string {
 	return r.raw
 }
 
-// The execution details of the Tool.
+// The execution details of the function.
 type ToolExecResponseExecution struct {
-	ExitCode int64                         `json:"exit_code,required"`
-	Stderr   string                        `json:"stderr,required"`
-	Stdout   string                        `json:"stdout,required"`
-	JSON     toolExecResponseExecutionJSON `json:"-"`
+	// The execution time of the function in milliseconds.
+	Duration int64 `json:"duration,required"`
+	// The exit code returned by the function. Will often be '0' on success and
+	// non-zero on failure.
+	ExitCode int64 `json:"exit_code,required"`
+	// The contents of 'stderr' after executing the function.
+	Stderr string `json:"stderr,required"`
+	// The contents of 'stdout' after executing the function.
+	Stdout string                        `json:"stdout,required"`
+	JSON   toolExecResponseExecutionJSON `json:"-"`
 }
 
 // toolExecResponseExecutionJSON contains the JSON metadata for the struct
 // [ToolExecResponseExecution]
 type toolExecResponseExecutionJSON struct {
+	Duration    apijson.Field
 	ExitCode    apijson.Field
 	Stderr      apijson.Field
 	Stdout      apijson.Field
