@@ -68,7 +68,7 @@ type Runtime struct {
 	Language                RuntimeLanguage     `json:"language,required"`
 	Name                    string              `json:"name,required"`
 	RevisionID              string              `json:"revision_id,required"`
-	Status                  string              `json:"status,required"`
+	Status                  RuntimeStatus       `json:"status,required"`
 	AdditionalPythonImports string              `json:"additional_python_imports"`
 	ManifestFile            RuntimeManifestFile `json:"manifest_file"`
 	JSON                    runtimeJSON         `json:"-"`
@@ -105,6 +105,24 @@ const (
 func (r RuntimeLanguage) IsKnown() bool {
 	switch r {
 	case RuntimeLanguagePython, RuntimeLanguageJavascript:
+		return true
+	}
+	return false
+}
+
+type RuntimeStatus string
+
+const (
+	RuntimeStatusPending   RuntimeStatus = "pending"
+	RuntimeStatusBuilding  RuntimeStatus = "building"
+	RuntimeStatusSucceeded RuntimeStatus = "succeeded"
+	RuntimeStatusFailed    RuntimeStatus = "failed"
+	RuntimeStatusCancelled RuntimeStatus = "cancelled"
+)
+
+func (r RuntimeStatus) IsKnown() bool {
+	switch r {
+	case RuntimeStatusPending, RuntimeStatusBuilding, RuntimeStatusSucceeded, RuntimeStatusFailed, RuntimeStatusCancelled:
 		return true
 	}
 	return false
