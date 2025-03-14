@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.10.0 (2025-03-14)
+
+Full Changelog: [v0.9.0...v0.10.0](https://github.com/riza-io/riza-api-go/compare/v0.9.0...v0.10.0)
+
+### Features
+
+* **api:** api update ([#103](https://github.com/riza-io/riza-api-go/issues/103)) ([bf623a3](https://github.com/riza-io/riza-api-go/commit/bf623a30ad6fafbc243d76bd227971c72f434c31))
+* **client:** improve default client options support ([#104](https://github.com/riza-io/riza-api-go/issues/104)) ([9078a6c](https://github.com/riza-io/riza-api-go/commit/9078a6cc3e7900b93323a644a79e84ac2fc918fc))
+
+
+### Chores
+
+* **internal:** codegen related update ([#101](https://github.com/riza-io/riza-api-go/issues/101)) ([8c118f3](https://github.com/riza-io/riza-api-go/commit/8c118f3964fae0529097496cb2ad970d39e591f8))
+* **internal:** remove extra empty newlines ([#105](https://github.com/riza-io/riza-api-go/issues/105)) ([6fcfd1b](https://github.com/riza-io/riza-api-go/commit/6fcfd1b8cd6008b7f5edba3c211fcdf13fa27e16))
+
 ## 0.9.0 (2025-03-11)
 
 Full Changelog: [v0.8.0...v0.9.0](https://github.com/riza-io/riza-api-go/compare/v0.8.0...v0.9.0)

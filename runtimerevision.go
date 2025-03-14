@@ -142,17 +142,16 @@ func (r RevisionManifestFileName) IsKnown() bool {
 type RevisionStatus string
 
 const (
-	RevisionStatusUnspecified RevisionStatus = "unspecified"
-	RevisionStatusPending     RevisionStatus = "pending"
-	RevisionStatusBuilding    RevisionStatus = "building"
-	RevisionStatusSucceeded   RevisionStatus = "succeeded"
-	RevisionStatusFailed      RevisionStatus = "failed"
-	RevisionStatusCancelled   RevisionStatus = "cancelled"
+	RevisionStatusPending   RevisionStatus = "pending"
+	RevisionStatusBuilding  RevisionStatus = "building"
+	RevisionStatusSucceeded RevisionStatus = "succeeded"
+	RevisionStatusFailed    RevisionStatus = "failed"
+	RevisionStatusCancelled RevisionStatus = "cancelled"
 )
 
 func (r RevisionStatus) IsKnown() bool {
 	switch r {
-	case RevisionStatusUnspecified, RevisionStatusPending, RevisionStatusBuilding, RevisionStatusSucceeded, RevisionStatusFailed, RevisionStatusCancelled:
+	case RevisionStatusPending, RevisionStatusBuilding, RevisionStatusSucceeded, RevisionStatusFailed, RevisionStatusCancelled:
 		return true
 	}
 	return false
