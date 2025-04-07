@@ -65,6 +65,7 @@ func (r *RuntimeService) Get(ctx context.Context, id string, opts ...option.Requ
 
 type Runtime struct {
 	ID                      string              `json:"id,required"`
+	Engine                  RuntimeEngine       `json:"engine,required"`
 	Language                RuntimeLanguage     `json:"language,required"`
 	Name                    string              `json:"name,required"`
 	RevisionID              string              `json:"revision_id,required"`
@@ -77,6 +78,7 @@ type Runtime struct {
 // runtimeJSON contains the JSON metadata for the struct [Runtime]
 type runtimeJSON struct {
 	ID                      apijson.Field
+	Engine                  apijson.Field
 	Language                apijson.Field
 	Name                    apijson.Field
 	RevisionID              apijson.Field
@@ -93,6 +95,22 @@ func (r *Runtime) UnmarshalJSON(data []byte) (err error) {
 
 func (r runtimeJSON) RawJSON() string {
 	return r.raw
+}
+
+type RuntimeEngine string
+
+const (
+	RuntimeEngineWasi    RuntimeEngine = "wasi"
+	RuntimeEngineMicrovm RuntimeEngine = "microvm"
+	RuntimeEngineV8      RuntimeEngine = "v8"
+)
+
+func (r RuntimeEngine) IsKnown() bool {
+	switch r {
+	case RuntimeEngineWasi, RuntimeEngineMicrovm, RuntimeEngineV8:
+		return true
+	}
+	return false
 }
 
 type RuntimeLanguage string
@@ -192,6 +210,7 @@ type RuntimeNewParams struct {
 	ManifestFile            param.Field[RuntimeNewParamsManifestFile] `json:"manifest_file,required"`
 	Name                    param.Field[string]                       `json:"name,required"`
 	AdditionalPythonImports param.Field[string]                       `json:"additional_python_imports"`
+	Engine                  param.Field[RuntimeNewParamsEngine]       `json:"engine"`
 }
 
 func (r RuntimeNewParams) MarshalJSON() (data []byte, err error) {
@@ -232,6 +251,22 @@ const (
 func (r RuntimeNewParamsManifestFileName) IsKnown() bool {
 	switch r {
 	case RuntimeNewParamsManifestFileNameRequirementsTxt, RuntimeNewParamsManifestFileNamePackageJson:
+		return true
+	}
+	return false
+}
+
+type RuntimeNewParamsEngine string
+
+const (
+	RuntimeNewParamsEngineWasi    RuntimeNewParamsEngine = "wasi"
+	RuntimeNewParamsEngineMicrovm RuntimeNewParamsEngine = "microvm"
+	RuntimeNewParamsEngineV8      RuntimeNewParamsEngine = "v8"
+)
+
+func (r RuntimeNewParamsEngine) IsKnown() bool {
+	switch r {
+	case RuntimeNewParamsEngineWasi, RuntimeNewParamsEngineMicrovm, RuntimeNewParamsEngineV8:
 		return true
 	}
 	return false

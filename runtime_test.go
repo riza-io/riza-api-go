@@ -33,6 +33,7 @@ func TestRuntimeNewWithOptionalParams(t *testing.T) {
 		}),
 		Name:                    riza.F("name"),
 		AdditionalPythonImports: riza.F("additional_python_imports"),
+		Engine:                  riza.F(riza.RuntimeNewParamsEngineWasi),
 	})
 	if err != nil {
 		var apierr *riza.Error
