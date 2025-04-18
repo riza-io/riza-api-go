@@ -7,8 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/riza-io/riza-api-go/internal/apijson"
+	"github.com/riza-io/riza-api-go/internal/apiquery"
 	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
@@ -44,10 +46,10 @@ func (r *RuntimeService) New(ctx context.Context, body RuntimeNewParams, opts ..
 }
 
 // Returns a list of runtimes in your project.
-func (r *RuntimeService) List(ctx context.Context, opts ...option.RequestOption) (res *RuntimeListResponse, err error) {
+func (r *RuntimeService) List(ctx context.Context, query RuntimeListParams, opts ...option.RequestOption) (res *RuntimeListResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/runtimes"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -270,4 +272,20 @@ func (r RuntimeNewParamsEngine) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type RuntimeListParams struct {
+	// The number of items to return. Defaults to 100. Maximum is 100.
+	Limit param.Field[int64] `query:"limit"`
+	// The ID of the item to start after. To get the next page of results, set this to
+	// the ID of the last item in the current page.
+	StartingAfter param.Field[string] `query:"starting_after"`
+}
+
+// URLQuery serializes [RuntimeListParams]'s query parameters as `url.Values`.
+func (r RuntimeListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
