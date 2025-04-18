@@ -75,7 +75,7 @@ func TestToolUpdateWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestToolList(t *testing.T) {
+func TestToolListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -87,7 +87,10 @@ func TestToolList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Tools.List(context.TODO())
+	_, err := client.Tools.List(context.TODO(), riza.ToolListParams{
+		Limit:         riza.F(int64(0)),
+		StartingAfter: riza.F("starting_after"),
+	})
 	if err != nil {
 		var apierr *riza.Error
 		if errors.As(err, &apierr) {
