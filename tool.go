@@ -7,8 +7,10 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/riza-io/riza-api-go/internal/apijson"
+	"github.com/riza-io/riza-api-go/internal/apiquery"
 	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
@@ -54,10 +56,10 @@ func (r *ToolService) Update(ctx context.Context, id string, body ToolUpdatePara
 }
 
 // Returns a list of tools in your project.
-func (r *ToolService) List(ctx context.Context, opts ...option.RequestOption) (res *ToolListResponse, err error) {
+func (r *ToolService) List(ctx context.Context, query ToolListParams, opts ...option.RequestOption) (res *ToolListResponse, err error) {
 	opts = append(r.Options[:], opts...)
 	path := "v1/tools"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
 	return
 }
 
@@ -331,6 +333,22 @@ func (r ToolUpdateParamsLanguage) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type ToolListParams struct {
+	// The number of items to return. Defaults to 100. Maximum is 100.
+	Limit param.Field[int64] `query:"limit"`
+	// The ID of the item to start after. To get the next page of results, set this to
+	// the ID of the last item in the current page.
+	StartingAfter param.Field[string] `query:"starting_after"`
+}
+
+// URLQuery serializes [ToolListParams]'s query parameters as `url.Values`.
+func (r ToolListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
 
 type ToolExecParams struct {
