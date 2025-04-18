@@ -38,7 +38,7 @@ func TestSecretNew(t *testing.T) {
 	}
 }
 
-func TestSecretList(t *testing.T) {
+func TestSecretListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -50,7 +50,10 @@ func TestSecretList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Secrets.List(context.TODO())
+	_, err := client.Secrets.List(context.TODO(), riza.SecretListParams{
+		Limit:         riza.F(int64(0)),
+		StartingAfter: riza.F("starting_after"),
+	})
 	if err != nil {
 		var apierr *riza.Error
 		if errors.As(err, &apierr) {
