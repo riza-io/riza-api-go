@@ -12,6 +12,7 @@ import (
 	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
+	"github.com/riza-io/riza-api-go/packages/pagination"
 )
 
 // SecretService contains methods and other services that help with interacting
@@ -42,11 +43,26 @@ func (r *SecretService) New(ctx context.Context, body SecretNewParams, opts ...o
 }
 
 // Returns a list of secrets in your project.
-func (r *SecretService) List(ctx context.Context, query SecretListParams, opts ...option.RequestOption) (res *SecretListResponse, err error) {
+func (r *SecretService) List(ctx context.Context, query SecretListParams, opts ...option.RequestOption) (res *pagination.SecretsPagination[Secret], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/secrets"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Returns a list of secrets in your project.
+func (r *SecretService) ListAutoPaging(ctx context.Context, query SecretListParams, opts ...option.RequestOption) *pagination.SecretsPaginationAutoPager[Secret] {
+	return pagination.NewSecretsPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type Secret struct {
@@ -68,27 +84,6 @@ func (r *Secret) UnmarshalJSON(data []byte) (err error) {
 }
 
 func (r secretJSON) RawJSON() string {
-	return r.raw
-}
-
-type SecretListResponse struct {
-	Secrets []Secret               `json:"secrets,required"`
-	JSON    secretListResponseJSON `json:"-"`
-}
-
-// secretListResponseJSON contains the JSON metadata for the struct
-// [SecretListResponse]
-type secretListResponseJSON struct {
-	Secrets     apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SecretListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r secretListResponseJSON) RawJSON() string {
 	return r.raw
 }
 
