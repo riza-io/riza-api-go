@@ -14,6 +14,7 @@ import (
 	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
+	"github.com/riza-io/riza-api-go/packages/pagination"
 )
 
 // RuntimeService contains methods and other services that help with interacting
@@ -46,11 +47,26 @@ func (r *RuntimeService) New(ctx context.Context, body RuntimeNewParams, opts ..
 }
 
 // Returns a list of runtimes in your project.
-func (r *RuntimeService) List(ctx context.Context, query RuntimeListParams, opts ...option.RequestOption) (res *RuntimeListResponse, err error) {
+func (r *RuntimeService) List(ctx context.Context, query RuntimeListParams, opts ...option.RequestOption) (res *pagination.RuntimesPagination[Runtime], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/runtimes"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, query, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Returns a list of runtimes in your project.
+func (r *RuntimeService) ListAutoPaging(ctx context.Context, query RuntimeListParams, opts ...option.RequestOption) *pagination.RuntimesPaginationAutoPager[Runtime] {
+	return pagination.NewRuntimesPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Retrieves a runtime.
@@ -184,27 +200,6 @@ func (r RuntimeManifestFileName) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-type RuntimeListResponse struct {
-	Runtimes []Runtime               `json:"runtimes,required"`
-	JSON     runtimeListResponseJSON `json:"-"`
-}
-
-// runtimeListResponseJSON contains the JSON metadata for the struct
-// [RuntimeListResponse]
-type runtimeListResponseJSON struct {
-	Runtimes    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *RuntimeListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r runtimeListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type RuntimeNewParams struct {
