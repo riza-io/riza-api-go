@@ -7,11 +7,14 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/riza-io/riza-api-go/internal/apijson"
+	"github.com/riza-io/riza-api-go/internal/apiquery"
 	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
+	"github.com/riza-io/riza-api-go/packages/pagination"
 )
 
 // ToolService contains methods and other services that help with interacting with
@@ -54,11 +57,26 @@ func (r *ToolService) Update(ctx context.Context, id string, body ToolUpdatePara
 }
 
 // Returns a list of tools in your project.
-func (r *ToolService) List(ctx context.Context, opts ...option.RequestOption) (res *ToolListResponse, err error) {
+func (r *ToolService) List(ctx context.Context, query ToolListParams, opts ...option.RequestOption) (res *pagination.ToolsPagination[Tool], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/tools"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Returns a list of tools in your project.
+func (r *ToolService) ListAutoPaging(ctx context.Context, query ToolListParams, opts ...option.RequestOption) *pagination.ToolsPaginationAutoPager[Tool] {
+	return pagination.NewToolsPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Execute a tool with a given input. The input is validated against the tool's
@@ -148,27 +166,6 @@ func (r ToolLanguage) IsKnown() bool {
 		return true
 	}
 	return false
-}
-
-type ToolListResponse struct {
-	Tools []Tool               `json:"tools,required"`
-	JSON  toolListResponseJSON `json:"-"`
-}
-
-// toolListResponseJSON contains the JSON metadata for the struct
-// [ToolListResponse]
-type toolListResponseJSON struct {
-	Tools       apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *ToolListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r toolListResponseJSON) RawJSON() string {
-	return r.raw
 }
 
 type ToolExecResponse struct {
@@ -331,6 +328,22 @@ func (r ToolUpdateParamsLanguage) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type ToolListParams struct {
+	// The number of items to return. Defaults to 100. Maximum is 100.
+	Limit param.Field[int64] `query:"limit"`
+	// The ID of the item to start after. To get the next page of results, set this to
+	// the ID of the last item in the current page.
+	StartingAfter param.Field[string] `query:"starting_after"`
+}
+
+// URLQuery serializes [ToolListParams]'s query parameters as `url.Values`.
+func (r ToolListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
 
 type ToolExecParams struct {

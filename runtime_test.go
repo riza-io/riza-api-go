@@ -33,6 +33,7 @@ func TestRuntimeNewWithOptionalParams(t *testing.T) {
 		}),
 		Name:                    riza.F("name"),
 		AdditionalPythonImports: riza.F("additional_python_imports"),
+		Engine:                  riza.F(riza.RuntimeNewParamsEngineWasi),
 	})
 	if err != nil {
 		var apierr *riza.Error
@@ -43,7 +44,7 @@ func TestRuntimeNewWithOptionalParams(t *testing.T) {
 	}
 }
 
-func TestRuntimeList(t *testing.T) {
+func TestRuntimeListWithOptionalParams(t *testing.T) {
 	baseURL := "http://localhost:4010"
 	if envURL, ok := os.LookupEnv("TEST_API_BASE_URL"); ok {
 		baseURL = envURL
@@ -55,7 +56,10 @@ func TestRuntimeList(t *testing.T) {
 		option.WithBaseURL(baseURL),
 		option.WithAPIKey("My API Key"),
 	)
-	_, err := client.Runtimes.List(context.TODO())
+	_, err := client.Runtimes.List(context.TODO(), riza.RuntimeListParams{
+		Limit:         riza.F(int64(0)),
+		StartingAfter: riza.F("starting_after"),
+	})
 	if err != nil {
 		var apierr *riza.Error
 		if errors.As(err, &apierr) {

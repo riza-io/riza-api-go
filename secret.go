@@ -5,11 +5,14 @@ package riza
 import (
 	"context"
 	"net/http"
+	"net/url"
 
 	"github.com/riza-io/riza-api-go/internal/apijson"
+	"github.com/riza-io/riza-api-go/internal/apiquery"
 	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
+	"github.com/riza-io/riza-api-go/packages/pagination"
 )
 
 // SecretService contains methods and other services that help with interacting
@@ -40,11 +43,26 @@ func (r *SecretService) New(ctx context.Context, body SecretNewParams, opts ...o
 }
 
 // Returns a list of secrets in your project.
-func (r *SecretService) List(ctx context.Context, opts ...option.RequestOption) (res *SecretListResponse, err error) {
+func (r *SecretService) List(ctx context.Context, query SecretListParams, opts ...option.RequestOption) (res *pagination.SecretsPagination[Secret], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/secrets"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Returns a list of secrets in your project.
+func (r *SecretService) ListAutoPaging(ctx context.Context, query SecretListParams, opts ...option.RequestOption) *pagination.SecretsPaginationAutoPager[Secret] {
+	return pagination.NewSecretsPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 type Secret struct {
@@ -69,27 +87,6 @@ func (r secretJSON) RawJSON() string {
 	return r.raw
 }
 
-type SecretListResponse struct {
-	Secrets []Secret               `json:"secrets,required"`
-	JSON    secretListResponseJSON `json:"-"`
-}
-
-// secretListResponseJSON contains the JSON metadata for the struct
-// [SecretListResponse]
-type secretListResponseJSON struct {
-	Secrets     apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *SecretListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r secretListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
 type SecretNewParams struct {
 	Name  param.Field[string] `json:"name,required"`
 	Value param.Field[string] `json:"value,required"`
@@ -97,4 +94,20 @@ type SecretNewParams struct {
 
 func (r SecretNewParams) MarshalJSON() (data []byte, err error) {
 	return apijson.MarshalRoot(r)
+}
+
+type SecretListParams struct {
+	// The number of items to return. Defaults to 100. Maximum is 100.
+	Limit param.Field[int64] `query:"limit"`
+	// The ID of the item to start after. To get the next page of results, set this to
+	// the ID of the last item in the current page.
+	StartingAfter param.Field[string] `query:"starting_after"`
+}
+
+// URLQuery serializes [SecretListParams]'s query parameters as `url.Values`.
+func (r SecretListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }

@@ -7,11 +7,14 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/riza-io/riza-api-go/internal/apijson"
+	"github.com/riza-io/riza-api-go/internal/apiquery"
 	"github.com/riza-io/riza-api-go/internal/param"
 	"github.com/riza-io/riza-api-go/internal/requestconfig"
 	"github.com/riza-io/riza-api-go/option"
+	"github.com/riza-io/riza-api-go/packages/pagination"
 )
 
 // RuntimeService contains methods and other services that help with interacting
@@ -44,11 +47,26 @@ func (r *RuntimeService) New(ctx context.Context, body RuntimeNewParams, opts ..
 }
 
 // Returns a list of runtimes in your project.
-func (r *RuntimeService) List(ctx context.Context, opts ...option.RequestOption) (res *RuntimeListResponse, err error) {
+func (r *RuntimeService) List(ctx context.Context, query RuntimeListParams, opts ...option.RequestOption) (res *pagination.RuntimesPagination[Runtime], err error) {
+	var raw *http.Response
 	opts = append(r.Options[:], opts...)
+	opts = append([]option.RequestOption{option.WithResponseInto(&raw)}, opts...)
 	path := "v1/runtimes"
-	err = requestconfig.ExecuteNewRequest(ctx, http.MethodGet, path, nil, &res, opts...)
-	return
+	cfg, err := requestconfig.NewRequestConfig(ctx, http.MethodGet, path, query, &res, opts...)
+	if err != nil {
+		return nil, err
+	}
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+// Returns a list of runtimes in your project.
+func (r *RuntimeService) ListAutoPaging(ctx context.Context, query RuntimeListParams, opts ...option.RequestOption) *pagination.RuntimesPaginationAutoPager[Runtime] {
+	return pagination.NewRuntimesPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
 // Retrieves a runtime.
@@ -65,6 +83,7 @@ func (r *RuntimeService) Get(ctx context.Context, id string, opts ...option.Requ
 
 type Runtime struct {
 	ID                      string              `json:"id,required"`
+	Engine                  RuntimeEngine       `json:"engine,required"`
 	Language                RuntimeLanguage     `json:"language,required"`
 	Name                    string              `json:"name,required"`
 	RevisionID              string              `json:"revision_id,required"`
@@ -77,6 +96,7 @@ type Runtime struct {
 // runtimeJSON contains the JSON metadata for the struct [Runtime]
 type runtimeJSON struct {
 	ID                      apijson.Field
+	Engine                  apijson.Field
 	Language                apijson.Field
 	Name                    apijson.Field
 	RevisionID              apijson.Field
@@ -93,6 +113,22 @@ func (r *Runtime) UnmarshalJSON(data []byte) (err error) {
 
 func (r runtimeJSON) RawJSON() string {
 	return r.raw
+}
+
+type RuntimeEngine string
+
+const (
+	RuntimeEngineWasi    RuntimeEngine = "wasi"
+	RuntimeEngineMicrovm RuntimeEngine = "microvm"
+	RuntimeEngineV8      RuntimeEngine = "v8"
+)
+
+func (r RuntimeEngine) IsKnown() bool {
+	switch r {
+	case RuntimeEngineWasi, RuntimeEngineMicrovm, RuntimeEngineV8:
+		return true
+	}
+	return false
 }
 
 type RuntimeLanguage string
@@ -166,32 +202,12 @@ func (r RuntimeManifestFileName) IsKnown() bool {
 	return false
 }
 
-type RuntimeListResponse struct {
-	Runtimes []Runtime               `json:"runtimes,required"`
-	JSON     runtimeListResponseJSON `json:"-"`
-}
-
-// runtimeListResponseJSON contains the JSON metadata for the struct
-// [RuntimeListResponse]
-type runtimeListResponseJSON struct {
-	Runtimes    apijson.Field
-	raw         string
-	ExtraFields map[string]apijson.Field
-}
-
-func (r *RuntimeListResponse) UnmarshalJSON(data []byte) (err error) {
-	return apijson.UnmarshalRoot(data, r)
-}
-
-func (r runtimeListResponseJSON) RawJSON() string {
-	return r.raw
-}
-
 type RuntimeNewParams struct {
 	Language                param.Field[RuntimeNewParamsLanguage]     `json:"language,required"`
 	ManifestFile            param.Field[RuntimeNewParamsManifestFile] `json:"manifest_file,required"`
 	Name                    param.Field[string]                       `json:"name,required"`
 	AdditionalPythonImports param.Field[string]                       `json:"additional_python_imports"`
+	Engine                  param.Field[RuntimeNewParamsEngine]       `json:"engine"`
 }
 
 func (r RuntimeNewParams) MarshalJSON() (data []byte, err error) {
@@ -235,4 +251,36 @@ func (r RuntimeNewParamsManifestFileName) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type RuntimeNewParamsEngine string
+
+const (
+	RuntimeNewParamsEngineWasi    RuntimeNewParamsEngine = "wasi"
+	RuntimeNewParamsEngineMicrovm RuntimeNewParamsEngine = "microvm"
+	RuntimeNewParamsEngineV8      RuntimeNewParamsEngine = "v8"
+)
+
+func (r RuntimeNewParamsEngine) IsKnown() bool {
+	switch r {
+	case RuntimeNewParamsEngineWasi, RuntimeNewParamsEngineMicrovm, RuntimeNewParamsEngineV8:
+		return true
+	}
+	return false
+}
+
+type RuntimeListParams struct {
+	// The number of items to return. Defaults to 100. Maximum is 100.
+	Limit param.Field[int64] `query:"limit"`
+	// The ID of the item to start after. To get the next page of results, set this to
+	// the ID of the last item in the current page.
+	StartingAfter param.Field[string] `query:"starting_after"`
+}
+
+// URLQuery serializes [RuntimeListParams]'s query parameters as `url.Values`.
+func (r RuntimeListParams) URLQuery() (v url.Values) {
+	return apiquery.MarshalWithSettings(r, apiquery.QuerySettings{
+		ArrayFormat:  apiquery.ArrayQueryFormatComma,
+		NestedFormat: apiquery.NestedQueryFormatBrackets,
+	})
 }
