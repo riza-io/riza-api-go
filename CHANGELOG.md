@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.11.0 (2025-04-24)
+
+Full Changelog: [v0.10.0...v0.11.0](https://github.com/riza-io/riza-api-go/compare/v0.10.0...v0.11.0)
+
+### Features
+
+* **api:** api update ([6c47882](https://github.com/riza-io/riza-api-go/commit/6c4788247485fff145a04b46f4abc1dcfedbf15c))
+* **api:** api update ([81a6537](https://github.com/riza-io/riza-api-go/commit/81a653722fd4b276f18e3b4aced956c16f2145d8))
+* **api:** api update ([c62d761](https://github.com/riza-io/riza-api-go/commit/c62d7614f047d4f1caddb9d1cf398bc5c28f54e7))
+* **api:** api update ([6091cc8](https://github.com/riza-io/riza-api-go/commit/6091cc8b3800e85522f701051fba6a0f5e8b266a))
+* **api:** api update ([#113](https://github.com/riza-io/riza-api-go/issues/113)) ([362e34c](https://github.com/riza-io/riza-api-go/commit/362e34c83912b929f013c6c225a4879a82327808))
+* **client:** add support for reading base URL from environment variable ([2386a6f](https://github.com/riza-io/riza-api-go/commit/2386a6f50c8cb637ab5f758ab78183110ee20397))
+* **client:** support custom http clients ([#114](https://github.com/riza-io/riza-api-go/issues/114)) ([f9ae9a9](https://github.com/riza-io/riza-api-go/commit/f9ae9a9989cd54566978723c95c9499458971e10))
+
+
+### Bug Fixes
+
+* **client:** return error on bad custom url instead of panic ([#112](https://github.com/riza-io/riza-api-go/issues/112)) ([279608f](https://github.com/riza-io/riza-api-go/commit/279608f36941947839cc427d32625974d46d72de))
+* **test:** return early after test failure ([#110](https://github.com/riza-io/riza-api-go/issues/110)) ([f0f79cc](https://github.com/riza-io/riza-api-go/commit/f0f79cc384843928887446828494136331ca3d2f))
+
+
+### Chores
+
+* add request options to client tests ([#109](https://github.com/riza-io/riza-api-go/issues/109)) ([8ad7670](https://github.com/riza-io/riza-api-go/commit/8ad7670c0f2f708b458623737e7d181fb3d76a31))
+* **ci:** add timeout thresholds for CI jobs ([afaa476](https://github.com/riza-io/riza-api-go/commit/afaa47664ca519bbcfeeece3f0b066d8751e0ac6))
+* **ci:** only use depot for staging repos ([e5353eb](https://github.com/riza-io/riza-api-go/commit/e5353eb4a81747b945cf698ed831bd437f579bd7))
+* **docs:** document pre-request options ([f95f41e](https://github.com/riza-io/riza-api-go/commit/f95f41e8dad9a091fb782e8274ee8408b4a0b627))
+* **docs:** improve security documentation ([#107](https://github.com/riza-io/riza-api-go/issues/107)) ([2389440](https://github.com/riza-io/riza-api-go/commit/2389440489e6977ee71d57a67dcb74d7069e6e04))
+* fix typos ([#111](https://github.com/riza-io/riza-api-go/issues/111)) ([4709229](https://github.com/riza-io/riza-api-go/commit/4709229aad1953fd0380d42a19cdf6f52ad4446c))
+* **internal:** codegen related update ([2653cff](https://github.com/riza-io/riza-api-go/commit/2653cffd013c42787e2f45987605979b02178e30))
+* **internal:** expand CI branch coverage ([d6f56db](https://github.com/riza-io/riza-api-go/commit/d6f56db1edb91ac8db14fb39f174d40ee51d732a))
+* **internal:** reduce CI branch coverage ([a6a23ca](https://github.com/riza-io/riza-api-go/commit/a6a23caf08ce53d3756f01952f4be7f5963abeb2))
+
+
+### Documentation
+
+* update documentation links to be more uniform ([345e83f](https://github.com/riza-io/riza-api-go/commit/345e83fcd7763074c98211f55d6f38299a50706d))
+
 ## 0.10.0 (2025-03-14)
 
 Full Changelog: [v0.9.0...v0.10.0](https://github.com/riza-io/riza-api-go/compare/v0.9.0...v0.10.0)
