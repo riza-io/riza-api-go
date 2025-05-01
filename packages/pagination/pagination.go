@@ -45,7 +45,10 @@ func (r *RuntimesPagination[T]) GetNextPage() (res *RuntimesPagination[T], err e
 	cfg := r.cfg.Clone(r.cfg.Context)
 	value := reflect.ValueOf(items[len(items)-1])
 	field := value.FieldByName("ID")
-	cfg.Apply(option.WithQuery("starting_after", field.Interface().(string)))
+	err = cfg.Apply(option.WithQuery("starting_after", field.Interface().(string)))
+	if err != nil {
+		return nil, err
+	}
 	var raw *http.Response
 	cfg.ResponseInto = &raw
 	cfg.ResponseBodyInto = &res
@@ -143,7 +146,10 @@ func (r *ToolsPagination[T]) GetNextPage() (res *ToolsPagination[T], err error) 
 	cfg := r.cfg.Clone(r.cfg.Context)
 	value := reflect.ValueOf(items[len(items)-1])
 	field := value.FieldByName("ID")
-	cfg.Apply(option.WithQuery("starting_after", field.Interface().(string)))
+	err = cfg.Apply(option.WithQuery("starting_after", field.Interface().(string)))
+	if err != nil {
+		return nil, err
+	}
 	var raw *http.Response
 	cfg.ResponseInto = &raw
 	cfg.ResponseBodyInto = &res
@@ -241,7 +247,10 @@ func (r *SecretsPagination[T]) GetNextPage() (res *SecretsPagination[T], err err
 	cfg := r.cfg.Clone(r.cfg.Context)
 	value := reflect.ValueOf(items[len(items)-1])
 	field := value.FieldByName("ID")
-	cfg.Apply(option.WithQuery("starting_after", field.Interface().(string)))
+	err = cfg.Apply(option.WithQuery("starting_after", field.Interface().(string)))
+	if err != nil {
+		return nil, err
+	}
 	var raw *http.Response
 	cfg.ResponseInto = &raw
 	cfg.ResponseBodyInto = &res
