@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.11.1 (2025-05-07)
+
+Full Changelog: [v0.11.0...v0.11.1](https://github.com/riza-io/riza-api-go/compare/v0.11.0...v0.11.1)
+
+### Bug Fixes
+
+* **client:** clean up reader resources ([b6cb859](https://github.com/riza-io/riza-api-go/commit/b6cb859d95c0adea2a0510f805369f5149cbfd38))
+* **client:** correctly update body in WithJSONSet ([c36dd78](https://github.com/riza-io/riza-api-go/commit/c36dd786a4175585839eb5a2012a0c4e82ca1a17))
+* handle empty bodies in WithJSONSet ([94c410b](https://github.com/riza-io/riza-api-go/commit/94c410bea1b9fc202e7b37d3b6a3f3cdd1f76b2c))
+* **pagination:** handle errors when applying options ([3e739c2](https://github.com/riza-io/riza-api-go/commit/3e739c2853700ae724cb1582347176209b42fd03))
+
 ## 0.11.0 (2025-04-24)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/riza-io/riza-api-go/compare/v0.10.0...v0.11.0)
