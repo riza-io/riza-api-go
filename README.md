@@ -59,7 +59,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", response.Duration)
+	fmt.Printf("%+v\n", response.ID)
 }
 
 ```
