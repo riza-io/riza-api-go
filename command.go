@@ -51,6 +51,8 @@ func (r *CommandService) ExecFunc(ctx context.Context, body CommandExecFuncParam
 }
 
 type CommandExecResponse struct {
+	// The ID of the execution.
+	ID string `json:"id,required"`
 	// The execution time of the script in milliseconds.
 	Duration int64 `json:"duration,required"`
 	// The exit code returned by the script. Will often be '0' on success and non-zero
@@ -66,6 +68,7 @@ type CommandExecResponse struct {
 // commandExecResponseJSON contains the JSON metadata for the struct
 // [CommandExecResponse]
 type commandExecResponseJSON struct {
+	ID          apijson.Field
 	Duration    apijson.Field
 	ExitCode    apijson.Field
 	Stderr      apijson.Field
@@ -115,6 +118,8 @@ func (r commandExecFuncResponseJSON) RawJSON() string {
 
 // The execution details of the function.
 type CommandExecFuncResponseExecution struct {
+	// The ID of the execution.
+	ID string `json:"id,required"`
 	// The execution time of the function in milliseconds.
 	Duration int64 `json:"duration,required"`
 	// The exit code returned by the function. Will often be '0' on success and
@@ -130,6 +135,7 @@ type CommandExecFuncResponseExecution struct {
 // commandExecFuncResponseExecutionJSON contains the JSON metadata for the struct
 // [CommandExecFuncResponseExecution]
 type commandExecFuncResponseExecutionJSON struct {
+	ID          apijson.Field
 	Duration    apijson.Field
 	ExitCode    apijson.Field
 	Stderr      apijson.Field
