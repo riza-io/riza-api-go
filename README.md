@@ -24,7 +24,7 @@ Or to pin the version:
 <!-- x-release-please-start-version -->
 
 ```sh
-go get -u 'github.com/riza-io/riza-api-go@v0.11.0'
+go get -u 'github.com/riza-io/riza-api-go@v0.12.0'
 ```
 
 <!-- x-release-please-end -->
@@ -59,7 +59,7 @@ func main() {
 	if err != nil {
 		panic(err.Error())
 	}
-	fmt.Printf("%+v\n", response.Duration)
+	fmt.Printf("%+v\n", response.ID)
 }
 
 ```
