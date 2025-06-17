@@ -32,5 +32,5 @@ func TestUsage(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	t.Logf("%+v\n", response.Duration)
+	t.Logf("%+v\n", response.ID)
 }
