@@ -38,6 +38,9 @@ func (r runtimesPaginationJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *RuntimesPagination[T]) GetNextPage() (res *RuntimesPagination[T], err error) {
+	if len(r.Runtimes) == 0 {
+		return nil, nil
+	}
 	items := r.Runtimes
 	if items == nil || len(items) == 0 {
 		return nil, nil
@@ -139,6 +142,9 @@ func (r toolsPaginationJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *ToolsPagination[T]) GetNextPage() (res *ToolsPagination[T], err error) {
+	if len(r.Tools) == 0 {
+		return nil, nil
+	}
 	items := r.Tools
 	if items == nil || len(items) == 0 {
 		return nil, nil
@@ -240,6 +246,9 @@ func (r secretsPaginationJSON) RawJSON() string {
 // there is no next page, this function will return a 'nil' for the page value, but
 // will not return an error
 func (r *SecretsPagination[T]) GetNextPage() (res *SecretsPagination[T], err error) {
+	if len(r.Secrets) == 0 {
+		return nil, nil
+	}
 	items := r.Secrets
 	if items == nil || len(items) == 0 {
 		return nil, nil
