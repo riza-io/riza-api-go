@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.12.0 (2025-06-29)
+
+Full Changelog: [v0.11.0...v0.12.0](https://github.com/riza-io/riza-api-go/compare/v0.11.0...v0.12.0)
+
+### Features
+
+* **api:** api update ([a5c8601](https://github.com/riza-io/riza-api-go/commit/a5c860134d1be1dec1d985dd9cac0d602cf5904e))
+* **api:** api update ([5b9da35](https://github.com/riza-io/riza-api-go/commit/5b9da351c1d35bc06691b60624ce121b1fb6be7c))
+* **api:** api update ([16b2fd7](https://github.com/riza-io/riza-api-go/commit/16b2fd7973c79d45f996c13936a46e2ee2d3109f))
+* **client:** add debug log helper ([c1ce97c](https://github.com/riza-io/riza-api-go/commit/c1ce97c496b760d0db7cfa72381f8a1fec99ecc5))
+* **client:** add support for endpoint-specific base URLs in python ([03ba4f5](https://github.com/riza-io/riza-api-go/commit/03ba4f5070ec44301dd6c583316635de718eb145))
+
+
+### Bug Fixes
+
+* **client:** clean up reader resources ([b6cb859](https://github.com/riza-io/riza-api-go/commit/b6cb859d95c0adea2a0510f805369f5149cbfd38))
+* **client:** correctly update body in WithJSONSet ([c36dd78](https://github.com/riza-io/riza-api-go/commit/c36dd786a4175585839eb5a2012a0c4e82ca1a17))
+* handle empty bodies in WithJSONSet ([94c410b](https://github.com/riza-io/riza-api-go/commit/94c410bea1b9fc202e7b37d3b6a3f3cdd1f76b2c))
+* **pagination:** handle errors when applying options ([3e739c2](https://github.com/riza-io/riza-api-go/commit/3e739c2853700ae724cb1582347176209b42fd03))
+
+
+### Chores
+
+* **ci:** enable for pull requests ([3fc111d](https://github.com/riza-io/riza-api-go/commit/3fc111d5c189b191beca430af1c4d56c975cf76a))
+* **docs:** grammar improvements ([3e42af7](https://github.com/riza-io/riza-api-go/commit/3e42af74067329161af01bfff3519d69aa884ffd))
+* improve devcontainer setup ([10030fa](https://github.com/riza-io/riza-api-go/commit/10030fa45fcdb07449652c95fe7ad67350d4200a))
+* make go mod tidy continue on error ([c9804f8](https://github.com/riza-io/riza-api-go/commit/c9804f86d09d0c433a8bf73fb2e7959b15e6ac91))
+
 ## 0.11.0 (2025-04-24)
 
 Full Changelog: [v0.10.0...v0.11.0](https://github.com/riza-io/riza-api-go/compare/v0.10.0...v0.11.0)

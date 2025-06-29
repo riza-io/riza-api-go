@@ -208,6 +208,9 @@ type RequestConfig struct {
 	Context        context.Context
 	Request        *http.Request
 	BaseURL        *url.URL
+	// DefaultBaseURL will be used if BaseURL is not explicitly overridden using
+	// WithBaseURL.
+	DefaultBaseURL *url.URL
 	CustomHTTPDoer HTTPDoer
 	HTTPClient     *http.Client
 	Middlewares    []middleware
@@ -374,7 +377,11 @@ func retryDelay(res *http.Response, retryCount int) time.Duration {
 
 func (cfg *RequestConfig) Execute() (err error) {
 	if cfg.BaseURL == nil {
-		return fmt.Errorf("requestconfig: base url is not set")
+		if cfg.DefaultBaseURL != nil {
+			cfg.BaseURL = cfg.DefaultBaseURL
+		} else {
+			return fmt.Errorf("requestconfig: base url is not set")
+		}
 	}
 
 	cfg.Request.URL, err = cfg.BaseURL.Parse(strings.TrimLeft(cfg.Request.URL.String(), "/"))
@@ -508,6 +515,7 @@ func (cfg *RequestConfig) Execute() (err error) {
 	}
 
 	contents, err := io.ReadAll(res.Body)
+	res.Body.Close()
 	if err != nil {
 		return fmt.Errorf("error reading response body: %w", err)
 	}
@@ -531,15 +539,15 @@ func (cfg *RequestConfig) Execute() (err error) {
 		return nil
 	}
 
-	// If the response happens to be a byte array, deserialize the body as-is.
 	switch dst := cfg.ResponseBodyInto.(type) {
+	// If the response happens to be a byte array, deserialize the body as-is.
 	case *[]byte:
 		*dst = contents
-	}
-
-	err = json.NewDecoder(bytes.NewReader(contents)).Decode(cfg.ResponseBodyInto)
-	if err != nil {
-		return fmt.Errorf("error parsing response json: %w", err)
+	default:
+		err = json.NewDecoder(bytes.NewReader(contents)).Decode(cfg.ResponseBodyInto)
+		if err != nil {
+			return fmt.Errorf("error parsing response json: %w", err)
+		}
 	}
 
 	return nil
@@ -606,4 +614,18 @@ func PreRequestOptions(opts ...RequestOption) (RequestConfig, error) {
 		}
 	}
 	return cfg, nil
+}
+
+// WithDefaultBaseURL returns a RequestOption that sets the client's default Base URL.
+// This is always overridden by setting a base URL with WithBaseURL.
+// WithBaseURL should be used instead of WithDefaultBaseURL except in internal code.
+func WithDefaultBaseURL(baseURL string) RequestOption {
+	u, err := url.Parse(baseURL)
+	return RequestOptionFunc(func(r *RequestConfig) error {
+		if err != nil {
+			return err
+		}
+		r.DefaultBaseURL = u
+		return nil
+	})
 }
