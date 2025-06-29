@@ -69,6 +69,18 @@ func (r *RuntimeService) ListAutoPaging(ctx context.Context, query RuntimeListPa
 	return pagination.NewRuntimesPaginationAutoPager(r.List(ctx, query, opts...))
 }
 
+// Deletes a runtime.
+func (r *RuntimeService) Delete(ctx context.Context, id string, opts ...option.RequestOption) (res *RuntimeDeleteResponse, err error) {
+	opts = append(r.Options[:], opts...)
+	if id == "" {
+		err = errors.New("missing required id parameter")
+		return
+	}
+	path := fmt.Sprintf("v1/runtimes/%s", id)
+	err = requestconfig.ExecuteNewRequest(ctx, http.MethodDelete, path, nil, &res, opts...)
+	return
+}
+
 // Retrieves a runtime.
 func (r *RuntimeService) Get(ctx context.Context, id string, opts ...option.RequestOption) (res *Runtime, err error) {
 	opts = append(r.Options[:], opts...)
@@ -200,6 +212,29 @@ func (r RuntimeManifestFileName) IsKnown() bool {
 		return true
 	}
 	return false
+}
+
+type RuntimeDeleteResponse struct {
+	ID      string                    `json:"id"`
+	Deleted bool                      `json:"deleted"`
+	JSON    runtimeDeleteResponseJSON `json:"-"`
+}
+
+// runtimeDeleteResponseJSON contains the JSON metadata for the struct
+// [RuntimeDeleteResponse]
+type runtimeDeleteResponseJSON struct {
+	ID          apijson.Field
+	Deleted     apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *RuntimeDeleteResponse) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r runtimeDeleteResponseJSON) RawJSON() string {
+	return r.raw
 }
 
 type RuntimeNewParams struct {

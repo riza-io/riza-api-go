@@ -11,6 +11,110 @@ import (
 	"github.com/riza-io/riza-api-go/option"
 )
 
+type DefaultPagination[T any] struct {
+	Data []T                   `json:"data"`
+	JSON defaultPaginationJSON `json:"-"`
+	cfg  *requestconfig.RequestConfig
+	res  *http.Response
+}
+
+// defaultPaginationJSON contains the JSON metadata for the struct
+// [DefaultPagination[T]]
+type defaultPaginationJSON struct {
+	Data        apijson.Field
+	raw         string
+	ExtraFields map[string]apijson.Field
+}
+
+func (r *DefaultPagination[T]) UnmarshalJSON(data []byte) (err error) {
+	return apijson.UnmarshalRoot(data, r)
+}
+
+func (r defaultPaginationJSON) RawJSON() string {
+	return r.raw
+}
+
+// GetNextPage returns the next page as defined by this pagination style. When
+// there is no next page, this function will return a 'nil' for the page value, but
+// will not return an error
+func (r *DefaultPagination[T]) GetNextPage() (res *DefaultPagination[T], err error) {
+	if len(r.Data) == 0 {
+		return nil, nil
+	}
+	items := r.Data
+	if items == nil || len(items) == 0 {
+		return nil, nil
+	}
+	cfg := r.cfg.Clone(r.cfg.Context)
+	value := reflect.ValueOf(items[len(items)-1])
+	field := value.FieldByName("ID")
+	err = cfg.Apply(option.WithQuery("starting_after", field.Interface().(string)))
+	if err != nil {
+		return nil, err
+	}
+	var raw *http.Response
+	cfg.ResponseInto = &raw
+	cfg.ResponseBodyInto = &res
+	err = cfg.Execute()
+	if err != nil {
+		return nil, err
+	}
+	res.SetPageConfig(cfg, raw)
+	return res, nil
+}
+
+func (r *DefaultPagination[T]) SetPageConfig(cfg *requestconfig.RequestConfig, res *http.Response) {
+	if r == nil {
+		r = &DefaultPagination[T]{}
+	}
+	r.cfg = cfg
+	r.res = res
+}
+
+type DefaultPaginationAutoPager[T any] struct {
+	page *DefaultPagination[T]
+	cur  T
+	idx  int
+	run  int
+	err  error
+}
+
+func NewDefaultPaginationAutoPager[T any](page *DefaultPagination[T], err error) *DefaultPaginationAutoPager[T] {
+	return &DefaultPaginationAutoPager[T]{
+		page: page,
+		err:  err,
+	}
+}
+
+func (r *DefaultPaginationAutoPager[T]) Next() bool {
+	if r.page == nil || len(r.page.Data) == 0 {
+		return false
+	}
+	if r.idx >= len(r.page.Data) {
+		r.idx = 0
+		r.page, r.err = r.page.GetNextPage()
+		if r.err != nil || r.page == nil || len(r.page.Data) == 0 {
+			return false
+		}
+	}
+	r.cur = r.page.Data[r.idx]
+	r.run += 1
+	r.idx += 1
+	return true
+}
+
+func (r *DefaultPaginationAutoPager[T]) Current() T {
+	return r.cur
+}
+
+func (r *DefaultPaginationAutoPager[T]) Err() error {
+	return r.err
+}
+
+func (r *DefaultPaginationAutoPager[T]) Index() int {
+	return r.run
+}
+
 type RuntimesPagination[T any] struct {
 	Runtimes []T                    `json:"runtimes"`
 	JSON     runtimesPaginationJSON `json:"-"`
