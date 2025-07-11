@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.12.1 (2025-07-11)
+
+Full Changelog: [v0.12.0...v0.12.1](https://github.com/riza-io/riza-api-go/compare/v0.12.0...v0.12.1)
+
+### Chores
+
+* **internal:** fix lint script for tests ([6400795](https://github.com/riza-io/riza-api-go/commit/6400795153e6ec49769b062408a08f15f49fb07a))
+* lint tests ([7036da2](https://github.com/riza-io/riza-api-go/commit/7036da29fbf2054be54df2f094ccc926234e05cb))
+* lint tests in subpackages ([e62b715](https://github.com/riza-io/riza-api-go/commit/e62b7150235da592ad0e20f9f4d821b7fb6a1062))
+
 ## 0.12.0 (2025-06-29)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/riza-io/riza-api-go/compare/v0.11.0...v0.12.0)
