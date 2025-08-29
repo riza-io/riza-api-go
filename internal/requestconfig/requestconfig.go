@@ -133,11 +133,13 @@ func NewRequestConfig(ctx context.Context, method string, u string, body interfa
 	// Fallback to json serialization if none of the serialization functions that we expect
 	// to see is present.
 	if body != nil && !hasSerializationFunc {
-		content, err := json.Marshal(body)
-		if err != nil {
+		buf := new(bytes.Buffer)
+		enc := json.NewEncoder(buf)
+		enc.SetEscapeHTML(true)
+		if err := enc.Encode(body); err != nil {
 			return nil, err
 		}
-		reader = bytes.NewBuffer(content)
+		reader = buf
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, u, nil)
@@ -461,6 +463,11 @@ func (cfg *RequestConfig) Execute() (err error) {
 		// Can't actually refresh the body, so we don't attempt to retry here
 		if cfg.Request.GetBody == nil && cfg.Request.Body != nil {
 			break
+		}
+
+		// Close the response body before retrying to prevent connection leaks
+		if res != nil && res.Body != nil {
+			res.Body.Close()
 		}
 
 		time.Sleep(retryDelay(res, retryCount))

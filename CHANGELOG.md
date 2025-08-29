@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.12.1 (2025-08-29)
+
+Full Changelog: [v0.12.0...v0.12.1](https://github.com/riza-io/riza-api-go/compare/v0.12.0...v0.12.1)
+
+### Features
+
+* **client:** support optional json html escaping ([fee78c6](https://github.com/riza-io/riza-api-go/commit/fee78c62c5586eb8c4bbd5977b2e22fbc4262f1e))
+
+
+### Bug Fixes
+
+* **client:** process custom base url ahead of time ([bb276e9](https://github.com/riza-io/riza-api-go/commit/bb276e972ffb0446c332e043ef85372191a94d98))
+* close body before retrying ([73f9ba3](https://github.com/riza-io/riza-api-go/commit/73f9ba34a20f3a1cb4731b13c3a7d19cb1a5b5ca))
+
+
+### Chores
+
+* **internal:** fix lint script for tests ([6400795](https://github.com/riza-io/riza-api-go/commit/6400795153e6ec49769b062408a08f15f49fb07a))
+* **internal:** update comment in script ([af92de4](https://github.com/riza-io/riza-api-go/commit/af92de46161e9f0e3675e471f5022c1685b37f5e))
+* lint tests ([7036da2](https://github.com/riza-io/riza-api-go/commit/7036da29fbf2054be54df2f094ccc926234e05cb))
+* lint tests in subpackages ([e62b715](https://github.com/riza-io/riza-api-go/commit/e62b7150235da592ad0e20f9f4d821b7fb6a1062))
+* update @stainless-api/prism-cli to v5.15.0 ([1446e7d](https://github.com/riza-io/riza-api-go/commit/1446e7d09d742033b66ab4c1ad6149bf63a8fb34))
+
 ## 0.12.0 (2025-06-29)
 
 Full Changelog: [v0.11.0...v0.12.0](https://github.com/riza-io/riza-api-go/compare/v0.11.0...v0.12.0)
